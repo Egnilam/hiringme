@@ -17,7 +17,7 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Company/Infrastructure/Entity'
+                dir: '%kernel.project_dir%/src/Infrastructure/Framework/Doctrine/Entity'
                 prefix: 'App\Entity'
                 alias: App
 
