@@ -27,5 +27,7 @@ services:
             - '../src/Infrastructure/Framework/Doctrine/Entity/'
             - '../src/Kernel.php'
 
+    Domain\:
+        resource: '../domain/src/'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
