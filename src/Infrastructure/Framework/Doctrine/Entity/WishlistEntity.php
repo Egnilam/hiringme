@@ -15,19 +15,19 @@ class WishlistEntity
 
     use EntityDecoratorTrait;
 
-    #[ORM\ManyToOne(targetEntity: UserEntity::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: 'user_id')]
-    private UserEntity $user;
+    #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'owner_id')]
+    private WishlistMemberEntity $user;
 
     #[ORM\Column('string', length: 255)]
     private string $name;
 
-    public function getUser(): UserEntity
+    public function getUser(): WishlistMemberEntity
     {
         return $this->user;
     }
 
-    public function setUser(UserEntity $user): self
+    public function setUser(WishlistMemberEntity $user): self
     {
         $this->user = $user;
         return $this;

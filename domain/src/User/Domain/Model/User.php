@@ -39,9 +39,9 @@ class User
         string $email,
         string $password,
         array $roles,
+        ?\DateTimeImmutable $birthDate = null,
         ?string $token = null,
         bool $active = true,
-        ?\DateTimeImmutable $birthDate = null,
     ) {
         $this->person = new Person($firstName, $lastName, $birthDate);
         $this->setEmail($email);
