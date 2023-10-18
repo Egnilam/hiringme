@@ -2,27 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Framework\Doctrine\Entity;
+namespace App\Action\Command\User;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'person')]
-#[ORM\HasLifecycleCallbacks]
-class PersonEntity
+final class RegisterUserCommand implements CommandInterface
 {
-    use EntityIdTrait;
-
-    use EntityDecoratorTrait;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private string $firstName;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private string $lastName;
-
-    #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeImmutable $birthDate;
+    private string $email;
+    private string $password;
+    private ?\DateTimeImmutable $birthDate = null;
 
     public function getFirstName(): string
     {
@@ -43,6 +33,28 @@ class PersonEntity
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+        return $this;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
         return $this;
     }
 

@@ -18,5 +18,4 @@ final class RegisterCompanyCommand implements CommandInterface
     {
         return $this->name;
     }
-
 }
