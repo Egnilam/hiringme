@@ -19,9 +19,9 @@ class WishlistGroupMemberEntity
     #[ORM\JoinColumn(name: 'wishlist_group_id')]
     private WishlistGroupEntity $wishlistGroup;
 
-    #[ORM\ManyToOne(targetEntity: UserEntity::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: 'user_id')]
-    private UserEntity $user;
+    #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'wishlist_member_id')]
+    private WishlistMemberEntity $wishlistMember;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $pseudonym = null;
@@ -37,14 +37,14 @@ class WishlistGroupMemberEntity
         return $this;
     }
 
-    public function getUser(): UserEntity
+    public function getWishlistMember(): WishlistMemberEntity
     {
-        return $this->user;
+        return $this->wishlistMember;
     }
 
-    public function setUser(UserEntity $user): self
+    public function setWishlistMember(WishlistMemberEntity $wishlistMember): self
     {
-        $this->user = $user;
+        $this->wishlistMember = $wishlistMember;
         return $this;
     }
 
