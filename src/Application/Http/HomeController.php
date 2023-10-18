@@ -15,7 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 final class HomeController extends AbstractController
 {
     #[Route(name: 'home')]
-    public function __invoke(Request $request, CommandBusInterface $commandBus): Response {
+    public function __invoke(Request $request, CommandBusInterface $commandBus): Response
+    {
 
         $commandBus->dispatch(new RegisterCompanyCommand('hiringme'));
 

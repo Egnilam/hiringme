@@ -10,7 +10,8 @@ use Domain\Company\Repository\Command\CompanyCommandRepositoryInterface;
 
 final readonly class CompanyCommandRepository implements CompanyCommandRepositoryInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager) {
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
 
     }
 

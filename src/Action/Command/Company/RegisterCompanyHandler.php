@@ -11,11 +11,13 @@ use Domain\Company\Request\RegisterCompanyRequest;
 
 final readonly class RegisterCompanyHandler implements CommandHandlerInterface
 {
-    public function __construct(private RegisterCompanyInterface $registerCompany, private RegisterCompanyUserInterface $registerCompanyUser) {
+    public function __construct(private RegisterCompanyInterface $registerCompany, private RegisterCompanyUserInterface $registerCompanyUser)
+    {
 
     }
 
-    public function __invoke(RegisterCompanyCommand $registerCompanyCommand): void {
+    public function __invoke(RegisterCompanyCommand $registerCompanyCommand): void
+    {
 
         dump('is dispatch');
         $this->registerCompany->execute($this->transformToRegisterCompanyRequest($registerCompanyCommand));
@@ -23,7 +25,8 @@ final readonly class RegisterCompanyHandler implements CommandHandlerInterface
         $this->registerCompanyUser->execute();
     }
 
-    private function transformToRegisterCompanyRequest(RegisterCompanyCommand $registerCompanyCommand): RegisterCompanyRequest {
+    private function transformToRegisterCompanyRequest(RegisterCompanyCommand $registerCompanyCommand): RegisterCompanyRequest
+    {
         return new RegisterCompanyRequest(
             $registerCompanyCommand->getName(),
             'size'

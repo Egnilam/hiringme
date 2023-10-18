@@ -10,7 +10,7 @@ final class RegisterCompanyCommand implements CommandInterface
 {
     public function __construct(
         private string $name
-    ){
+    ) {
 
     }
 

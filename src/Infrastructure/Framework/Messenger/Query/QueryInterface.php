@@ -6,5 +6,4 @@ namespace App\Infrastructure\Framework\Messenger\Query;
 
 interface QueryInterface
 {
-
 }
