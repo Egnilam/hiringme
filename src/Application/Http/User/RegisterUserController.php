@@ -16,16 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 final class RegisterUserController extends AbstractController
 {
     #[Route(name: 'user_register', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, CommandBusInterface $commandBus): Response {
+    public function __invoke(Request $request, CommandBusInterface $commandBus): Response
+    {
         $registerUserCommand = new RegisterUserCommand();
         $form = $this->createForm(RegisterUserForm::class, $registerUserCommand);
 
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                try{
+        if($form->isSubmitted()) {
+            if($form->isValid()) {
+                try {
                     $commandBus->dispatch($registerUserCommand);
-                } catch (\Exception $exception){
+                } catch (\Exception $exception) {
                 }
             }
         }

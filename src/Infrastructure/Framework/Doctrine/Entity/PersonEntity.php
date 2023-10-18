@@ -21,8 +21,8 @@ class PersonEntity
     #[ORM\Column(type: 'string', length: 255)]
     private string $lastName;
 
-    #[ORM\Column(type: 'date')]
-    private \DateTimeImmutable $birthDate;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeImmutable $birthDate;
 
     public function getFirstName(): string
     {
@@ -46,12 +46,12 @@ class PersonEntity
         return $this;
     }
 
-    public function getBirthDate(): \DateTimeImmutable
+    public function getBirthDate(): ?\DateTimeImmutable
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeImmutable $birthDate): self
+    public function setBirthDate(?\DateTimeImmutable $birthDate): self
     {
         $this->birthDate = $birthDate;
         return $this;

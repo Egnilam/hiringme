@@ -16,7 +16,8 @@ class UserCommandRepository implements UserCommandRepositoryInterface
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $userPasswordHasher,
-    ) {}
+    ) {
+    }
     public function register(User $user): void
     {
         $personEntity = new PersonEntity();
