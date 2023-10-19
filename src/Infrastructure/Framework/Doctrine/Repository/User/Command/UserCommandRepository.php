@@ -6,18 +6,23 @@ namespace App\Infrastructure\Framework\Doctrine\Repository\User\Command;
 
 use App\Infrastructure\Framework\Doctrine\Entity\PersonEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
+use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Domain\User\Domain\Model\User;
 use Domain\User\Repository\Command\UserCommandRepositoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserCommandRepository implements UserCommandRepositoryInterface
+final class UserCommandRepository extends AbstractRepository implements UserCommandRepositoryInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        protected EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $userPasswordHasher,
     ) {
+        parent::__construct(
+            $this->entityManager,
+        );
     }
+
     public function register(User $user): void
     {
         $personEntity = new PersonEntity();

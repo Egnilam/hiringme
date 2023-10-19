@@ -25,7 +25,7 @@ class UserModelTest extends TestCase
             [UserRoleEnum::USER->value],
         );
 
-        $this->assertSame($user->getEmail(), 'test@test.fr');
+        $this->assertSame('test@test.fr', $user->getEmail());
     }
 
     public function testEmailExceptionWithoutAt(): void
