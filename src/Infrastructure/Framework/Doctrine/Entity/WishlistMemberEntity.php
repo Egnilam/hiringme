@@ -23,7 +23,7 @@ class WishlistMemberEntity
     private ?string $email = null;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $register = false;
+    private bool $registered = false;
 
     public function getUser(): ?UserEntity
     {
@@ -47,14 +47,14 @@ class WishlistMemberEntity
         return $this;
     }
 
-    public function isRegister(): bool
+    public function isRegistered(): bool
     {
-        return $this->register;
+        return $this->registered;
     }
 
-    public function setRegister(bool $register): self
+    public function setRegistered(bool $registered): self
     {
-        $this->register = $register;
+        $this->registered = $registered;
         return $this;
     }
 }
