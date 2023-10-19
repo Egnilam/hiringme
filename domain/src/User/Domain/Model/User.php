@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Domain\User\Domain\Model;
 
+use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Domain\ValueObject\NameValueObject;
 use Domain\User\Domain\Enum\UserRoleEnum;
-use Domain\User\Domain\Exception\EmailException;
 use Domain\User\Domain\Exception\UserRoleException;
 
-class User
+final class User
 {
     private string $id;
 
@@ -29,14 +30,14 @@ class User
 
     /**
      * @param array<string> $roles
-     * @throws EmailException|UserRoleException
+     * @throws UserRoleException
      * @throws \Exception
      */
     public function __construct(
         string $id,
-        string $firstName,
-        string $lastName,
-        string $email,
+        NameValueObject $firstName,
+        NameValueObject $lastName,
+        EmailValueObject $email,
         string $password,
         array $roles,
         ?\DateTimeImmutable $birthDate = null,
@@ -44,9 +45,9 @@ class User
         bool $active = true,
     ) {
         $this->person = new Person($firstName, $lastName, $birthDate);
-        $this->setEmail($email);
         $this->setRoles($roles);
         $this->id = $id;
+        $this->email = $email->get();
         $this->password = $password;
         $this->token = $token;
         $this->active = $active;
@@ -88,20 +89,6 @@ class User
     public function isActive(): bool
     {
         return $this->active;
-    }
-
-    /**
-     * @throws EmailException
-     */
-    private function setEmail(string $email): void
-    {
-        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-
-        if(!preg_match($pattern, $email)) {
-            throw new EmailException();
-        }
-
-        $this->email = $email;
     }
 
     /**

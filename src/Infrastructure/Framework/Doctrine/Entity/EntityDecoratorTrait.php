@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait EntityDecoratorTrait
 {
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $updatedAt;
 
     #[ORM\Column(type: 'boolean')]

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\User\Domain\Exception;
+namespace Domain\Common\Domain\Exception;
 
-class EmailException extends \Exception
+class EmailFormatException extends \Exception
 {
     public function __construct()
     {

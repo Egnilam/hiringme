@@ -21,7 +21,7 @@ class PersonEntity
     #[ORM\Column(type: 'string', length: 255)]
     private string $lastName;
 
-    #[ORM\Column(type: 'date', nullable: true)]
+    #[ORM\Column(type: 'date_immutable', nullable: true)]
     private ?\DateTimeImmutable $birthDate;
 
     public function getFirstName(): string

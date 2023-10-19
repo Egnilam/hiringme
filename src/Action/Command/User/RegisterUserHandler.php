@@ -13,6 +13,7 @@ final readonly class RegisterUserHandler implements CommandHandlerInterface
     public function __construct(private RegisterUserInterface $registerUser)
     {
     }
+
     public function __invoke(RegisterUserCommand $registerUserCommand): void
     {
         $registerUserRequest = new RegisterUserRequest(

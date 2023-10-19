@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\User\Domain\Model;
 
+use Domain\Common\Domain\ValueObject\NameValueObject;
+
 class Person
 {
     private const MIN_AGE = 6;
@@ -15,14 +17,15 @@ class Person
 
     private ?\DateTimeImmutable $birthDate;
 
+
     /**
      * @throws \Exception
      */
-    public function __construct(string $firstName, string $lastName, ?\DateTimeImmutable $birthDate)
+    public function __construct(NameValueObject $firstName, NameValueObject $lastName, ?\DateTimeImmutable $birthDate)
     {
-        $this->setFirstName($firstName);
-        $this->setLastName($lastName);
         $this->setBirthDate($birthDate);
+        $this->firstName = $firstName->get();
+        $this->lastName = $lastName->get();
     }
 
     public function getFirstName(): string
@@ -43,26 +46,6 @@ class Person
     /**
      * @throws \Exception
      */
-    private function setFirstName(string $firstName): void
-    {
-        $firstName = rtrim($firstName);
-        $this->checkNameFormat($firstName, 'firstName');
-        $this->firstName = mb_strtoupper($firstName);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function setLastName(string $lastName): void
-    {
-        $lastName = rtrim($lastName);
-        $this->checkNameFormat($lastName, 'lastName');
-        $this->lastName = mb_strtoupper($lastName);
-    }
-
-    /**
-     * @throws \Exception
-     */
     private function setBirthDate(?\DateTimeImmutable $birthDate): void
     {
         if($birthDate === null) {
@@ -78,17 +61,5 @@ class Person
         }
 
         $this->birthDate = $birthDate;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function checkNameFormat(string $name, string $property): void
-    {
-        $pattern = '/^[a-zA-ZÀ-ÖØ-öø-ÿ-]{3,50}$/';
-
-        if(!preg_match($pattern, $name)) {
-            throw new \Exception(sprintf('Invalid property : %s', $property));
-        }
     }
 }

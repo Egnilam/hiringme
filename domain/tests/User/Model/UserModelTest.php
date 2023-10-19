@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Domain\Tests\User\Model;
 
+use Domain\Common\Domain\Exception\EmailFormatException;
+use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Domain\ValueObject\NameValueObject;
 use Domain\User\Domain\Enum\UserRoleEnum;
-use Domain\User\Domain\Exception\EmailException;
 use Domain\User\Domain\Exception\UserRoleException;
 use Domain\User\Domain\Model\User;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +18,9 @@ class UserModelTest extends TestCase
     {
         $user = new User(
             '1',
-            'florian',
-            'malinge',
-            'test@test.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@test.fr'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -28,12 +30,12 @@ class UserModelTest extends TestCase
 
     public function testEmailExceptionWithoutAt(): void
     {
-        $this->expectException(EmailException::class);
+        $this->expectException(EmailFormatException::class);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'testtest.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('testtest.fr'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -41,12 +43,12 @@ class UserModelTest extends TestCase
 
     public function testEmailExceptionWithoutDot(): void
     {
-        $this->expectException(EmailException::class);
+        $this->expectException(EmailFormatException::class);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'test@testfr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@testfr'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -54,12 +56,12 @@ class UserModelTest extends TestCase
 
     public function testEmailExceptionWithInvalidCharsAtFirstPart(): void
     {
-        $this->expectException(EmailException::class);
+        $this->expectException(EmailFormatException::class);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'tesét@test.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('teést@test.fr'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -67,12 +69,12 @@ class UserModelTest extends TestCase
 
     public function testEmailExceptionWithInvalidCharsAtSecondPart(): void
     {
-        $this->expectException(EmailException::class);
+        $this->expectException(EmailFormatException::class);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'test@teést.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@teést.fr'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -80,12 +82,12 @@ class UserModelTest extends TestCase
 
     public function testEmailExceptionWithInvalidCharsAtThirdPart(): void
     {
-        $this->expectException(EmailException::class);
+        $this->expectException(EmailFormatException::class);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'test@test.fé',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@test.fé'),
             'password',
             [UserRoleEnum::USER->value],
         );
@@ -97,9 +99,9 @@ class UserModelTest extends TestCase
         $this->expectExceptionMessage(UserRoleException::INVALID_ROLE_NAME);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'test@test.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@test.fr'),
             'password',
             ['invalid role'],
         );
@@ -111,9 +113,9 @@ class UserModelTest extends TestCase
         $this->expectExceptionMessage(UserRoleException::AT_LEAST_ONE_ROLE);
         new User(
             '1',
-            'florian',
-            'malinge',
-            'test@test.fr',
+            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
+            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new EmailValueObject('test@test.fr'),
             'password',
             [],
         );
