@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\User\Request;
 
-final class RegisterUserRequest
+final readonly class RegisterUserRequest
 {
     public function __construct(
         private string $firstName,

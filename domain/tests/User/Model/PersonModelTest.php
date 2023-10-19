@@ -18,8 +18,8 @@ class PersonModelTest extends TestCase
             new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
-        $this->assertSame($person->getFirstName(), 'FLORIAN');
-        $this->assertSame($person->getLastName(), 'MALINGE');
+        $this->assertSame('FLORIAN', $person->getFirstName());
+        $this->assertSame('MALINGE', $person->getLastName());
     }
 
     public function testValidPersonWithAccent(): void
@@ -29,8 +29,8 @@ class PersonModelTest extends TestCase
             new NameValueObject('malingeé', NameValueObject::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
-        $this->assertSame($person->getFirstName(), 'FLORIANÉ');
-        $this->assertSame($person->getLastName(), 'MALINGEÉ');
+        $this->assertSame('FLORIANÉ', $person->getFirstName());
+        $this->assertSame('MALINGEÉ', $person->getLastName());
     }
 
     public function testValidPersonWithDash(): void
@@ -40,8 +40,8 @@ class PersonModelTest extends TestCase
             new NameValueObject('mal-inge', NameValueObject::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
-        $this->assertSame($person->getFirstName(), 'FLO-RIAN');
-        $this->assertSame($person->getLastName(), 'MAL-INGE');
+        $this->assertSame('FLO-RIAN', $person->getFirstName());
+        $this->assertSame('MAL-INGE', $person->getLastName());
     }
 
     public function testExceptionInvalidFirstNameWithLengthToShort(): void

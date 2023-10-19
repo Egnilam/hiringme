@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Application\Http\Security;
 
 use App\Action\Command\User\RegisterUserCommand;
+use App\Action\Command\Wishlist\RegisterWishlistMemberCommand;
 use App\Application\Form\User\RegisterUserForm;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class RegisterUserController extends AbstractController
 {
     #[Route(name: 'app_register', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, EntityManagerInterface $entityManager, CommandBusInterface $commandBus): Response
     {
         if($this->getUser()) {
             return $this->redirectToRoute('user_account');
@@ -26,14 +28,22 @@ final class RegisterUserController extends AbstractController
         $form = $this->createForm(RegisterUserForm::class, $registerUserCommand);
 
         $form->handleRequest($request);
-        if($form->isSubmitted()) {
-            if($form->isValid()) {
-                try {
+        if($form->isSubmitted() && $form->isValid()) {
+            try {
+                $entityManager->wrapInTransaction(function () use ($commandBus, $registerUserCommand) {
                     $commandBus->dispatch($registerUserCommand);
 
-                    return $this->redirectToRoute('app_login');
-                } catch (\Exception $exception) {
-                }
+                    $registerWishlistMemberCommand = new RegisterWishlistMemberCommand();
+                    $registerWishlistMemberCommand
+                        ->setEmail($registerUserCommand->getEmail())
+                        ->setRegistered(true);
+
+                    $commandBus->dispatch($registerWishlistMemberCommand);
+                });
+
+                return $this->redirectToRoute('app_login');
+            } catch (\Exception $exception) {
+                //TODO: implement domain error display
             }
         }
 
