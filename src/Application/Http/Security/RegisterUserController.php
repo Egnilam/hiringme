@@ -7,11 +7,14 @@ namespace App\Application\Http\Security;
 use App\Action\Command\User\RegisterUserCommand;
 use App\Action\Command\Wishlist\RegisterWishlistMemberCommand;
 use App\Application\Form\User\RegisterUserForm;
+use App\Application\Presenter\DomainErrorPresenter;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Domain\Common\Domain\Exception\DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/register')]
@@ -42,13 +45,15 @@ final class RegisterUserController extends AbstractController
                 });
 
                 return $this->redirectToRoute('app_login');
+            } catch (HandlerFailedException $exception) {
+                $domainErrorPresenter = new DomainErrorPresenter($exception->getNestedExceptionOfClass(DomainException::class));
             } catch (\Exception $exception) {
-                //TODO: implement domain error display
             }
         }
 
         return $this->render('security/register.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'domain_error' => $domainErrorPresenter ?? null,
         ]);
     }
 }

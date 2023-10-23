@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Domain\Common\Domain\Exception;
 
-class EmailFormatException extends DomainException
+class DomainException extends \Exception
 {
-    public function __construct()
+    /**
+     * @param string $message
+     */
+    public function __construct(protected $message)
     {
-        parent::__construct('Invalid email format');
+        parent::__construct($this->message, 422);
     }
 
     public function __toString(): string

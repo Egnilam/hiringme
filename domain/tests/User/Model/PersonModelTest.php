@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Tests\User\Model;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\Exception\NameFormatException;
 use Domain\Common\Domain\ValueObject\NameValueObject;
 use Domain\User\Domain\Model\Person;
@@ -106,7 +107,7 @@ class PersonModelTest extends TestCase
 
     public function testExceptionBirthDateToOld(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(DomainException::class);
         new Person(
             new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
             new NameValueObject('mal_inge', NameValueObject::PROPERTY_LASTNAME),
@@ -116,7 +117,7 @@ class PersonModelTest extends TestCase
 
     public function testExceptionBirthDateToYoung(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(DomainException::class);
         new Person(
             new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
             new NameValueObject('mal_inge', NameValueObject::PROPERTY_LASTNAME),

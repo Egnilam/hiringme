@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Domain\Common\Domain\Exception;
 
-class NameFormatException extends \Exception
+class NameFormatException extends DomainException
 {
     public function __construct(private string $property)
     {
-        parent::__construct('Invalid name format', 422);
+        parent::__construct('Invalid name format');
     }
 
     public function __toString(): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\User\Domain\Model;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\ValueObject\NameValueObject;
 
 class Person
@@ -53,11 +54,11 @@ class Person
         }
 
         if($birthDate->diff(new \DateTimeImmutable())->y < self::MIN_AGE) {
-            throw new \Exception(sprintf('To young, under %d years old.', self::MIN_AGE));
+            throw new DomainException(sprintf('To young, under %d years old.', self::MIN_AGE));
         }
 
         if($birthDate->diff(new \DateTimeImmutable())->y > self::MAX_AGE) {
-            throw new \Exception(sprintf('To old, over %d years old.', self::MAX_AGE));
+            throw new DomainException(sprintf('To old, over %d years old.', self::MAX_AGE));
         }
 
         $this->birthDate = $birthDate;

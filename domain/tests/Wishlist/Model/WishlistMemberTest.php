@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Tests\Wishlist\Model;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class WishlistMemberTest extends TestCase
 
     public function testExceptionInvalidUser(): void
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(DomainException::class);
         new WishlistMember(
             'id',
             new EmailValueObject('test@test.fr'),
