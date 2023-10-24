@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist groups{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1>Wishlist groups</h1>
+        <a href="{{ path('wishlist_group_create') }}">Create new group</a>
+    {% endblock %}
+{% endblock %}
