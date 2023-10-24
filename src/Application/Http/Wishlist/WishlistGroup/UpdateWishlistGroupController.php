@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlist_groups')]
-final class WishlistGroupCreateController extends AbstractController
+final class UpdateWishlistGroupController extends AbstractController
 {
-    #[Route('/create', name: 'wishlist_group_create', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request): Response
+    #[Route('/{id}/update', name: 'wishlist_group_update', methods: ['GET', 'PUT'])]
+    public function __invoke(Request $request, string $id): Response
     {
-        return $this->render('wishlist/wishlist_group/create.html.twig');
+        return $this->render('wishlist/wishlist_group/update.html.twig');
     }
 }

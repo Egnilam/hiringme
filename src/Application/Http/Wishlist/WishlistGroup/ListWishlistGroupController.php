@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlist_groups')]
-final class WishlistGroupListController extends AbstractController
+final class ListWishlistGroupController extends AbstractController
 {
     #[Route(name: 'wishlist_group_list', methods: ['GET'])]
     public function __invoke(Request $request): Response

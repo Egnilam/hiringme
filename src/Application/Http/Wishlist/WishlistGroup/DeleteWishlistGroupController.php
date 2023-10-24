@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlist_groups')]
-final class WishlistGroupShowController extends AbstractController
+final class DeleteWishlistGroupController extends AbstractController
 {
-    #[Route('/{id}', name: 'wishlist_group_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'wishlist_group_delete', methods: ['DELETE'])]
     public function __invoke(Request $request, string $id): Response
     {
-        return $this->render('wishlist/wishlist_group/show.html.twig');
+        return $this->redirectToRoute('wishlist_group_list');
     }
 }
