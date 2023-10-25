@@ -7,6 +7,7 @@ namespace App\Infrastructure\Framework\Doctrine\Repository\User\Command;
 use App\Infrastructure\Framework\Doctrine\Entity\PersonEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
+use App\Infrastructure\Framework\Doctrine\StorePersistEntityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Domain\User\Domain\Model\User;
 use Domain\User\Repository\Command\UserCommandRepositoryInterface;
@@ -16,10 +17,12 @@ final class UserCommandRepository extends AbstractRepository implements UserComm
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
+        protected StorePersistEntityService $storePersistEntityService,
         private UserPasswordHasherInterface $userPasswordHasher,
     ) {
         parent::__construct(
             $this->entityManager,
+            $this->storePersistEntityService,
         );
     }
 

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Table(name: 'wishlist')]
 #[ORM\HasLifecycleCallbacks]
-class WishlistEntity
+class WishlistEntity implements EntityInterface
 {
     use EntityIdTrait;
 
