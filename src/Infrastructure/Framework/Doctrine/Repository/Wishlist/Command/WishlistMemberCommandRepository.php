@@ -14,11 +14,13 @@ use Symfony\Component\Uid\Uuid;
 
 final class WishlistMemberCommandRepository extends AbstractRepository implements WishlistMemberCommandRepositoryInterface
 {
+    /**
+     * @throws \Exception
+     */
     public function register(WishlistMember $wishlistMember): void
     {
         if($wishlistMember->getUserId()) {
-            $user = $this->entityManager->getRepository(UserEntity::class)
-                ->findOneBy(['uuid' => IdService::fromString($wishlistMember->getUserId())]);
+            $user = $this->getUserEntity($wishlistMember->getUserId());
         }
 
         $wishlistMemberEntity = new WishlistMemberEntity();
@@ -28,5 +30,23 @@ final class WishlistMemberCommandRepository extends AbstractRepository implement
             ->setRegistered($wishlistMember->isRegistered());
 
         $this->entityManager->persist($wishlistMemberEntity);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getUserEntity(string $uuid): UserEntity
+    {
+        if(!$this->storePersistEntityService->has($uuid)) {
+            /** @var UserEntity $user */
+            $user = $this->storePersistEntityService->search($uuid);
+
+            return $user;
+        }
+
+        $user = $this->entityManager->getRepository(UserEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($uuid)]);
+
+        return $user ?? throw new \Exception('User not found', 422);
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity]
 #[ORM\Table(name: 'user')]
 #[ORM\HasLifecycleCallbacks]
-class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
+class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use EntityIdTrait;
 
