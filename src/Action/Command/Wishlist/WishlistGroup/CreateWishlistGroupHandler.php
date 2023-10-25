@@ -16,14 +16,14 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
 
     }
 
-    public function __invoke(CreateWishlistGroupCommand $createWishlistGroupCommand): void
+    public function __invoke(CreateWishlistGroupCommand $command): void
     {
-        $createWishListGroupRequest = new CreateWishlistGroupRequest(
-            $createWishlistGroupCommand->getOwner(),
-            $createWishlistGroupCommand->getName(),
-            $createWishlistGroupCommand->getMembers(),
+        $request = new CreateWishlistGroupRequest(
+            $command->getOwner(),
+            $command->getName(),
+            $command->getMembers(),
         );
 
-        $this->createWishlistGroup->execute($createWishListGroupRequest);
+        $this->createWishlistGroup->execute($request);
     }
 }

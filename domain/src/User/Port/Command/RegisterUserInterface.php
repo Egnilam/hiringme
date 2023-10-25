@@ -8,5 +8,5 @@ use Domain\User\Request\RegisterUserRequest;
 
 interface RegisterUserInterface
 {
-    public function execute(RegisterUserRequest $registerUserRequest): void;
+    public function execute(RegisterUserRequest $request): void;
 }

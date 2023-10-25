@@ -10,12 +10,12 @@ use Domain\Wishlist\Response\WishlistMemberResponse;
 
 final readonly class GetWishlistMemberHandler implements QueryHandlerInterface
 {
-    public function __construct(private GetWishlistMemberInterface $query)
+    public function __construct(private GetWishlistMemberInterface $getWishlistMember)
     {
     }
 
-    public function __invoke(GetWishlistMemberQuery $getWishlistMemberQuery): WishlistMemberResponse
+    public function __invoke(GetWishlistMemberQuery $query): WishlistMemberResponse
     {
-        return $this->query->execute($getWishlistMemberQuery->getRequest());
+        return $this->getWishlistMember->execute($query->getRequest());
     }
 }

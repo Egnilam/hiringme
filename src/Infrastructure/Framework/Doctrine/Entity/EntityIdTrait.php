@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Framework\Doctrine\Entity;
 
+use App\Infrastructure\Framework\Uuid\IdService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -52,7 +53,7 @@ trait EntityIdTrait
         }
 
         if(!isset($this->uuid)) {
-            $this->uuid = Uuid::v4();
+            $this->uuid = IdService::generate();
         }
     }
 }

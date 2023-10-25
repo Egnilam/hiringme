@@ -8,5 +8,5 @@ use Domain\Wishlist\Request\RegisterWishlistMemberRequest;
 
 interface RegisterWishlistMemberInterface
 {
-    public function execute(RegisterWishlistMemberRequest $registerWishlistMemberRequest): void;
+    public function execute(RegisterWishlistMemberRequest $request): void;
 }

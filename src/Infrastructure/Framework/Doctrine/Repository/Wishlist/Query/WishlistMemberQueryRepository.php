@@ -7,6 +7,7 @@ namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Query;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
+use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Wishlist\Domain\Model\WishlistMember;
@@ -29,7 +30,7 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
             $entityRequest
                 ->innerJoin(UserEntity::class, 'user', 'WITH', 'user.id = wishlist_member.user')
                 ->andWhere('user.uuid = :userId')
-                ->setParameter('userId', Uuid::fromRfc4122($request->getUserId())->toBinary());
+                ->setParameter('userId', IdService::fromStringToBinary($request->getUserId()));
         }
 
         if($request->getEmail()) {

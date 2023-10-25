@@ -14,16 +14,16 @@ final readonly class RegisterUserHandler implements CommandHandlerInterface
     {
     }
 
-    public function __invoke(RegisterUserCommand $registerUserCommand): void
+    public function __invoke(RegisterUserCommand $command): void
     {
-        $registerUserRequest = new RegisterUserRequest(
-            $registerUserCommand->getFirstName(),
-            $registerUserCommand->getLastName(),
-            $registerUserCommand->getEmail(),
-            $registerUserCommand->getPassword(),
-            $registerUserCommand->getBirthDate(),
+        $request = new RegisterUserRequest(
+            $command->getFirstName(),
+            $command->getLastName(),
+            $command->getEmail(),
+            $command->getPassword(),
+            $command->getBirthDate(),
         );
 
-        $this->registerUser->execute($registerUserRequest);
+        $this->registerUser->execute($request);
     }
 }

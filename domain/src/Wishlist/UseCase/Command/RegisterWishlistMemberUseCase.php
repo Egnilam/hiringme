@@ -6,6 +6,7 @@ namespace Domain\Wishlist\UseCase\Command;
 
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Port\Command\RegisterWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
@@ -17,6 +18,7 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
     public function __construct(
         private WishlistMemberCommandRepositoryInterface $wishlistMemberCommandRepository,
         private UserQueryRepositoryInterface $userQueryRepository,
+        private IdServiceInterface $idService,
     ) {
     }
 
@@ -24,22 +26,22 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
      * @throws EmailFormatException
      * @throws \Exception
      */
-    public function execute(RegisterWishlistMemberRequest $registerWishlistMemberRequest): void
+    public function execute(RegisterWishlistMemberRequest $request): void
     {
-        if($registerWishlistMemberRequest->getEmail()) {
-            $email = new EmailValueObject($registerWishlistMemberRequest->getEmail());
+        if($request->getEmail()) {
+            $email = new EmailValueObject($request->getEmail());
 
-            $userId = $registerWishlistMemberRequest->isRegistered() ?
+            $userId = $request->isRegistered() ?
                 $this->userQueryRepository->searchUserIdByEmail($email->get()) : null;
         }
 
         //TODO: implement update case if email already exist in WishlistMember
 
         $wishListMember = new WishlistMember(
-            'id',
+            $this->idService->next(),
             $email ?? null,
             $userId ?? null,
-            $registerWishlistMemberRequest->isRegistered()
+            $request->isRegistered()
         );
 
         $this->wishlistMemberCommandRepository->register($wishListMember);

@@ -15,13 +15,13 @@ final readonly class RegisterWishlistMemberHandler implements CommandHandlerInte
 
     }
 
-    public function __invoke(RegisterWishlistMemberCommand $registerWishlistMemberCommand): void
+    public function __invoke(RegisterWishlistMemberCommand $command): void
     {
-        $registerWishlistMemberRequest = new RegisterWishlistMemberRequest(
-            $registerWishlistMemberCommand->getEmail(),
-            $registerWishlistMemberCommand->isRegistered()
+        $request = new RegisterWishlistMemberRequest(
+            $command->getEmail(),
+            $command->isRegistered()
         );
 
-        $this->registerWishlistMember->execute($registerWishlistMemberRequest);
+        $this->registerWishlistMember->execute($request);
     }
 }
