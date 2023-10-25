@@ -30,6 +30,7 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
             $request->getMembers()
         );
 
+        $this->wishlistGroupCommandRepository->create($wishlistGroup);
         //add members
         $createWishlistGroupMemberRequest = new CreateWishlistGroupMemberRequest(
             $wishlistGroup->getId(),
@@ -38,6 +39,5 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
         );
         $this->createWishlistGroupMember->execute($createWishlistGroupMemberRequest);
 
-        $this->wishlistGroupCommandRepository->create($wishlistGroup);
     }
 }

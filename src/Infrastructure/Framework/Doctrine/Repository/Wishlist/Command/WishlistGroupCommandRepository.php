@@ -10,7 +10,6 @@ use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Wishlist\Domain\Model\WishlistGroup;
 use Domain\Wishlist\Repository\Command\WishlistGroupCommandRepositoryInterface;
-use Symfony\Component\Uid\Uuid;
 
 final class WishlistGroupCommandRepository extends AbstractRepository implements WishlistGroupCommandRepositoryInterface
 {
@@ -27,6 +26,7 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
 
         $wishlistGroupEntity = new WishlistGroupEntity();
         $wishlistGroupEntity
+            ->setStringUuid($wishlistGroup->getId())
             ->setOwner($ownerEntity)
             ->setName($wishlistGroup->getName());
 
