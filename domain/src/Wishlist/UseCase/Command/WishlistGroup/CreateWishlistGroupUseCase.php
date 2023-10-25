@@ -15,6 +15,7 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
         private WishlistGroupCommandRepositoryInterface $wishlistGroupCommandRepository,
     ) {
     }
+
     public function execute(CreateWishlistGroupRequest $createWishlistGroupRequest): void
     {
         $wishlistGroup = new WishlistGroup(
