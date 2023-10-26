@@ -21,23 +21,32 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
     ) {
     }
 
-    public function execute(CreateWishlistGroupRequest $request): void
+    public function execute(CreateWishlistGroupRequest $request): string
     {
         $wishlistGroup = new WishlistGroup(
             $this->idService->next(),
             $request->getOwner(),
             $request->getName(),
-            $request->getMembers()
+            []
         );
 
-        $this->wishlistGroupCommandRepository->create($wishlistGroup);
-        //add members
-        $createWishlistGroupMemberRequest = new CreateWishlistGroupMemberRequest(
-            $wishlistGroup->getId(),
-            $wishlistGroup->getOwner(),
-            'test'
-        );
-        $this->createWishlistGroupMember->execute($createWishlistGroupMemberRequest);
+        $id = $this->wishlistGroupCommandRepository->create($wishlistGroup);
 
+        $this->addWishlistGroupMember($request, $wishlistGroup);
+
+        return $id;
+    }
+
+    private function addWishlistGroupMember(CreateWishlistGroupRequest $request, WishlistGroup $wishlistGroup): void
+    {
+        foreach ($request->getMembers() as $groupMemberRequest) {
+            $createWishlistGroupMemberRequest = new CreateWishlistGroupMemberRequest(
+                $wishlistGroup->getId(),
+                $groupMemberRequest->getPseudonym(),
+                $groupMemberRequest->getEmail(),
+            );
+
+            $this->createWishlistGroupMember->execute($createWishlistGroupMemberRequest);
+        }
     }
 }

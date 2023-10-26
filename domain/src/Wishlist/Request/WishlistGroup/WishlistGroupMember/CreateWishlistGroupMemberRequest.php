@@ -8,8 +8,8 @@ final readonly class CreateWishlistGroupMemberRequest
 {
     public function __construct(
         private string $wishlistGroupId,
-        private string $wishlistMemberId,
         private string $pseudonym,
+        private ?string $email = null,
     ) {
 
     }
@@ -19,13 +19,13 @@ final readonly class CreateWishlistGroupMemberRequest
         return $this->wishlistGroupId;
     }
 
-    public function getWishlistMemberId(): string
-    {
-        return $this->wishlistMemberId;
-    }
-
     public function getPseudonym(): string
     {
         return $this->pseudonym;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 }

@@ -8,5 +8,5 @@ use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGrou
 
 interface CreateWishlistGroupMemberInterface
 {
-    public function execute(CreateWishlistGroupMemberRequest $request): void;
+    public function execute(CreateWishlistGroupMemberRequest $request): string;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Action\Command\Wishlist\WishlistGroup;
 
+use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberCommand;
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
 final class CreateWishlistGroupCommand implements CommandInterface
@@ -13,7 +14,7 @@ final class CreateWishlistGroupCommand implements CommandInterface
     private string $name;
 
     /**
-     * @var array<string>
+     * @var array<CreateWishlistGroupMemberCommand>
      */
     private array $members;
 
@@ -40,7 +41,7 @@ final class CreateWishlistGroupCommand implements CommandInterface
     }
 
     /**
-     * @return array<string>
+     * @return array<CreateWishlistGroupMemberCommand>
      */
     public function getMembers(): array
     {
@@ -48,7 +49,7 @@ final class CreateWishlistGroupCommand implements CommandInterface
     }
 
     /**
-     * @param array<string> $members
+     * @param array<CreateWishlistGroupMemberCommand> $members
      */
     public function setMembers(array $members): self
     {

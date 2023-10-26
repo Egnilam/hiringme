@@ -16,7 +16,7 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
     /**
      * @throws \Exception
      */
-    public function create(WishlistGroup $wishlistGroup): void
+    public function create(WishlistGroup $wishlistGroup): string
     {
         $ownerEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
             ->findOneBy(['uuid' => IdService::fromString($wishlistGroup->getOwner())]);
@@ -31,5 +31,7 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
             ->setName($wishlistGroup->getName());
 
         $this->entityManager->persist($wishlistGroupEntity);
+
+        return $wishlistGroupEntity->getStringUuid();
     }
 }

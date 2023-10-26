@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Repository\Command;
 
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberRequest;
+use Domain\Wishlist\Domain\Model\WishlistGroupMember;
 
 interface WishlistGroupMemberCommandRepositoryInterface
 {
-    public function create(CreateWishlistGroupMemberRequest $request): void;
+    public function create(WishlistGroupMember $wishlistGroupMember): string;
 }

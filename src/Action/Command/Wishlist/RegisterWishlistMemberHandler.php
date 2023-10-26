@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Action\Command\Wishlist;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandHandlerInterface;
-use Domain\Wishlist\Port\Command\RegisterWishlistMemberInterface;
+use Domain\Wishlist\Port\Command\WishlistMember\RegisterWishlistMemberInterface;
 use Domain\Wishlist\Request\RegisterWishlistMemberRequest;
 
 final readonly class RegisterWishlistMemberHandler implements CommandHandlerInterface
