@@ -22,6 +22,8 @@ class CreateWishlistGroupForm extends AbstractType
             ->add('name', TextType::class)
             ->add('members', CollectionType::class, [
                 'entry_type' => CreateWishlistGroupMemberForm::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
             ])
         ;
     }

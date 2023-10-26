@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\UseCase\Command;
+namespace Domain\Wishlist\UseCase\Command\WishlistMember;
 
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistMember;
-use Domain\Wishlist\Port\Command\RegisterWishlistMemberInterface;
+use Domain\Wishlist\Port\Command\WishlistMember\RegisterWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\UserQueryRepositoryInterface;
 use Domain\Wishlist\Request\RegisterWishlistMemberRequest;
@@ -26,7 +26,7 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
      * @throws EmailFormatException
      * @throws \Exception
      */
-    public function execute(RegisterWishlistMemberRequest $request): void
+    public function execute(RegisterWishlistMemberRequest $request): string
     {
         if($request->getEmail()) {
             $email = new EmailValueObject($request->getEmail());
@@ -44,6 +44,6 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
             $request->isRegistered()
         );
 
-        $this->wishlistMemberCommandRepository->register($wishListMember);
+        return $this->wishlistMemberCommandRepository->register($wishListMember);
     }
 }

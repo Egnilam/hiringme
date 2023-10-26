@@ -8,5 +8,5 @@ use Domain\Wishlist\Domain\Model\WishlistGroup;
 
 interface WishlistGroupCommandRepositoryInterface
 {
-    public function create(WishlistGroup $wishlistGroup): void;
+    public function create(WishlistGroup $wishlistGroup): string;
 }

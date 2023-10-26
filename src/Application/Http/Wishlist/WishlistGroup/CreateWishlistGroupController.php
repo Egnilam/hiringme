@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Http\Wishlist\WishlistGroup;
 
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
+use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberCommand;
 use App\Action\Query\Wishlist\WishlistMember\GetWishlistMemberQuery;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
@@ -33,6 +34,7 @@ final class CreateWishlistGroupController extends AbstractController
 
         $createWishlistCommand = new CreateWishlistGroupCommand();
         $createWishlistCommand->setOwner($wishlistMemberResponse->getId());
+        $createWishlistCommand->setMembers([new CreateWishlistGroupMemberCommand()]);
         $form = $this->createForm(CreateWishlistGroupForm::class, $createWishlistCommand);
 
         $form->handleRequest($request);
