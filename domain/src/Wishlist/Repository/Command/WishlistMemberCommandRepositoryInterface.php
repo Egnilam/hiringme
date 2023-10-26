@@ -9,4 +9,6 @@ use Domain\Wishlist\Domain\Model\WishlistMember;
 interface WishlistMemberCommandRepositoryInterface
 {
     public function register(WishlistMember $wishlistMember): string;
+
+    public function update(WishlistMember $wishlistMember): string;
 }

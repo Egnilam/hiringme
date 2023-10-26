@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Action\Command\Wishlist;
+namespace App\Action\Command\Wishlist\WishlistMember;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 

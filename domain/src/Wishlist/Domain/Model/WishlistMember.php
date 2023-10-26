@@ -17,8 +17,9 @@ final class WishlistMember
 
     private bool $registered;
 
+
     /**
-     * @throws \Exception
+     * @throws DomainException
      */
     public function __construct(string $id, ?EmailValueObject $email, ?string $userId, bool $registered)
     {
