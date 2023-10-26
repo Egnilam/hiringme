@@ -12,6 +12,8 @@ final class CreateWishlistGroupMemberCommand implements CommandInterface
 
     private ?string $email;
 
+    private bool $owner = false;
+
     public function getPseudonym(): string
     {
         return $this->pseudonym;
@@ -31,6 +33,17 @@ final class CreateWishlistGroupMemberCommand implements CommandInterface
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(bool $owner): self
+    {
+        $this->owner = $owner;
         return $this;
     }
 }

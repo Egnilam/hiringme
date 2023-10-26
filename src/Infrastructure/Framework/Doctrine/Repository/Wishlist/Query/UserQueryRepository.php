@@ -12,7 +12,7 @@ use Domain\Wishlist\Repository\Query\UserQueryRepositoryInterface;
 final class UserQueryRepository extends AbstractRepository implements UserQueryRepositoryInterface
 {
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     public function searchUserIdByEmail(string $email): string
     {

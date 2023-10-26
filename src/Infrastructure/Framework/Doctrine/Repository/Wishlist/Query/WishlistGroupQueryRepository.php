@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Query;
 
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupEntity;
+use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
@@ -25,9 +26,12 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
 
         if($request->getWishlistMemberId()) {
             $entityRequest
-                ->innerJoin(WishlistMemberEntity::class, 'wishlist_member', 'WITH', 'wishlist_member.id = wishlist_group.owner')
+                ->innerJoin(WishlistGroupMemberEntity::class, 'wishlist_group_member', 'WITH', 'wishlist_group_member.wishlistGroup = wishlist_group.id')
+                ->innerJoin(WishlistMemberEntity::class, 'wishlist_member', 'WITH', 'wishlist_member.id = wishlist_group_member.wishlistMember')
                 ->andWhere('wishlist_member.uuid = :wishlistMemberId')
-                ->setParameter('wishlistMemberId', IdService::fromStringToBinary($request->getWishlistMemberId()));
+                ->setParameter('wishlistMemberId', IdService::fromStringToBinary($request->getWishlistMemberId()))
+                ->andWhere('wishlist_group_member.owner = :owner')
+                ->setParameter('owner', true);
         }
 
         /** @var array<WishlistGroupEntity> $wishlistGroupEntities */
@@ -38,7 +42,6 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
             $wishlistGroupResponses[] = new WishlistGroupResponse(
                 $wishlistGroupEntity->getStringUuid(),
                 $wishlistGroupEntity->getName(),
-                $wishlistGroupEntity->getOwner()->getStringUuid()
             );
         }
 

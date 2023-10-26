@@ -24,12 +24,12 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
             $memberCommands[] = new CreateWishlistGroupMemberRequest(
                 'id',
                 $memberCommand->getPseudonym(),
-                $memberCommand->getEmail()
+                $memberCommand->getEmail(),
+                $memberCommand->isOwner(),
             );
         }
 
         $request = new CreateWishlistGroupRequest(
-            $command->getOwner(),
             $command->getName(),
             $memberCommands,
         );

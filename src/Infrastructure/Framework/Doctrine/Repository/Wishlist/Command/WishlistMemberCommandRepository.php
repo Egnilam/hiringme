@@ -15,7 +15,7 @@ use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
 final class WishlistMemberCommandRepository extends AbstractRepository implements WishlistMemberCommandRepositoryInterface
 {
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     public function register(WishlistMember $wishlistMember): string
     {
@@ -36,7 +36,7 @@ final class WishlistMemberCommandRepository extends AbstractRepository implement
     }
 
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     private function getUserEntity(string $uuid): UserEntity
     {

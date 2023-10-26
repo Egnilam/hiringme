@@ -10,6 +10,7 @@ final readonly class CreateWishlistGroupMemberRequest
         private string $wishlistGroupId,
         private string $pseudonym,
         private ?string $email = null,
+        private bool $owner = false,
     ) {
 
     }
@@ -27,5 +28,10 @@ final readonly class CreateWishlistGroupMemberRequest
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->owner;
     }
 }

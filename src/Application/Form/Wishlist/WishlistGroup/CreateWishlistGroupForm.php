@@ -18,7 +18,6 @@ class CreateWishlistGroupForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('owner', HiddenType::class)
             ->add('name', TextType::class)
             ->add('members', CollectionType::class, [
                 'entry_type' => CreateWishlistGroupMemberForm::class,

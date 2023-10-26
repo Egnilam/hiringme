@@ -20,7 +20,7 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
 {
     /**
      * @throws EmailFormatException
-     * @throws \Exception
+     * @throws \Exception|NotFoundException
      */
     public function get(GetWishlistMemberRequest $request): WishlistMember
     {

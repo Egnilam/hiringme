@@ -26,6 +26,9 @@ class WishlistGroupMemberEntity implements EntityInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $pseudonym = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $owner = false;
+
     public function getWishlistGroup(): WishlistGroupEntity
     {
         return $this->wishlistGroup;
@@ -56,6 +59,17 @@ class WishlistGroupMemberEntity implements EntityInterface
     public function setPseudonym(?string $pseudonym): self
     {
         $this->pseudonym = $pseudonym;
+        return $this;
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(bool $owner): self
+    {
+        $this->owner = $owner;
         return $this;
     }
 }
