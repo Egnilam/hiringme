@@ -14,7 +14,6 @@ use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
 use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
-use Symfony\Component\Uid\Uuid;
 
 final class WishlistMemberQueryRepository extends AbstractRepository implements WishlistMemberQueryRepositoryInterface
 {

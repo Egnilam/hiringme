@@ -6,13 +6,10 @@ namespace App\Application\Http\Wishlist\WishlistGroup;
 
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
 use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberCommand;
-use App\Action\Query\Wishlist\WishlistMember\GetWishlistMemberQuery;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
 use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
-use Domain\Wishlist\Response\WishlistMemberResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +24,6 @@ final class CreateWishlistGroupController extends AbstractController
         /** @var UserEntity $user */
         $user = $this->getUser();
 
-        $getWishlistMemberQuery = new GetWishlistMemberQuery();
-        $getWishlistMemberQuery->setRequest(new GetWishlistMemberRequest($user->getStringUuid()));
-        /** @var WishlistMemberResponse $wishlistMemberResponse */
-        $wishlistMemberResponse = $queryBus->ask($getWishlistMemberQuery);
-
         $createWishlistCommand = new CreateWishlistGroupCommand();
         $wishlistGroupMemberCommand = new CreateWishlistGroupMemberCommand();
         $wishlistGroupMemberCommand
@@ -39,7 +31,7 @@ final class CreateWishlistGroupController extends AbstractController
             ->setEmail($user->getEmail())
             ->setPseudonym($user->getPerson()->getFirstName());
 
-        $createWishlistCommand->setMembers([$wishlistGroupMemberCommand]);
+        $createWishlistCommand->setMembers([$wishlistGroupMemberCommand, new CreateWishlistGroupMemberCommand()]);
         $form = $this->createForm(CreateWishlistGroupForm::class, $createWishlistCommand);
 
         $form->handleRequest($request);

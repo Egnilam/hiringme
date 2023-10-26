@@ -10,7 +10,7 @@ final class CreateWishlistGroupMemberCommand implements CommandInterface
 {
     private string $pseudonym;
 
-    private ?string $email;
+    private ?string $email = null;
 
     private bool $owner = false;
 

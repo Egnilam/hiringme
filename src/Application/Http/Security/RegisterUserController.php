@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Http\Security;
 
 use App\Action\Command\User\RegisterUserCommand;
-use App\Action\Command\Wishlist\RegisterWishlistMemberCommand;
+use App\Action\Command\Wishlist\WishlistMember\RegisterWishlistMemberCommand;
 use App\Application\Form\User\RegisterUserForm;
 use App\Application\Presenter\DomainErrorPresenter;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;

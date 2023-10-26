@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Request\WishlistMember;
 
-final class GetWishlistMemberRequest
+final readonly class GetWishlistMemberRequest
 {
     public function __construct(
         private ?string $userId = null,

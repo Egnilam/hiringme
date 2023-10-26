@@ -17,7 +17,9 @@ class CreateWishlistGroupMemberForm extends AbstractType
     {
         $builder
             ->add('pseudonym', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'required' => false,
+            ])
         ;
     }
 

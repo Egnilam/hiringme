@@ -19,20 +19,41 @@ final class WishlistMemberCommandRepository extends AbstractRepository implement
      */
     public function register(WishlistMember $wishlistMember): string
     {
+        $wishlistMemberEntity = $this->createWishlistMemberEntity($wishlistMember);
+
+        $this->entityManager->persist($wishlistMemberEntity);
+
+        return $wishlistMemberEntity->getStringUuid();
+    }
+
+    public function update(WishlistMember $wishlistMember): string
+    {
+        $wishlistMemberEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($wishlistMember->getId())]);
+
+        if($wishlistMemberEntity === null) {
+            throw new NotFoundException();
+        }
+
+        $wishlistMemberEntity = $this->createWishlistMemberEntity($wishlistMember, $wishlistMemberEntity);
+
+        return $wishlistMemberEntity->getStringUuid();
+    }
+
+    private function createWishlistMemberEntity(WishlistMember $wishlistMember, ?WishlistMemberEntity $wishlistMemberEntity = null): WishlistMemberEntity
+    {
         if($wishlistMember->getUserId()) {
             $user = $this->getUserEntity($wishlistMember->getUserId());
         }
 
-        $wishlistMemberEntity = new WishlistMemberEntity();
+        $wishlistMemberEntity = $wishlistMemberEntity ?? new WishlistMemberEntity();
         $wishlistMemberEntity
             ->setStringUuid($wishlistMember->getId())
             ->setEmail($wishlistMember->getEmail())
             ->setUser($user ?? null)
             ->setRegistered($wishlistMember->isRegistered());
 
-        $this->entityManager->persist($wishlistMemberEntity);
-
-        return $wishlistMemberEntity->getStringUuid();
+        return $wishlistMemberEntity;
     }
 
     /**
