@@ -8,6 +8,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Domain\Model\WishlistGroup;
 use Domain\Wishlist\Repository\Command\WishlistGroupCommandRepositoryInterface;
 
@@ -21,7 +22,7 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
         $ownerEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
             ->findOneBy(['uuid' => IdService::fromString($wishlistGroup->getOwner())]);
         if(!$ownerEntity) {
-            throw new \Exception('Not found', 422);
+            throw new NotFoundException();
         }
 
         $wishlistGroupEntity = new WishlistGroupEntity();

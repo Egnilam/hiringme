@@ -9,6 +9,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\EmailFormatException;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
@@ -43,7 +44,7 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
         $wishlistMemberEntities = $entityRequest->getQuery()->getResult();
 
         if(count($wishlistMemberEntities) === 0) {
-            throw new \Exception('Not found', 422);
+            throw new NotFoundException();
         } elseif (count($wishlistMemberEntities) > 1) {
             throw new \Exception('To many found', 422);
         }

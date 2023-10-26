@@ -8,6 +8,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
 
@@ -49,6 +50,6 @@ final class WishlistMemberCommandRepository extends AbstractRepository implement
         $user = $this->entityManager->getRepository(UserEntity::class)
             ->findOneBy(['uuid' => IdService::fromString($uuid)]);
 
-        return $user ?? throw new \Exception('User not found', 422);
+        return $user ?? throw new NotFoundException();
     }
 }

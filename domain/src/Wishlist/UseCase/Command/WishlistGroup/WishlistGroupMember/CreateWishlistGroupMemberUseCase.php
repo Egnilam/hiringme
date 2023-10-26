@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\UseCase\Command\WishlistGroup\WishlistGroupMember;
 
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistGroupMember;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberInterface;
@@ -46,7 +47,7 @@ final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistG
                 $wishlistMember = $this->wishlistMemberQueryRepository->get($wishlistMemberRequest);
 
                 return $wishlistMember->getId();
-            } catch (\Exception $exception) {
+            } catch (NotFoundException $exception) {
 
             }
         }

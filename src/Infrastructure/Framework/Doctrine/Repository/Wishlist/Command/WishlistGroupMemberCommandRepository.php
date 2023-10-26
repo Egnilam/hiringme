@@ -9,6 +9,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Domain\Model\WishlistGroupMember;
 use Domain\Wishlist\Repository\Command\WishlistGroupMemberCommandRepositoryInterface;
 
@@ -44,7 +45,7 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
         }
 
         return $this->entityManager->getRepository(WishlistGroupEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($uuid)]) ?? throw new \Exception('Not found', 422);
+            ->findOneBy(['uuid' => IdService::fromString($uuid)]) ?? throw new NotFoundException();
     }
 
     /**
@@ -60,6 +61,6 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
         }
 
         return $this->entityManager->getRepository(WishlistMemberEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($uuid)]) ?? throw new \Exception('Not found', 422);
+            ->findOneBy(['uuid' => IdService::fromString($uuid)]) ?? throw new NotFoundException();
     }
 }
