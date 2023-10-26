@@ -16,7 +16,7 @@ use Domain\Wishlist\Repository\Command\WishlistGroupMemberCommandRepositoryInter
 final class WishlistGroupMemberCommandRepository extends AbstractRepository implements WishlistGroupMemberCommandRepositoryInterface
 {
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     public function create(WishlistGroupMember $wishlistGroupMember): string
     {
@@ -25,7 +25,8 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
             ->setStringUuid($wishlistGroupMember->getId())
             ->setWishlistMember($this->getWishlistMemberEntity($wishlistGroupMember->getWishlistMemberId()))
             ->setWishlistGroup($this->getWishlistGroupEntity($wishlistGroupMember->getWishlistGroupId()))
-            ->setPseudonym($wishlistGroupMember->getPseudonym());
+            ->setPseudonym($wishlistGroupMember->getPseudonym())
+            ->setOwner($wishlistGroupMember->isOwner());
 
         $this->entityManager->persist($wishlistGroupMemberEntity);
 
@@ -33,7 +34,7 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
     }
 
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     private function getWishlistGroupEntity(string $uuid): WishlistGroupEntity
     {
@@ -49,7 +50,7 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
     }
 
     /**
-     * @throws \Exception
+     * @throws NotFoundException
      */
     private function getWishlistMemberEntity(string $uuid): WishlistMemberEntity
     {

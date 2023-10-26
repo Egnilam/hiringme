@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\UseCase\Command\WishlistGroup;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistGroup;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupMembersValueObject;
 use Domain\Wishlist\Port\Command\WishlistGroup\CreateWishlistGroupInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistGroupCommandRepositoryInterface;
@@ -21,13 +23,15 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
     ) {
     }
 
+    /**
+     * @throws DomainException
+     */
     public function execute(CreateWishlistGroupRequest $request): string
     {
         $wishlistGroup = new WishlistGroup(
             $this->idService->next(),
-            $request->getOwner(),
             $request->getName(),
-            []
+            new WishlistGroupMembersValueObject($request->getMembers())
         );
 
         $id = $this->wishlistGroupCommandRepository->create($wishlistGroup);
@@ -44,6 +48,7 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
                 $wishlistGroup->getId(),
                 $groupMemberRequest->getPseudonym(),
                 $groupMemberRequest->getEmail(),
+                $groupMemberRequest->isOwner()
             );
 
             $this->createWishlistGroupMember->execute($createWishlistGroupMemberRequest);

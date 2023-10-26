@@ -9,7 +9,6 @@ final readonly class WishlistGroupResponse
     public function __construct(
         private string $id,
         private string $name,
-        private string $owner
     ) {
     }
 
@@ -21,10 +20,5 @@ final readonly class WishlistGroupResponse
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getOwner(): string
-    {
-        return $this->owner;
     }
 }

@@ -33,8 +33,13 @@ final class CreateWishlistGroupController extends AbstractController
         $wishlistMemberResponse = $queryBus->ask($getWishlistMemberQuery);
 
         $createWishlistCommand = new CreateWishlistGroupCommand();
-        $createWishlistCommand->setOwner($wishlistMemberResponse->getId());
-        $createWishlistCommand->setMembers([new CreateWishlistGroupMemberCommand()]);
+        $wishlistGroupMemberCommand = new CreateWishlistGroupMemberCommand();
+        $wishlistGroupMemberCommand
+            ->setOwner(true)
+            ->setEmail($user->getEmail())
+            ->setPseudonym($user->getPerson()->getFirstName());
+
+        $createWishlistCommand->setMembers([$wishlistGroupMemberCommand]);
         $form = $this->createForm(CreateWishlistGroupForm::class, $createWishlistCommand);
 
         $form->handleRequest($request);

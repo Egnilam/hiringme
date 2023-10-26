@@ -12,16 +12,10 @@ final readonly class CreateWishlistGroupRequest
      * @param array<CreateWishlistGroupMemberRequest> $members
      */
     public function __construct(
-        private string $owner,
         private string $name,
         private array $members,
     ) {
 
-    }
-
-    public function getOwner(): string
-    {
-        return $this->owner;
     }
 
     public function getName(): string

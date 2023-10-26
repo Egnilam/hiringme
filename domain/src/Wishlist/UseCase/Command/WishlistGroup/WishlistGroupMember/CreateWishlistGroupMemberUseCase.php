@@ -32,7 +32,8 @@ final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistG
             $this->idService->next(),
             $request->getPseudonym(),
             $this->getWishlistMemberId($request),
-            $request->getWishlistGroupId()
+            $request->getWishlistGroupId(),
+            $request->isOwner()
         );
 
         return $this->wishlistGroupMemberCommandRepository->create($wishlistGroupMember);
