@@ -8,20 +8,17 @@ use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
-use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\Exception\NotFoundException;
-use Domain\Common\Domain\ValueObject\EmailValueObject;
-use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
 use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
+use Domain\Wishlist\Response\WishlistMemberResponse;
 
 final class WishlistMemberQueryRepository extends AbstractRepository implements WishlistMemberQueryRepositoryInterface
 {
     /**
-     * @throws EmailFormatException
      * @throws \Exception|NotFoundException
      */
-    public function get(GetWishlistMemberRequest $request): WishlistMember
+    public function get(GetWishlistMemberRequest $request): WishlistMemberResponse
     {
         $entityRequest = $this->entityManager->getRepository(WishlistMemberEntity::class)
             ->createQueryBuilder('wishlist_member');
@@ -50,10 +47,10 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
 
         $wishlistMemberEntity = $wishlistMemberEntities[0];
 
-        return new WishlistMember(
+        return new WishlistMemberResponse(
             $wishlistMemberEntity->getStringUuid(),
-            $wishlistMemberEntity->getEmail() ? new EmailValueObject($wishlistMemberEntity->getEmail()) : null,
             $wishlistMemberEntity->getUser()?->getStringUuid(),
+            $wishlistMemberEntity->getEmail(),
             $wishlistMemberEntity->isRegistered()
         );
     }

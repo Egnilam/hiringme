@@ -62,13 +62,13 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
     {
         try {
             $getWishlistMemberRequest = new GetWishlistMemberRequest(null, $email);
-            $wishListMemberSearch = $this->wishlistMemberQueryRepository->get($getWishlistMemberRequest);
+            $wishlistMemberResponse = $this->wishlistMemberQueryRepository->get($getWishlistMemberRequest);
         } catch (NotFoundException $exception) {
             return null;
         }
 
         $updateWishlistMemberRequest = new UpdateWishlistMemberRequest(
-            $wishListMemberSearch->getId(),
+            $wishlistMemberResponse->getId(),
             $email,
             $userId,
             $registered

@@ -17,13 +17,6 @@ final readonly class GetWishlistMemberUseCase implements GetWishlistMemberInterf
 
     public function execute(GetWishlistMemberRequest $request): WishlistMemberResponse
     {
-        $wishlistMember = $this->wishlistMemberQueryRepository->get($request);
-
-        return new WishlistMemberResponse(
-            $wishlistMember->getId(),
-            $wishlistMember->getUserId(),
-            $wishlistMember->getEmail(),
-            $wishlistMember->isRegistered()
-        );
+        return $this->wishlistMemberQueryRepository->get($request);
     }
 }

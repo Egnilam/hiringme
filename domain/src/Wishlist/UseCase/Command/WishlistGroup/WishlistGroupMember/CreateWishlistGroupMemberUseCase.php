@@ -54,9 +54,9 @@ final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistG
             $wishlistMemberRequest = new GetWishlistMemberRequest(null, $email->get());
 
             try {
-                $wishlistMember = $this->wishlistMemberQueryRepository->get($wishlistMemberRequest);
+                $wishlistMemberResponse = $this->wishlistMemberQueryRepository->get($wishlistMemberRequest);
 
-                return $wishlistMember->getId();
+                return $wishlistMemberResponse->getId();
             } catch (NotFoundException $exception) {
 
             }
