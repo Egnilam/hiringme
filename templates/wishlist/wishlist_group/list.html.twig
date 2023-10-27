@@ -10,6 +10,7 @@
         {% for wishlist_group in wishlist_groups %}
             <div>
                 <h2>{{ wishlist_group.name }}</h2>
+                <a href="{{ path('wishlist_group_show', { id: wishlist_group.id}) }}">Show</a>
             </div>
         {% endfor %}
     {% endblock %}

@@ -23,8 +23,8 @@ class WishlistGroupMemberEntity implements EntityInterface
     #[ORM\JoinColumn(name: 'wishlist_member_id')]
     private WishlistMemberEntity $wishlistMember;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $pseudonym = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $pseudonym;
 
     #[ORM\Column(type: 'boolean')]
     private bool $owner = false;
@@ -51,12 +51,12 @@ class WishlistGroupMemberEntity implements EntityInterface
         return $this;
     }
 
-    public function getPseudonym(): ?string
+    public function getPseudonym(): string
     {
         return $this->pseudonym;
     }
 
-    public function setPseudonym(?string $pseudonym): self
+    public function setPseudonym(string $pseudonym): self
     {
         $this->pseudonym = $pseudonym;
         return $this;
