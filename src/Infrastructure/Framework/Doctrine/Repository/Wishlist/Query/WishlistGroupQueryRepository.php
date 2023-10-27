@@ -9,13 +9,43 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Repository\Query\WishlistGroupQueryRepositoryInterface;
 use Domain\Wishlist\Request\WishlistGroup\GetListWishlistGroupRequest;
+use Domain\Wishlist\Request\WishlistGroup\GetWishlistGroupRequest;
+use Domain\Wishlist\Response\WishlistGroupMemberResponse;
 use Domain\Wishlist\Response\WishlistGroupResponse;
-use Symfony\Component\Uid\Uuid;
 
 final class WishlistGroupQueryRepository extends AbstractRepository implements WishlistGroupQueryRepositoryInterface
 {
+    public function get(GetWishlistGroupRequest $request): WishlistGroupResponse
+    {
+        $wishlistGroupEntity = $this->entityManager->getRepository(WishlistGroupEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($request->getId())]);
+        if($wishlistGroupEntity === null) {
+            throw new NotFoundException();
+        }
+
+        $wishlistGroupMemberEntities = $this->entityManager->getRepository(WishlistGroupMemberEntity::class)
+            ->findBy(['wishlistGroup' => $wishlistGroupEntity]);
+
+        $wishlistGroupMembers = [];
+        foreach ($wishlistGroupMemberEntities as $wishlistGroupMemberEntity) {
+            $wishlistGroupMembers[] = new WishlistGroupMemberResponse(
+                $wishlistGroupMemberEntity->getStringUuid(),
+                $wishlistGroupMemberEntity->getPseudonym(),
+                $wishlistGroupMemberEntity->getWishlistMember()->getEmail(),
+                $wishlistGroupMemberEntity->isOwner()
+            );
+        }
+
+        return new WishlistGroupResponse(
+            $wishlistGroupEntity->getStringUuid(),
+            $wishlistGroupEntity->getName(),
+            $wishlistGroupMembers
+        );
+    }
+
     /**
      * @inheritDoc
      */

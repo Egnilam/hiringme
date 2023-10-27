@@ -6,7 +6,8 @@ namespace Domain\Wishlist\UseCase\Query\WishlistGroup;
 
 use Domain\Wishlist\Port\Query\WishlistGroup\GetWishlistGroupInterface;
 use Domain\Wishlist\Repository\Query\WishlistGroupQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\GetListWishlistGroupRequest;
+use Domain\Wishlist\Request\WishlistGroup\GetWishlistGroupRequest;
+use Domain\Wishlist\Response\WishlistGroupResponse;
 
 final readonly class GetWishlistGroupUseCase implements GetWishlistGroupInterface
 {
@@ -14,11 +15,8 @@ final readonly class GetWishlistGroupUseCase implements GetWishlistGroupInterfac
     {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(GetListWishlistGroupRequest $request): array
+    public function execute(GetWishlistGroupRequest $request): WishlistGroupResponse
     {
-        return $this->wishlistGroupQueryRepository->getList($request);
+        return $this->wishlistGroupQueryRepository->get($request);
     }
 }
