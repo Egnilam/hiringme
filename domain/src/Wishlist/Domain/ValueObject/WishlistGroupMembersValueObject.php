@@ -16,7 +16,7 @@ class WishlistGroupMembersValueObject
     /**
      * @var array<string>
      */
-    private array $members;
+    private array $members = [];
 
     /**
      * @param array<CreateWishlistGroupMemberRequest> $members
@@ -28,15 +28,24 @@ class WishlistGroupMembersValueObject
             throw new DomainException(sprintf('Should have at least %d members', self::MIN_MEMBER));
         }
 
+        $emails = [];
         $owner = 0;
         foreach ($members as $member) {
             $owner += $member->isOwner() ? 1 : 0;
 
             if(isset($this->members[$member->getPseudonym()])) {
-                throw new DomainException('Cant have two times the same pseudonym');
+                throw new DomainException('Each pseudonym should be individual');
             }
 
-            $this->members[] = $member->getPseudonym();
+            if(isset($emails[$member->getEmail()])) {
+                throw new DomainException('Each email should be individual');
+            }
+
+            $this->members[$member->getPseudonym()] = $member->getPseudonym();
+
+            if($member->getEmail()) {
+                $emails[$member->getEmail()] = $member->getEmail();
+            }
         }
 
         if($owner < self::MIN_OWNER) {
