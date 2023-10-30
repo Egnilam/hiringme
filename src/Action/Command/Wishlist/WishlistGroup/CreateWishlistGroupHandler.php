@@ -19,7 +19,8 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
 
     public function __invoke(CreateWishlistGroupCommand $command): void
     {
-        $memberCommands = [];
+        $memberCommands[] = $this->createWishlistGroupMemberOwner($command->getOwnerEmail(), $command->getOwnerPseudonym());
+
         foreach ($command->getMembers() as $memberCommand) {
             $memberCommands[] = new CreateWishlistGroupMemberRequest(
                 'id',
@@ -35,5 +36,14 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
         );
 
         $this->createWishlistGroup->execute($request);
+    }
+
+    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): CreateWishlistGroupMemberRequest {
+        return new CreateWishlistGroupMemberRequest(
+            'id',
+            $pseudonym,
+            $email,
+            true
+        );
     }
 }

@@ -11,6 +11,10 @@ final class CreateWishlistGroupCommand implements CommandInterface
 {
     private string $name;
 
+    private string $ownerEmail;
+
+    private string $ownerPseudonym;
+
     /**
      * @var array<CreateWishlistGroupMemberCommand>
      */
@@ -24,6 +28,28 @@ final class CreateWishlistGroupCommand implements CommandInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getOwnerEmail(): string
+    {
+        return $this->ownerEmail;
+    }
+
+    public function setOwnerEmail(string $ownerEmail): self
+    {
+        $this->ownerEmail = $ownerEmail;
+        return $this;
+    }
+
+    public function getOwnerPseudonym(): string
+    {
+        return $this->ownerPseudonym;
+    }
+
+    public function setOwnerPseudonym(string $ownerPseudonym): self
+    {
+        $this->ownerPseudonym = $ownerPseudonym;
         return $this;
     }
 
@@ -42,5 +68,9 @@ final class CreateWishlistGroupCommand implements CommandInterface
     {
         $this->members = $members;
         return $this;
+    }
+
+    public function removeMember(int $index): void {
+        unset($this->members[$index]);
     }
 }
