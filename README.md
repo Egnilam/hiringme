@@ -1,8 +1,8 @@
-# HIRINGME
+# WISHLIST
 ## Installation
 ## Tests
 ```sh
- php bin/phpunit
+ php bin/phpunit domain
 ```
 ## Tools
 ### php-cs-fixer

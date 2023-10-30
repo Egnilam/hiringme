@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Application\Components\Wishlist\WishlistGroup;
+
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
 use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberCommand;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
@@ -34,15 +35,20 @@ class WishlistGroupFormComponent extends AbstractController
     }
 
     #[LiveAction]
-    public function addWishlistGroupMember(): void {
+    public function addWishlistGroupMember(): void
+    {
         $this->formValues['members'][] = new CreateWishlistGroupMemberCommand();
     }
 
     #[LiveAction]
-    public function removeWishlistGroupMember(#[LiveArg] int $index): void {
+    public function removeWishlistGroupMember(#[LiveArg] int $index): void
+    {
         unset($this->formValues['members'][$index]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[LiveAction]
     public function save(CommandBusInterface $commandBus): void
     {
@@ -50,7 +56,12 @@ class WishlistGroupFormComponent extends AbstractController
 
         /** @var CreateWishlistGroupCommand $command */
         $command = $this->getForm()->getData();
-        $command->setOwnerEmail($this->getUser()->getUserIdentifier());
+
+        $user = $this->getUser();
+        if($user === null) {
+            throw new \Exception('No user found', 500);
+        }
+        $command->setOwnerEmail($user->getUserIdentifier());
 
         $commandBus->dispatch($command);
     }

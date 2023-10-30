@@ -70,7 +70,8 @@ final class CreateWishlistGroupCommand implements CommandInterface
         return $this;
     }
 
-    public function removeMember(int $index): void {
+    public function removeMember(int $index): void
+    {
         unset($this->members[$index]);
     }
 }

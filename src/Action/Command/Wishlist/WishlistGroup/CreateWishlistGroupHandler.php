@@ -38,7 +38,8 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
         $this->createWishlistGroup->execute($request);
     }
 
-    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): CreateWishlistGroupMemberRequest {
+    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): CreateWishlistGroupMemberRequest
+    {
         return new CreateWishlistGroupMemberRequest(
             'id',
             $pseudonym,

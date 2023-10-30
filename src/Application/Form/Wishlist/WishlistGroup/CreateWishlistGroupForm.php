@@ -37,8 +37,8 @@ class CreateWishlistGroupForm extends AbstractType
                 $createWishlistGroupCommand = $event->getData();
 
                 $reflectionClass = new \ReflectionClass(CreateWishlistGroupMemberCommand::class);
-                foreach ($createWishlistGroupCommand->getMembers() as $index => $member){
-                    if(!$reflectionClass->getProperty('pseudonym')->isInitialized($member)){
+                foreach ($createWishlistGroupCommand->getMembers() as $index => $member) {
+                    if(!$reflectionClass->getProperty('pseudonym')->isInitialized($member)) {
                         $createWishlistGroupCommand->removeMember($index);
                     }
                 }
