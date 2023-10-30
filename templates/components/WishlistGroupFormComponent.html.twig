@@ -1,0 +1,30 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save',
+            'data-model': 'norender|*'
+        }
+    }) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.ownerPseudonym) }}
+    {% for key, memberForm in form.members %}
+        <div>
+            {{ form_errors(memberForm) }}
+
+            {{ form_row(memberForm) }}
+            <button
+                    data-action="live#action"
+                    data-action-name="removeWishlistGroupMember(index={{ key }})"
+                    type="button"
+            >X</button>
+        </div>
+    {% endfor %}
+    <button
+            data-action="live#action"
+            data-action-name="addWishlistGroupMember"
+            type="button"
+    >+ Add member</button>
+    <button type="submit">Envoyer</button>
+    {{ form_end(form) }}
+</div>

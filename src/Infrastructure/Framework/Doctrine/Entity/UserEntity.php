@@ -65,7 +65,7 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface, E
         return $this;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
     }
