@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember;
 
-final readonly class CreateWishlistGroupMemberRequest
+final readonly class AddWishlistGroupMemberRequest
 {
     public function __construct(
         private string $wishlistGroupId,

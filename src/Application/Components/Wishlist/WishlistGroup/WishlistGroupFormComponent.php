@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Application\Components\Wishlist\WishlistGroup;
 
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
-use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberCommand;
+use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberCommand;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -29,6 +30,8 @@ class WishlistGroupFormComponent extends AbstractController
     #[LiveProp]
     public ?CreateWishlistGroupCommand $initialFormData = null;
 
+    public ?string $error = null;
+
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(CreateWishlistGroupForm::class, $this->initialFormData);
@@ -37,7 +40,7 @@ class WishlistGroupFormComponent extends AbstractController
     #[LiveAction]
     public function addWishlistGroupMember(): void
     {
-        $this->formValues['members'][] = new CreateWishlistGroupMemberCommand();
+        $this->formValues['members'][] = new AddWishlistGroupMemberCommand();
     }
 
     #[LiveAction]
@@ -50,20 +53,26 @@ class WishlistGroupFormComponent extends AbstractController
      * @throws \Exception
      */
     #[LiveAction]
-    public function save(CommandBusInterface $commandBus): void
+    public function save(CommandBusInterface $commandBus): ?Response
     {
-        $this->submitForm();
+        try {
+            $this->submitForm();
 
-        /** @var CreateWishlistGroupCommand $command */
-        $command = $this->getForm()->getData();
+            /** @var CreateWishlistGroupCommand $command */
+            $command = $this->getForm()->getData();
 
-        $user = $this->getUser();
-        if($user === null) {
-            throw new \Exception('No user found', 500);
+            $user = $this->getUser();
+            if($user === null) {
+                throw new \Exception('No user found', 500);
+            }
+            $command->setOwnerEmail($user->getUserIdentifier());
+
+            $commandBus->dispatch($command);
+
+            return $this->redirectToRoute('wishlist_group_list');
+        } catch (\Exception $exception) {
+            $this->error = $exception->getMessage();
+            return null;
         }
-        $command->setOwnerEmail($user->getUserIdentifier());
-
-        $commandBus->dispatch($command);
     }
-
 }

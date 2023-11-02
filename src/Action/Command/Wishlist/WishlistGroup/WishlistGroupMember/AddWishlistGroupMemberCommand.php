@@ -5,14 +5,29 @@ declare(strict_types=1);
 namespace App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateWishlistGroupMemberCommand implements CommandInterface
+final class AddWishlistGroupMemberCommand implements CommandInterface
 {
+    private ?string $wishlistGroupId = null;
+
+    #[Assert\NotBlank]
     private string $pseudonym;
 
     private ?string $email = null;
 
     private bool $owner = false;
+
+    public function getWishlistGroupId(): ?string
+    {
+        return $this->wishlistGroupId;
+    }
+
+    public function setWishlistGroupId(?string $wishlistGroupId): self
+    {
+        $this->wishlistGroupId = $wishlistGroupId;
+        return $this;
+    }
 
     public function getPseudonym(): string
     {
