@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Wishlist\Domain\ValueObject;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 class WishlistGroupMembersValueObject
 {
@@ -19,7 +19,7 @@ class WishlistGroupMembersValueObject
     private array $members = [];
 
     /**
-     * @param array<CreateWishlistGroupMemberRequest> $members
+     * @param array<AddWishlistGroupMemberRequest> $members
      * @throws DomainException
      */
     public function __construct(array $members)

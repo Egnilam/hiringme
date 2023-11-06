@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Request\WishlistGroup;
 
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class CreateWishlistGroupRequest
 {
     /**
-     * @param array<CreateWishlistGroupMemberRequest> $members
+     * @param array<AddWishlistGroupMemberRequest> $members
      */
     public function __construct(
         private string $name,
@@ -24,7 +24,7 @@ final readonly class CreateWishlistGroupRequest
     }
 
     /**
-     * @return array<CreateWishlistGroupMemberRequest>
+     * @return array<AddWishlistGroupMemberRequest>
      */
     public function getMembers(): array
     {

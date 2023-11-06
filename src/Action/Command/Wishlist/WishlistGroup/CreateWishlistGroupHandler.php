@@ -7,7 +7,7 @@ namespace App\Action\Command\Wishlist\WishlistGroup;
 use App\Infrastructure\Framework\Messenger\Command\CommandHandlerInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\CreateWishlistGroupInterface;
 use Domain\Wishlist\Request\WishlistGroup\CreateWishlistGroupRequest;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class CreateWishlistGroupHandler implements CommandHandlerInterface
 {
@@ -19,10 +19,10 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
 
     public function __invoke(CreateWishlistGroupCommand $command): void
     {
-        $memberCommands[] = $this->createWishlistGroupMemberOwner($command->getOwnerEmail(), $command->getOwnerPseudonym());
+        $memberRequests[] = $this->createWishlistGroupMemberOwner($command->getOwnerEmail(), $command->getOwnerPseudonym());
 
         foreach ($command->getMembers() as $memberCommand) {
-            $memberCommands[] = new CreateWishlistGroupMemberRequest(
+            $memberRequests[] = new AddWishlistGroupMemberRequest(
                 'id',
                 $memberCommand->getPseudonym(),
                 $memberCommand->getEmail(),
@@ -32,15 +32,15 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
 
         $request = new CreateWishlistGroupRequest(
             $command->getName(),
-            $memberCommands,
+            $memberRequests,
         );
 
         $this->createWishlistGroup->execute($request);
     }
 
-    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): CreateWishlistGroupMemberRequest
+    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): AddWishlistGroupMemberRequest
     {
-        return new CreateWishlistGroupMemberRequest(
+        return new AddWishlistGroupMemberRequest(
             'id',
             $pseudonym,
             $email,

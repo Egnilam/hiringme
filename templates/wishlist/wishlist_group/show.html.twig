@@ -5,14 +5,18 @@
 {% block content %}
     {% block body %}
         <h1>Show group</h1>
-
         <div>
             <h2>{{ wishlist_group.name }}</h2>
+            <a href="{{ path('wishlist_group_member_add', { 'groupId' : wishlist_group.id }) }}">Add member</a>
             {% for wishlist_group_member in wishlist_group.members %}
                 <div>
                     <h3>{{ wishlist_group_member.pseudonym }}</h3>
                     <span>{{ wishlist_group_member.email }}</span>
                     <span>{{ wishlist_group_member.owner ? 'Owner' }}</span>
+                    <button>Show wishlist</button>
+                    <div>
+                        {% include 'wishlist/wishlist_group/wishlist_group_member/_remove.html.twig' %}
+                    </div>
                 </div>
             {% endfor %}
         </div>

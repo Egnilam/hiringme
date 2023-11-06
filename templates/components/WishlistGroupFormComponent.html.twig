@@ -6,6 +6,10 @@
             'data-model': 'norender|*'
         }
     }) }}
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    {{ form_errors(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.ownerPseudonym) }}
     {% for key, memberForm in form.members %}

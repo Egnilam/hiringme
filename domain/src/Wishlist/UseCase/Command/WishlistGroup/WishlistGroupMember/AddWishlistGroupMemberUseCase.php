@@ -4,24 +4,27 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\UseCase\Command\WishlistGroup\WishlistGroupMember;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistGroupMember;
-use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberInterface;
+use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberInterface;
 use Domain\Wishlist\Port\Command\WishlistMember\RegisterWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistGroupMemberCommandRepositoryInterface;
+use Domain\Wishlist\Repository\Query\WishlistGroupMemberQueryRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\CreateWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
 use Domain\Wishlist\Request\WishlistMember\RegisterWishlistMemberRequest;
 
-final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistGroupMemberInterface
+final readonly class AddWishlistGroupMemberUseCase implements AddWishlistGroupMemberInterface
 {
     public function __construct(
         private IdServiceInterface $idService,
         private WishlistGroupMemberCommandRepositoryInterface $wishlistGroupMemberCommandRepository,
+        private WishlistGroupMemberQueryRepositoryInterface $wishlistGroupMemberQueryRepository,
         private WishlistMemberQueryRepositoryInterface $wishlistMemberQueryRepository,
         private RegisterWishlistMemberInterface $registerWishlistMember
     ) {
@@ -29,10 +32,21 @@ final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistG
     }
 
     /**
-     * @throws EmailFormatException
+     * @throws EmailFormatException|DomainException
      */
-    public function execute(CreateWishlistGroupMemberRequest $request): string
+    public function execute(AddWishlistGroupMemberRequest $request): string
     {
+        if(!$this->wishlistGroupMemberQueryRepository->pseudonymIsAvailable($request->getPseudonym(), $request->getWishlistGroupId())) {
+            throw new DomainException('Pseudonym not available');
+        }
+
+        if(
+            $request->getEmail()
+            && !$this->wishlistGroupMemberQueryRepository->emailIsAvailable($request->getEmail(), $request->getWishlistGroupId())
+        ) {
+            throw new DomainException('Email not available');
+        }
+
         $wishlistGroupMember = new WishlistGroupMember(
             $this->idService->next(),
             $request->getPseudonym(),
@@ -47,7 +61,7 @@ final readonly class CreateWishlistGroupMemberUseCase implements CreateWishlistG
     /**
      * @throws EmailFormatException
      */
-    private function getWishlistMemberId(CreateWishlistGroupMemberRequest $request): string
+    private function getWishlistMemberId(AddWishlistGroupMemberRequest $request): string
     {
         if($request->getEmail()) {
             $email = new EmailValueObject($request->getEmail());
