@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Domain\Wishlist\Domain\ValueObject;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
-class WishlistGroupMembersValueObject
+class WishlistGroupMembers
 {
     public const MIN_OWNER = 1;
     public const MAX_OWNER = 1;

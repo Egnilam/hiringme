@@ -7,12 +7,13 @@ namespace Domain\Wishlist\UseCase\Command\WishlistGroup;
 use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistGroup;
-use Domain\Wishlist\Domain\ValueObject\WishlistGroupMembersValueObject;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupMembers;
 use Domain\Wishlist\Port\Command\WishlistGroup\CreateWishlistGroupInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistGroupCommandRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\CreateWishlistGroupRequest;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\CreateWishlistGroupRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupInterface
 {
@@ -28,10 +29,15 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
      */
     public function execute(CreateWishlistGroupRequest $request): string
     {
+        /*
+         * 1 - Create all group members
+         * 2 -
+         * */
+        $members = new WishlistGroupMembers($request->getMembers());
         $wishlistGroup = new WishlistGroup(
-            $this->idService->next(),
+            new WishlistGroupId($this->idService->next()),
             $request->getName(),
-            new WishlistGroupMembersValueObject($request->getMembers())
+            $members
         );
 
         $id = $this->wishlistGroupCommandRepository->create($wishlistGroup);
@@ -45,7 +51,7 @@ final readonly class CreateWishlistGroupUseCase implements CreateWishlistGroupIn
     {
         foreach ($request->getMembers() as $groupMemberRequest) {
             $createWishlistGroupMemberRequest = new AddWishlistGroupMemberRequest(
-                $wishlistGroup->getId(),
+                $wishlistGroup->getId()->getId(),
                 $groupMemberRequest->getPseudonym(),
                 $groupMemberRequest->getEmail(),
                 $groupMemberRequest->isOwner()

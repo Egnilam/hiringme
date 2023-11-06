@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Domain\Model;
 
-use Domain\Wishlist\Domain\ValueObject\WishlistGroupMembersValueObject;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupMembers;
 
 final class WishlistGroup
 {
-    private string $id;
+    private WishlistGroupId $id;
 
     private string $name;
 
@@ -17,14 +18,14 @@ final class WishlistGroup
      */
     private array $members;
 
-    public function __construct(string $id, string $name, WishlistGroupMembersValueObject $wishlistGroupMembersValueObject)
+    public function __construct(WishlistGroupId $id, string $name, WishlistGroupMembers $wishlistGroupMembersValueObject)
     {
         $this->id = $id;
         $this->name = $name;
         $this->members = $wishlistGroupMembersValueObject->getMembers();
     }
 
-    public function getId(): string
+    public function getId(): WishlistGroupId
     {
         return $this->id;
     }

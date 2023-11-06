@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember;
 
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
 
 interface RemoveWishlistGroupMemberInterface
 {

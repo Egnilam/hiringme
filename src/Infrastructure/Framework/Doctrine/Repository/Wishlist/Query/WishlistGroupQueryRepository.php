@@ -11,8 +11,8 @@ use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Repository\Query\WishlistGroupQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\GetListWishlistGroupRequest;
-use Domain\Wishlist\Request\WishlistGroup\GetWishlistGroupRequest;
+use Domain\Wishlist\Request\Query\WishlistGroup\GetListWishlistGroupRequest;
+use Domain\Wishlist\Request\Query\WishlistGroup\GetWishlistGroupRequest;
 use Domain\Wishlist\Response\WishlistGroupMemberResponse;
 use Domain\Wishlist\Response\WishlistGroupResponse;
 

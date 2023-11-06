@@ -10,7 +10,7 @@ use Domain\Common\Domain\ValueObject\EmailValueObject;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Port\Command\WishlistMember\UpdateWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
-use Domain\Wishlist\Request\WishlistMember\UpdateWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\UpdateWishlistMemberRequest;
 
 final readonly class UpdateWishlistMemberUseCase implements UpdateWishlistMemberInterface
 {

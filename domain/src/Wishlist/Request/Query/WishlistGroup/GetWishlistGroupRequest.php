@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Request\WishlistGroup;
+namespace Domain\Wishlist\Request\Query\WishlistGroup;
 
 final readonly class GetWishlistGroupRequest
 {

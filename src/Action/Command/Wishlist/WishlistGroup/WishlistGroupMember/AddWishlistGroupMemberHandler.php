@@ -6,7 +6,7 @@ namespace App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandHandlerInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberInterface;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class AddWishlistGroupMemberHandler implements CommandHandlerInterface
 {

@@ -15,9 +15,9 @@ use Domain\Wishlist\Port\Command\WishlistMember\UpdateWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\UserQueryRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\RegisterWishlistMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\UpdateWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\RegisterWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\UpdateWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 
 final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMemberInterface
 {

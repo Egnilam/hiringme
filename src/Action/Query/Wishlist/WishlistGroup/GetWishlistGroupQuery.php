@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Action\Query\Wishlist\WishlistGroup;
 
 use App\Infrastructure\Framework\Messenger\Query\QueryInterface;
-use Domain\Wishlist\Request\WishlistGroup\GetWishlistGroupRequest;
+use Domain\Wishlist\Request\Query\WishlistGroup\GetWishlistGroupRequest;
 
 final class GetWishlistGroupQuery implements QueryInterface
 {

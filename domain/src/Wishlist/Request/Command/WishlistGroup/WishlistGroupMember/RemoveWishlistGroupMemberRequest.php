@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember;
+namespace Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember;
 
 final readonly class RemoveWishlistGroupMemberRequest
 {

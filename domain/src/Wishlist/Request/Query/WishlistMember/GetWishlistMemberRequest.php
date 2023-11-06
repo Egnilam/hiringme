@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Request\WishlistMember;
+namespace Domain\Wishlist\Request\Query\WishlistMember;
 
 final readonly class GetWishlistMemberRequest
 {

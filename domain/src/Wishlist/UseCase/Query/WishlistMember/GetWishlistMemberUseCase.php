@@ -6,7 +6,7 @@ namespace Domain\Wishlist\UseCase\Query\WishlistMember;
 
 use Domain\Wishlist\Port\Query\WishlistMember\GetWishlistMemberInterface;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 use Domain\Wishlist\Response\WishlistMemberResponse;
 
 final readonly class GetWishlistMemberUseCase implements GetWishlistMemberInterface

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Request\WishlistGroup;
+namespace Domain\Wishlist\Request\Command\WishlistGroup;
 
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class CreateWishlistGroupRequest
 {

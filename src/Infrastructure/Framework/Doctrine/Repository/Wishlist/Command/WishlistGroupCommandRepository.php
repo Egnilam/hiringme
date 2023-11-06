@@ -15,7 +15,7 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
     {
         $wishlistGroupEntity = new WishlistGroupEntity();
         $wishlistGroupEntity
-            ->setStringUuid($wishlistGroup->getId())
+            ->setStringUuid($wishlistGroup->getId()->getId())
             ->setName($wishlistGroup->getName());
 
         $this->entityManager->persist($wishlistGroupEntity);

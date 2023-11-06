@@ -8,7 +8,7 @@ use Domain\Common\Domain\Exception\DomainException;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistGroupMemberCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistGroupMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
 
 final readonly class RemoveWishlistGroupMemberUseCase implements RemoveWishlistGroupMemberInterface
 {

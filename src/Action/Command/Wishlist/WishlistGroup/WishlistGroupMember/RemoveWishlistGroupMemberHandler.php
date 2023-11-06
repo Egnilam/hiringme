@@ -6,7 +6,7 @@ namespace App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandHandlerInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberInterface;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\RemoveWishlistGroupMemberRequest;
 
 final readonly class RemoveWishlistGroupMemberHandler implements CommandHandlerInterface
 {

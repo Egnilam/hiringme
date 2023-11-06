@@ -10,7 +10,7 @@ use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 use Domain\Wishlist\Response\WishlistMemberResponse;
 
 final class WishlistMemberQueryRepository extends AbstractRepository implements WishlistMemberQueryRepositoryInterface

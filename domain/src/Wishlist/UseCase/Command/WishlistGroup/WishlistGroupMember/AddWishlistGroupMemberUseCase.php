@@ -15,9 +15,9 @@ use Domain\Wishlist\Port\Command\WishlistMember\RegisterWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistGroupMemberCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistGroupMemberQueryRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\RegisterWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\RegisterWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 
 final readonly class AddWishlistGroupMemberUseCase implements AddWishlistGroupMemberInterface
 {
