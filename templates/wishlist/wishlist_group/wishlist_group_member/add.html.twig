@@ -5,6 +5,7 @@
 {% block content %}
     {% block body %}
         <h1>Add member</h1>
+        <a href="{{ path('wishlist_group_show', { 'id' : wishlist_group_id }) }}">Back to the group</a>
         {% if domain_error %}
             {% for error in domain_error.messages %}
                 <div>{{ error }}</div>

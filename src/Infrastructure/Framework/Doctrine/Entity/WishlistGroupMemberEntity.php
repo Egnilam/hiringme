@@ -15,11 +15,11 @@ class WishlistGroupMemberEntity implements EntityInterface
 
     use EntityDecoratorTrait;
 
-    #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class)]
     #[ORM\JoinColumn(name: 'wishlist_group_id')]
     private WishlistGroupEntity $wishlistGroup;
 
-    #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class)]
     #[ORM\JoinColumn(name: 'wishlist_member_id')]
     private WishlistMemberEntity $wishlistMember;
 

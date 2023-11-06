@@ -52,4 +52,14 @@ class WishlistGroupMemberQueryRepository extends AbstractRepository implements W
             ->getSingleScalarResult();
 
     }
+
+    public function isOwner(string $id): bool
+    {
+        return (bool)$this->entityManager->getRepository(WishlistGroupMemberEntity::class)
+            ->findOneBy([
+                'uuid' => IdService::fromStringToBinary($id),
+                'owner' => true
+            ]);
+
+    }
 }

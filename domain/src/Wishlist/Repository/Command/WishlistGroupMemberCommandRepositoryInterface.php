@@ -9,4 +9,6 @@ use Domain\Wishlist\Domain\Model\WishlistGroupMember;
 interface WishlistGroupMemberCommandRepositoryInterface
 {
     public function create(WishlistGroupMember $wishlistGroupMember): string;
+
+    public function delete(string $id): void;
 }

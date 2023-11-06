@@ -33,6 +33,19 @@ final class WishlistGroupMemberCommandRepository extends AbstractRepository impl
         return $wishlistGroupMemberEntity->getStringUuid();
     }
 
+
+    public function delete(string $id): void
+    {
+        $wishlistGroupMemberEntity = $this->entityManager->getRepository(WishlistGroupMemberEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($id)]);
+
+        if(!$wishlistGroupMemberEntity) {
+            throw new NotFoundException();
+        }
+
+        $this->entityManager->remove($wishlistGroupMemberEntity);
+    }
+
     /**
      * @throws NotFoundException
      */

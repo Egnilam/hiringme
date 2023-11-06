@@ -14,7 +14,9 @@
                     <span>{{ wishlist_group_member.email }}</span>
                     <span>{{ wishlist_group_member.owner ? 'Owner' }}</span>
                     <button>Show wishlist</button>
-                    <button>Delete</button>
+                    <div>
+                        {% include 'wishlist/wishlist_group/wishlist_group_member/_remove.html.twig' %}
+                    </div>
                 </div>
             {% endfor %}
         </div>

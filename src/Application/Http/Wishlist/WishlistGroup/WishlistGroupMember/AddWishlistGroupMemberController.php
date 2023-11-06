@@ -40,6 +40,7 @@ final class AddWishlistGroupMemberController extends AbstractController
         }
 
         return $this->render('wishlist/wishlist_group/wishlist_group_member/add.html.twig', [
+            'wishlist_group_id' => $groupId,
             'domain_error' => $domainErrorPresenter ?? null,
             'form' => $form
         ]);
