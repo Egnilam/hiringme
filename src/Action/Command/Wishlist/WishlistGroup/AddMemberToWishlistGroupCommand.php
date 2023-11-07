@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class AddMemberToWishlistGroupCommand implements CommandInterface
 {
-    private ?string $wishlistGroupId = null;
+    private string $wishlistGroupId;
 
     #[Assert\NotBlank]
     private string $pseudonym;
@@ -18,12 +18,12 @@ final class AddMemberToWishlistGroupCommand implements CommandInterface
 
     private bool $owner = false;
 
-    public function getWishlistGroupId(): ?string
+    public function getWishlistGroupId(): string
     {
         return $this->wishlistGroupId;
     }
 
-    public function setWishlistGroupId(?string $wishlistGroupId): self
+    public function setWishlistGroupId(string $wishlistGroupId): self
     {
         $this->wishlistGroupId = $wishlistGroupId;
         return $this;

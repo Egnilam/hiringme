@@ -17,7 +17,7 @@ final readonly class AddMemberToWishlistGroupHandler implements CommandHandlerIn
     public function __invoke(AddMemberToWishlistGroupCommand $command): void
     {
         $addWishlistGroupMemberRequest = new AddMemberToWishlistGroupRequest(
-            $command->getWishlistGroupId() ?? 'id',
+            $command->getWishlistGroupId(),
             $command->getPseudonym(),
             $command->getEmail(),
             $command->isOwner()
