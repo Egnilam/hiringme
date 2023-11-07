@@ -17,19 +17,19 @@ class WishlistEntity implements EntityInterface
 
     #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'owner_id')]
-    private WishlistMemberEntity $user;
+    private WishlistMemberEntity $wishlistMember;
 
     #[ORM\Column('string', length: 255)]
     private string $name;
 
-    public function getUser(): WishlistMemberEntity
+    public function getWishlistMember(): WishlistMemberEntity
     {
-        return $this->user;
+        return $this->wishlistMember;
     }
 
-    public function setUser(WishlistMemberEntity $user): self
+    public function setWishlistMember(WishlistMemberEntity $wishlistMember): self
     {
-        $this->user = $user;
+        $this->wishlistMember = $wishlistMember;
         return $this;
     }
 
