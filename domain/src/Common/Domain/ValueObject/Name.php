@@ -6,7 +6,7 @@ namespace Domain\Common\Domain\ValueObject;
 
 use Domain\Common\Domain\Exception\NameFormatException;
 
-final class NameValueObject
+final class Name
 {
     public const PROPERTY_FIRSTNAME = 'firstName';
     public const PROPERTY_LASTNAME = 'lastName';

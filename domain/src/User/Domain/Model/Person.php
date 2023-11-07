@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\User\Domain\Model;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Common\Domain\ValueObject\NameValueObject;
+use Domain\Common\Domain\ValueObject\Name;
 
 class Person
 {
@@ -22,7 +22,7 @@ class Person
     /**
      * @throws \Exception
      */
-    public function __construct(NameValueObject $firstName, NameValueObject $lastName, ?\DateTimeImmutable $birthDate)
+    public function __construct(Name $firstName, Name $lastName, ?\DateTimeImmutable $birthDate)
     {
         $this->setBirthDate($birthDate);
         $this->firstName = $firstName->get();

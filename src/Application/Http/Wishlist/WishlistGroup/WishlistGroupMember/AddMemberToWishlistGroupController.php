@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Http\Wishlist\WishlistGroup\WishlistGroupMember;
 
-use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberCommand;
+use App\Action\Command\Wishlist\WishlistGroup\AddMemberToWishlistGroupCommand;
 use App\Application\Form\Wishlist\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberForm;
 use App\Application\Presenter\DomainErrorPresenter;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
@@ -16,12 +16,12 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlist_groups/{groupId}/members')]
-final class AddWishlistGroupMemberController extends AbstractController
+final class AddMemberToWishlistGroupController extends AbstractController
 {
     #[Route('/add', name: 'wishlist_group_member_add', methods: ['GET', 'POST'])]
     public function __invoke(Request $request, string $groupId, CommandBusInterface $commandBus): Response
     {
-        $addWishlistGroupMemberCommand =  new AddWishlistGroupMemberCommand();
+        $addWishlistGroupMemberCommand =  new AddMemberToWishlistGroupCommand();
 
         $form = $this->createForm(AddWishlistGroupMemberForm::class, $addWishlistGroupMemberCommand);
         $form->handleRequest($request);

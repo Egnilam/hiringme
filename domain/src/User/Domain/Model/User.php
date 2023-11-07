@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\User\Domain\Model;
 
-use Domain\Common\Domain\ValueObject\EmailValueObject;
-use Domain\Common\Domain\ValueObject\NameValueObject;
+use Domain\Common\Domain\ValueObject\Email;
+use Domain\Common\Domain\ValueObject\Name;
 use Domain\User\Domain\Enum\UserRoleEnum;
 use Domain\User\Domain\Exception\UserRoleException;
 
@@ -34,15 +34,15 @@ final class User
      * @throws \Exception
      */
     public function __construct(
-        string $id,
-        NameValueObject $firstName,
-        NameValueObject $lastName,
-        EmailValueObject $email,
-        string $password,
-        array $roles,
+        string              $id,
+        Name                $firstName,
+        Name                $lastName,
+        Email               $email,
+        string              $password,
+        array               $roles,
         ?\DateTimeImmutable $birthDate = null,
-        ?string $token = null,
-        bool $active = true,
+        ?string             $token = null,
+        bool                $active = true,
     ) {
         $this->person = new Person($firstName, $lastName, $birthDate);
         $this->setRoles($roles);

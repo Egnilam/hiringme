@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Form\Wishlist\WishlistGroup\WishlistGroupMember;
 
-use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberCommand;
+use App\Action\Command\Wishlist\WishlistGroup\AddMemberToWishlistGroupCommand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,10 +26,10 @@ class AddWishlistGroupMemberForm extends AbstractType
                 'required' => false,
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {
-                /** @var AddWishlistGroupMemberCommand $data */
+                /** @var AddMemberToWishlistGroupCommand $data */
                 $data = $event->getData();
 
-                $reflectionClass = new \ReflectionClass(AddWishlistGroupMemberCommand::class);
+                $reflectionClass = new \ReflectionClass(AddMemberToWishlistGroupCommand::class);
                 if(
                     $data->getEmail()
                     && !$reflectionClass->getProperty('pseudonym')->isInitialized($data)
@@ -43,7 +43,7 @@ class AddWishlistGroupMemberForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AddWishlistGroupMemberCommand::class,
+            'data_class' => AddMemberToWishlistGroupCommand::class,
             'pseudonym_mandatory' => true
         ]);
     }

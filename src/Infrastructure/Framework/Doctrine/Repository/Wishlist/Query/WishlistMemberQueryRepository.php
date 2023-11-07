@@ -9,6 +9,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\NotFoundException;
+use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
 use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 use Domain\Wishlist\Response\WishlistMemberResponse;
@@ -53,5 +54,19 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
             $wishlistMemberEntity->getEmail(),
             $wishlistMemberEntity->isRegistered()
         );
+    }
+
+    public function getIdByEmail(string $email): WishlistMemberId
+    {
+        $wishlistMemberEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
+            ->findOneBy([
+                'email' => $email
+            ]);
+
+        if(!$wishlistMemberEntity) {
+            throw new NotFoundException();
+        }
+
+        return new WishlistMemberId($wishlistMemberEntity->getStringUuid());
     }
 }

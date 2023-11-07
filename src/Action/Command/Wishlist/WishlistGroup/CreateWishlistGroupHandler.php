@@ -6,8 +6,8 @@ namespace App\Action\Command\Wishlist\WishlistGroup;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandHandlerInterface;
 use Domain\Wishlist\Port\Command\WishlistGroup\CreateWishlistGroupInterface;
+use Domain\Wishlist\Request\Command\WishlistGroup\AddMemberToWishlistGroupRequest;
 use Domain\Wishlist\Request\Command\WishlistGroup\CreateWishlistGroupRequest;
-use Domain\Wishlist\Request\Command\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberRequest;
 
 final readonly class CreateWishlistGroupHandler implements CommandHandlerInterface
 {
@@ -22,7 +22,7 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
         $memberRequests[] = $this->createWishlistGroupMemberOwner($command->getOwnerEmail(), $command->getOwnerPseudonym());
 
         foreach ($command->getMembers() as $memberCommand) {
-            $memberRequests[] = new AddWishlistGroupMemberRequest(
+            $memberRequests[] = new AddMemberToWishlistGroupRequest(
                 'id',
                 $memberCommand->getPseudonym(),
                 $memberCommand->getEmail(),
@@ -38,9 +38,9 @@ final readonly class CreateWishlistGroupHandler implements CommandHandlerInterfa
         $this->createWishlistGroup->execute($request);
     }
 
-    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): AddWishlistGroupMemberRequest
+    private function createWishlistGroupMemberOwner(string $email, string $pseudonym): AddMemberToWishlistGroupRequest
     {
-        return new AddWishlistGroupMemberRequest(
+        return new AddMemberToWishlistGroupRequest(
             'id',
             $pseudonym,
             $email,

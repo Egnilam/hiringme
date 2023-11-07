@@ -6,7 +6,7 @@ namespace Domain\Common\Domain\ValueObject;
 
 use Domain\Common\Domain\Exception\EmailFormatException;
 
-final class EmailValueObject
+final class Email
 {
     private string $email;
 

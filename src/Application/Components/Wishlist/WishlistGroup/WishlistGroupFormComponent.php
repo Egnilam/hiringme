@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Components\Wishlist\WishlistGroup;
 
+use App\Action\Command\Wishlist\WishlistGroup\AddMemberToWishlistGroupCommand;
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
-use App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember\AddWishlistGroupMemberCommand;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +40,7 @@ class WishlistGroupFormComponent extends AbstractController
     #[LiveAction]
     public function addWishlistGroupMember(): void
     {
-        $this->formValues['members'][] = new AddWishlistGroupMemberCommand();
+        $this->formValues['members'][] = new AddMemberToWishlistGroupCommand();
     }
 
     #[LiveAction]

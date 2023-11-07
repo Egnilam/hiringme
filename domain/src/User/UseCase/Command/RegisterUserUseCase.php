@@ -6,8 +6,8 @@ namespace Domain\User\UseCase\Command;
 
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\Exception\NameFormatException;
-use Domain\Common\Domain\ValueObject\EmailValueObject;
-use Domain\Common\Domain\ValueObject\NameValueObject;
+use Domain\Common\Domain\ValueObject\Email;
+use Domain\Common\Domain\ValueObject\Name;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\User\Domain\Enum\UserRoleEnum;
 use Domain\User\Domain\Exception\UserRoleException;
@@ -33,9 +33,9 @@ final readonly class RegisterUserUseCase implements RegisterUserInterface
     {
         $user = new User(
             $this->idService->next(),
-            new NameValueObject($request->getFirstName(), NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject($request->getLastName(), NameValueObject::PROPERTY_LASTNAME),
-            new EmailValueObject($request->getEmail()),
+            new Name($request->getFirstName(), Name::PROPERTY_FIRSTNAME),
+            new Name($request->getLastName(), Name::PROPERTY_LASTNAME),
+            new Email($request->getEmail()),
             $request->getPassword(),
             [UserRoleEnum::USER->value],
             $request->getBirthDate()

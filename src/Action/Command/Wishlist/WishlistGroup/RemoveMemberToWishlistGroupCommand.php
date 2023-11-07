@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember;
+namespace App\Action\Command\Wishlist\WishlistGroup;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
-final class RemoveWishlistGroupMemberCommand implements CommandInterface
+final class RemoveMemberToWishlistGroupCommand implements CommandInterface
 {
     private string $claimantId;
 

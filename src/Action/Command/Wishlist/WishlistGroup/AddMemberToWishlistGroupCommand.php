@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Action\Command\Wishlist\WishlistGroup\WishlistGroupMember;
+namespace App\Action\Command\Wishlist\WishlistGroup;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class AddWishlistGroupMemberCommand implements CommandInterface
+final class AddMemberToWishlistGroupCommand implements CommandInterface
 {
     private ?string $wishlistGroupId = null;
 
