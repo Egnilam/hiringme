@@ -8,7 +8,8 @@ final readonly class GetListWishlistGroupRequest
 {
     public function __construct(
         private ?string $wishlistMemberId = null,
-        private bool $active = true,
+        private ?bool $owner = null,
+        private ?bool $active = null,
     ) {
 
     }
@@ -18,7 +19,12 @@ final readonly class GetListWishlistGroupRequest
         return $this->wishlistMemberId;
     }
 
-    public function isActive(): bool
+    public function isOwner(): ?bool
+    {
+        return $this->owner;
+    }
+
+    public function isActive(): ?bool
     {
         return $this->active;
     }

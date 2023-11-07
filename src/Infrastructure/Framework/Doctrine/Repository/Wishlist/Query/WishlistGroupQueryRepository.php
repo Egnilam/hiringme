@@ -60,9 +60,13 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
                 ->innerJoin(WishlistGroupMemberEntity::class, 'wishlist_group_member', 'WITH', 'wishlist_group_member.wishlistGroup = wishlist_group.id')
                 ->innerJoin(WishlistMemberEntity::class, 'wishlist_member', 'WITH', 'wishlist_member.id = wishlist_group_member.wishlistMember')
                 ->andWhere('wishlist_member.uuid = :wishlistMemberId')
-                ->setParameter('wishlistMemberId', IdService::fromStringToBinary($request->getWishlistMemberId()))
+                ->setParameter('wishlistMemberId', IdService::fromStringToBinary($request->getWishlistMemberId()));
+        }
+
+        if($request->isOwner() !== null){
+            $entityRequest
                 ->andWhere('wishlist_group_member.owner = :owner')
-                ->setParameter('owner', true);
+                ->setParameter('owner', $request->isOwner());
         }
 
         /** @var array<WishlistGroupEntity> $wishlistGroupEntities */
