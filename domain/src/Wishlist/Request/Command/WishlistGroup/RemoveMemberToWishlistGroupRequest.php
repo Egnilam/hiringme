@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Request\WishlistGroup\WishlistGroupMember;
+namespace Domain\Wishlist\Request\Command\WishlistGroup;
 
-final readonly class RemoveWishlistGroupMemberRequest
+final readonly class RemoveMemberToWishlistGroupRequest
 {
     public function __construct(
         private string $claimantId,

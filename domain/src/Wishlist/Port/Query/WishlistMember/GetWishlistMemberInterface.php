@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Port\Query\WishlistMember;
 
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 use Domain\Wishlist\Response\WishlistMemberResponse;
 
 interface GetWishlistMemberInterface

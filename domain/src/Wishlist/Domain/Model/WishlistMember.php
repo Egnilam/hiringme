@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Wishlist\Domain\Model;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Domain\ValueObject\Email;
 
 final class WishlistMember
 {
@@ -21,7 +21,7 @@ final class WishlistMember
     /**
      * @throws DomainException
      */
-    public function __construct(string $id, ?EmailValueObject $email, ?string $userId, bool $registered)
+    public function __construct(string $id, ?Email $email, ?string $userId, bool $registered)
     {
         if($registered && $userId === null) {
             throw new DomainException('Can\'t find registered user');

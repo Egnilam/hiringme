@@ -4,27 +4,35 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Domain\Model;
 
+use Domain\Common\Domain\ValueObject\Email;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
+use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
+
 final class WishlistGroupMember
 {
     private string $id;
 
     private string $pseudonym;
 
-    private string $wishlistMemberId;
+    private ?Email $email;
 
-    private string $wishlistGroupId;
+    private WishlistMemberId $wishlistMemberId;
+
+    private WishlistGroupId $wishlistGroupId;
 
     private bool $owner;
 
     public function __construct(
-        string $id,
-        string $pseudonym,
-        string $wishlistMemberId,
-        string $wishlistGroupId,
-        bool $owner
+        string           $id,
+        string           $pseudonym,
+        ?Email           $email,
+        WishlistMemberId $wishlistMemberId,
+        WishlistGroupId  $wishlistGroupId,
+        bool             $owner
     ) {
         $this->id = $id;
         $this->pseudonym = $pseudonym;
+        $this->email = $email;
         $this->wishlistMemberId = $wishlistMemberId;
         $this->wishlistGroupId = $wishlistGroupId;
         $this->owner = $owner;
@@ -40,12 +48,17 @@ final class WishlistGroupMember
         return $this->pseudonym;
     }
 
-    public function getWishlistMemberId(): string
+    public function getEmail(): ?Email
+    {
+        return $this->email;
+    }
+
+    public function getWishlistMemberId(): WishlistMemberId
     {
         return $this->wishlistMemberId;
     }
 
-    public function getWishlistGroupId(): string
+    public function getWishlistGroupId(): WishlistGroupId
     {
         return $this->wishlistGroupId;
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Tests\Wishlist\Model;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Domain\ValueObject\Email;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class WishlistMemberTest extends TestCase
     {
         $wishlistMember = new WishlistMember(
             'id',
-            new EmailValueObject('test@test.fr'),
+            new Email('test@test.fr'),
             'user-id',
             true
         );
@@ -28,7 +28,7 @@ class WishlistMemberTest extends TestCase
         $this->expectException(DomainException::class);
         new WishlistMember(
             'id',
-            new EmailValueObject('test@test.fr'),
+            new Email('test@test.fr'),
             null,
             true
         );

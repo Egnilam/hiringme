@@ -6,7 +6,7 @@ namespace App\Application\Http\Wishlist\WishlistGroup;
 
 use App\Action\Query\Wishlist\WishlistGroup\GetWishlistGroupQuery;
 use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
-use Domain\Wishlist\Request\WishlistGroup\GetWishlistGroupRequest;
+use Domain\Wishlist\Request\Query\WishlistGroup\GetWishlistGroupRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

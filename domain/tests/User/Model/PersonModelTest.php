@@ -6,7 +6,7 @@ namespace Domain\Tests\User\Model;
 
 use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\Exception\NameFormatException;
-use Domain\Common\Domain\ValueObject\NameValueObject;
+use Domain\Common\Domain\ValueObject\Name;
 use Domain\User\Domain\Model\Person;
 use PHPUnit\Framework\TestCase;
 
@@ -15,8 +15,8 @@ class PersonModelTest extends TestCase
     public function testValidPerson(): void
     {
         $person = new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name('malinge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
         $this->assertSame('FLORIAN', $person->getFirstName());
@@ -26,8 +26,8 @@ class PersonModelTest extends TestCase
     public function testValidPersonWithAccent(): void
     {
         $person = new Person(
-            new NameValueObject('floriané', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('malingeé', NameValueObject::PROPERTY_LASTNAME),
+            new Name('floriané', Name::PROPERTY_FIRSTNAME),
+            new Name('malingeé', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
         $this->assertSame('FLORIANÉ', $person->getFirstName());
@@ -37,8 +37,8 @@ class PersonModelTest extends TestCase
     public function testValidPersonWithDash(): void
     {
         $person = new Person(
-            new NameValueObject('flo-rian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('mal-inge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('flo-rian', Name::PROPERTY_FIRSTNAME),
+            new Name('mal-inge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
         $this->assertSame('FLO-RIAN', $person->getFirstName());
@@ -49,8 +49,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         $person = new Person(
-            new NameValueObject('fl', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('fl', Name::PROPERTY_FIRSTNAME),
+            new Name('malinge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -59,8 +59,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         new Person(
-            new NameValueObject(str_repeat('florian', 15), NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new Name(str_repeat('florian', 15), Name::PROPERTY_FIRSTNAME),
+            new Name('malinge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -69,8 +69,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         new Person(
-            new NameValueObject('flo_rian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('malinge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('flo_rian', Name::PROPERTY_FIRSTNAME),
+            new Name('malinge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -79,8 +79,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('ma', NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name('ma', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -89,8 +89,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject(str_repeat('malinge', 15), NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name(str_repeat('malinge', 15), Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -99,8 +99,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(NameFormatException::class);
         new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('mal_inge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name('mal_inge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1994-08-15')
         );
     }
@@ -109,8 +109,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(DomainException::class);
         new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('mal_inge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name('mal_inge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable('1900-08-01')
         );
     }
@@ -119,8 +119,8 @@ class PersonModelTest extends TestCase
     {
         $this->expectException(DomainException::class);
         new Person(
-            new NameValueObject('florian', NameValueObject::PROPERTY_FIRSTNAME),
-            new NameValueObject('mal_inge', NameValueObject::PROPERTY_LASTNAME),
+            new Name('florian', Name::PROPERTY_FIRSTNAME),
+            new Name('mal_inge', Name::PROPERTY_LASTNAME),
             new \DateTimeImmutable()
         );
     }

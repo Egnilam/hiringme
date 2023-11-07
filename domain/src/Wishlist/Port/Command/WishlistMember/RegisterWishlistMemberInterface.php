@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Port\Command\WishlistMember;
 
-use Domain\Wishlist\Request\WishlistMember\RegisterWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\RegisterWishlistMemberRequest;
 
 interface RegisterWishlistMemberInterface
 {

@@ -7,7 +7,7 @@ namespace Domain\Wishlist\UseCase\Command\WishlistMember;
 use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\Exception\NotFoundException;
-use Domain\Common\Domain\ValueObject\EmailValueObject;
+use Domain\Common\Domain\ValueObject\Email;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\WishlistMember;
 use Domain\Wishlist\Port\Command\WishlistMember\RegisterWishlistMemberInterface;
@@ -15,9 +15,9 @@ use Domain\Wishlist\Port\Command\WishlistMember\UpdateWishlistMemberInterface;
 use Domain\Wishlist\Repository\Command\WishlistMemberCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\UserQueryRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistMemberQueryRepositoryInterface;
-use Domain\Wishlist\Request\WishlistMember\GetWishlistMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\RegisterWishlistMemberRequest;
-use Domain\Wishlist\Request\WishlistMember\UpdateWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\RegisterWishlistMemberRequest;
+use Domain\Wishlist\Request\Command\WishlistMember\UpdateWishlistMemberRequest;
+use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
 
 final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMemberInterface
 {
@@ -37,7 +37,7 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
     public function execute(RegisterWishlistMemberRequest $request): string
     {
         if($request->getEmail()) {
-            $email = new EmailValueObject($request->getEmail());
+            $email = new Email($request->getEmail());
 
             $userId = $request->isRegistered() ?
                 $this->userQueryRepository->searchUserIdByEmail($email->get()) : null;
