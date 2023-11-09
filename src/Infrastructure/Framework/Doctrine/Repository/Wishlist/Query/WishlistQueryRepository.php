@@ -6,6 +6,7 @@ namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Query;
 
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistItemEntity;
+use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\NotFoundException;
@@ -26,12 +27,58 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
             throw new NotFoundException();
         }
 
+        return new WishlistResponse(
+            $wishlistEntity->getStringUuid(),
+            $wishlistEntity->getWishlistMember()->getStringUuid(),
+            $wishlistEntity->getName(),
+            $this->getWishlistItems($request->getId()),
+            'PUBLIC'
+        );
+    }
+
+    /**
+     * @return array<WishlistResponse>
+     */
+    public function getList(GetListWishlistRequest $request): array
+    {
+        $wishlistRequest = $this->entityManager->getRepository(WishlistEntity::class)
+            ->createQueryBuilder('wishlist');
+
+        if($request->getWishlistMemberId()) {
+            $wishlistRequest
+                ->innerJoin(WishlistMemberEntity::class, 'wishlist_member', 'WITH', 'wishlist_member.id = wishlist.wishlistMember')
+                ->andWhere('wishlist_member.uuid = :wishlistMember')
+                ->setParameter('wishlistMember', IdService::fromStringToBinary($request->getWishlistMemberId()));
+        }
+
+        /** @var array<WishlistEntity> $wishlistEntities */
+        $wishlistEntities = $wishlistRequest->getQuery()->getResult();
+
+        $wishlists = [];
+        foreach ($wishlistEntities as $wishlistEntity) {
+            $wishlists[] = new WishlistResponse(
+                $wishlistEntity->getStringUuid(),
+                $wishlistEntity->getWishlistMember()->getStringUuid(),
+                $wishlistEntity->getName(),
+                $this->getWishlistItems($wishlistEntity->getStringUuid()),
+                'PUBLIC'
+            );
+        }
+
+        return $wishlists;
+    }
+
+    /**
+     * @return array<WishlistItemResponse>
+     */
+    private function getWishlistItems(string $wishlistId): array
+    {
         /** @var array<WishlistItemEntity> $wishlistItemEntities  */
         $wishlistItemEntities = $this->entityManager->getRepository(WishlistItemEntity::class)
             ->createQueryBuilder('wishlist_item')
             ->innerJoin(WishlistEntity::class, 'wishlist', 'WITH', 'wishlist.id = wishlist_item.wishlist')
             ->andWhere('wishlist.uuid = :wishlist')
-            ->setParameter('wishlist', IdService::fromStringToBinary($request->getId()))
+            ->setParameter('wishlist', IdService::fromStringToBinary($wishlistId))
             ->getQuery()
             ->getResult();
 
@@ -47,33 +94,6 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
             );
         }
 
-        return new WishlistResponse(
-            $wishlistEntity->getStringUuid(),
-            $wishlistEntity->getWishlistMember()->getStringUuid(),
-            $wishlistEntity->getName(),
-            $wishlistItems,
-            'PUBLIC'
-        );
-    }
-
-    /**
-     * @return array<WishlistResponse>
-     */
-    public function getList(GetListWishlistRequest $request): array
-    {
-        $wishlistEntities =  $this->entityManager->getRepository(WishlistEntity::class)->findAll();
-
-        $wishlists = [];
-        foreach ($wishlistEntities as $wishlistEntity) {
-            $wishlists[] = new WishlistResponse(
-                $wishlistEntity->getStringUuid(),
-                $wishlistEntity->getWishlistMember()->getStringUuid(),
-                $wishlistEntity->getName(),
-                [],
-                'PUBLIC'
-            );
-        }
-
-        return $wishlists;
+        return $wishlistItems;
     }
 }
