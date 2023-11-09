@@ -28,10 +28,10 @@ class WishlistEntity implements EntityInterface
     private string $visibility;
 
     /**
-     * @var ArrayCollection<int, WishlistItemEntity>
+     * @var Collection<int, WishlistItemEntity>
      */
     #[ORM\OneToMany(mappedBy: 'wishlist', targetEntity: WishlistItemEntity::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
-    private ArrayCollection $wishlistItems;
+    private Collection $wishlistItems;
 
     public function __construct()
     {
