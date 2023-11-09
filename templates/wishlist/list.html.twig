@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlists{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1>Wishlists</h1>
+        <a href="{{ path('wishlist_create') }}">Create new wishlist</a>
+
+        {% for wishlist in wishlists %}
+            <div>
+                <h2>{{ wishlist.name }}</h2>
+                <span>{{ wishlist.visibility }}</span>
+                <a href="{{ path('wishlist_show', { id: wishlist.id}) }}">Show</a>
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

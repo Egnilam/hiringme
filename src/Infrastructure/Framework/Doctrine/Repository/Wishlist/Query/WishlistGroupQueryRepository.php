@@ -63,7 +63,7 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
                 ->setParameter('wishlistMemberId', IdService::fromStringToBinary($request->getWishlistMemberId()));
         }
 
-        if($request->isOwner() !== null){
+        if($request->isOwner() !== null) {
             $entityRequest
                 ->andWhere('wishlist_group_member.owner = :owner')
                 ->setParameter('owner', $request->isOwner());
