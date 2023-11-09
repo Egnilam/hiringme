@@ -30,7 +30,8 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
         $wishlistEntity
             ->setStringUuid($wishlist->getId()->getId())
             ->setName($wishlist->getName())
-            ->setWishlistMember($wishlistMemberEntity);
+            ->setWishlistMember($wishlistMemberEntity)
+            ->setVisibility($wishlist->getVisibility()->value);
 
         $this->entityManager->persist($wishlistEntity);
 

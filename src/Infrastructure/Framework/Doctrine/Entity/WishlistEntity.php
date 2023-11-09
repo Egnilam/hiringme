@@ -16,11 +16,14 @@ class WishlistEntity implements EntityInterface
     use EntityDecoratorTrait;
 
     #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: 'owner_id')]
+    #[ORM\JoinColumn(name: 'owner_id', nullable: false)]
     private WishlistMemberEntity $wishlistMember;
 
     #[ORM\Column(type:'string', length: 255)]
     private string $name;
+
+    #[ORM\Column(type:'string', length: 255)]
+    private string $visibility;
 
     public function getWishlistMember(): WishlistMemberEntity
     {
@@ -41,6 +44,17 @@ class WishlistEntity implements EntityInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getVisibility(): string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(string $visibility): self
+    {
+        $this->visibility = $visibility;
         return $this;
     }
 }
