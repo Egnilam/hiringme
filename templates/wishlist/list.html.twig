@@ -12,6 +12,7 @@
                 <h2>{{ wishlist.name }}</h2>
                 <span>{{ wishlist.visibility }}</span>
                 <a href="{{ path('wishlist_show', { id: wishlist.id}) }}">Show</a>
+                {% include 'wishlist//_delete.html.twig' %}
             </div>
         {% endfor %}
     {% endblock %}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Action\Command;
+namespace App\Action\Command\Wishlist;
 
 use Domain\Wishlist\Domain\Model\PriorityEnum;
 

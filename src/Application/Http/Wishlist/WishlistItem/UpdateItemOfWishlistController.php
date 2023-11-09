@@ -40,7 +40,7 @@ final class UpdateItemOfWishlistController extends AbstractController
                 $commandBus->dispatch($command);
 
                 return $this->redirectToRoute('wishlist_show', ['id' => $wishlistId]);
-            }catch (\Exception $exception) {
+            } catch (\Exception $exception) {
 
             }
         }

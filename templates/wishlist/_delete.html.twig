@@ -1,0 +1,5 @@
+<form action="{{ path('wishlist_delete', { 'id' : wishlist.id}) }}" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    <input type="hidden" name="_token" value="{{csrf_token('delete.'~ wishlist.id)}}">
+    <input type="submit" value="Delete" />
+</form>

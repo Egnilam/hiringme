@@ -39,6 +39,18 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
         return $wishlist->getId();
     }
 
+    public function delete(WishlistId $id): void
+    {
+        $wishlistEntity = $this->entityManager->getRepository(WishlistEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($id->getId())]);
+
+        if(!$wishlistEntity) {
+            throw new NotFoundException();
+        }
+
+        $this->entityManager->remove($wishlistEntity);
+    }
+
     public function addItem(WishlistItem $wishlistItem): string
     {
         $wishlistItemEntity = $this->buildWishlistItemEntity($wishlistItem);

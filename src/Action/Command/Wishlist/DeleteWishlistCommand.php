@@ -6,7 +6,7 @@ namespace App\Action\Command\Wishlist;
 
 use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
-final class UpdateItemOfWishlistCommand extends AbstractWishlistItemCommand implements CommandInterface
+final class DeleteWishlistCommand implements CommandInterface
 {
     private string $id;
 
