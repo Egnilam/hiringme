@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update wishlist item{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1>Update item</h1>
+        <a href="{{ path('wishlist_show', { 'id' : wishlist_id }) }}">Back to the wishlist</a>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Envoyer</button>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

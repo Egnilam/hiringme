@@ -14,5 +14,7 @@ interface WishlistCommandRepositoryInterface
 
     public function addItem(WishlistItem $wishlistItem): string;
 
+    public function updateItem(WishlistItem $wishlistItem): void;
+
     public function removeItem(string $wishlistItemId): void;
 }

@@ -1,0 +1,11 @@
+<div>
+    <h2>{{ item.label }}</h2>
+    {% if item.link %}
+        <a href="{{ item.link }}" target="_blank">Access to the link</a>
+    {% endif %}
+    <span>{{ item.priority }}</span>
+    <span>{{ item.description }}</span>
+    <span>{{ item.price }}</span>
+    <a href="{{ path('wishlist_item_update', {'wishlistId' : wishlist.id, 'id' : item.id}) }}">edit</a>
+    {% include 'wishlist/wishlist_item/_remove.html.twig' %}
+</div>

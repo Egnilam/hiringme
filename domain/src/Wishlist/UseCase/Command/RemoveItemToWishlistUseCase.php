@@ -38,15 +38,7 @@ final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlist
 
         $wishlistItems = [];
         foreach ($wishlistResponse->getItems() as $item) {
-            $wishlistItems[$item->getId()] = new WishlistItem(
-                $item->getId(),
-                $wishlistId,
-                $item->getLabel(),
-                $item->getLink() ? new LinkItem($item->getLink()) : null,
-                $item->getDescription(),
-                $item->getPriority() ? PriorityEnum::from($item->getPriority()) : null,
-                $item->getPrice() ? new PriceItem($item->getPrice()) : null,
-            );
+            $wishlistItems[$item->getId()] = WishlistItem::createFromResponse($item, $wishlistId);
         }
 
         unset($wishlistItems[$request->getWishlistItemId()]);

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Domain\Model;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Wishlist\Domain\ValueObject\LinkItem;
 use Domain\Wishlist\Domain\ValueObject\PriceItem;
 use Domain\Wishlist\Domain\ValueObject\WishlistId;
+use Domain\Wishlist\Response\WishlistItemResponse;
 
 final class WishlistItem
 {
@@ -40,6 +42,22 @@ final class WishlistItem
         $this->description = $description;
         $this->priority = $priority;
         $this->price = $price;
+    }
+
+    /**
+     * @throws DomainException
+     */
+    public static function createFromResponse(WishlistItemResponse $item, WishlistId $wishlistId): self
+    {
+        return new WishlistItem(
+            $item->getId(),
+            $wishlistId,
+            $item->getLabel(),
+            $item->getLink() ? new LinkItem($item->getLink()) : null,
+            $item->getDescription(),
+            $item->getPriority() ? PriorityEnum::from($item->getPriority()) : null,
+            $item->getPrice() ? new PriceItem($item->getPrice()) : null,
+        );
     }
 
     public function getId(): string

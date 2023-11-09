@@ -7,16 +7,7 @@
         <h1>Wishlist</h1>
         <a href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
         {% for item in wishlist.items %}
-            <div>
-                <h2>{{ item.label }}</h2>
-                {% if item.link %}
-                    <a href="{{ item.link }}" target="_blank">Access to the link</a>
-                {% endif %}
-                <span>{{ item.priority }}</span>
-                <span>{{ item.description }}</span>
-                <span>{{ item.price }}</span>
-                {% include 'wishlist/wishlist_item/_remove.html.twig' %}
-            </div>
+            {% include 'wishlist/wishlist_item/_show.html.twig' %}
         {% endfor %}
     {% endblock %}
 {% endblock %}
