@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/wishlists/{wishlistId}')]
+#[Route('/wishlists/{wishlistId}/items')]
 class AddItemToWishlistController extends AbstractController
 {
     #[Route('/add', name: 'wishlist_item_add', methods: ['GET', 'POST'])]

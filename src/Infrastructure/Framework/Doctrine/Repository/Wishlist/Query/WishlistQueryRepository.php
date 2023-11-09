@@ -10,7 +10,6 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
 use Domain\Common\Domain\Exception\NotFoundException;
-use Domain\Wishlist\Domain\Model\VisibilityEnum;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Query\GetListWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;

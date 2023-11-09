@@ -15,6 +15,7 @@
                 <span>{{ item.priority }}</span>
                 <span>{{ item.description }}</span>
                 <span>{{ item.price }}</span>
+                {% include 'wishlist/wishlist_item/_remove.html.twig' %}
             </div>
         {% endfor %}
     {% endblock %}

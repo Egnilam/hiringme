@@ -15,7 +15,7 @@ class WishlistItemEntity implements EntityInterface
 
     use EntityDecoratorTrait;
 
-    #[ORM\ManyToOne(targetEntity: WishlistEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: WishlistEntity::class)]
     #[ORM\JoinColumn(name: 'wishlist_id', nullable: false)]
     private WishlistEntity $wishlist;
 
