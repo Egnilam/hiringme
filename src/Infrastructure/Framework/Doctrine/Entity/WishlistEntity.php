@@ -19,7 +19,7 @@ class WishlistEntity implements EntityInterface
     #[ORM\JoinColumn(name: 'owner_id')]
     private WishlistMemberEntity $wishlistMember;
 
-    #[ORM\Column('string', length: 255)]
+    #[ORM\Column(type:'string', length: 255)]
     private string $name;
 
     public function getWishlistMember(): WishlistMemberEntity

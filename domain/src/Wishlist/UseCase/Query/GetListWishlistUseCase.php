@@ -20,9 +20,6 @@ final readonly class GetListWishlistUseCase implements GetListWishlistInterface
      */
     public function execute(GetListWishlistRequest $request): array
     {
-        $x = $this->wishlistQueryRepository->get($request);
-        dump($x);
-
-        return $x;
+        return $this->wishlistQueryRepository->getList($request);
     }
 }

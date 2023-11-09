@@ -33,8 +33,6 @@ final readonly class CreateWishlistUseCase implements CreateWishlistInterface
             $request->getVisibility()
         );
 
-        dump($wishlist);
-
         return $this->wishlistCommandRepository->create($wishlist);
     }
 }

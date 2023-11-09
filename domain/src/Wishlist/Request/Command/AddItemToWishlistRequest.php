@@ -2,23 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Domain\Wishlist\Response;
+namespace Domain\Wishlist\Request\Command;
 
-final readonly class WishlistItemResponse
+use Domain\Wishlist\Domain\Model\PriorityEnum;
+
+final readonly class AddItemToWishlistRequest
 {
     public function __construct(
-        private string $id,
+        private string $wishlistId,
         private string $label,
         private ?string $link,
         private ?string $description,
-        private ?string $priority,
+        private ?PriorityEnum $priority,
         private ?float $price
     ) {
     }
 
-    public function getId(): string
+    public function getWishlistId(): string
     {
-        return $this->id;
+        return $this->wishlistId;
     }
 
     public function getLabel(): string
@@ -36,7 +38,7 @@ final readonly class WishlistItemResponse
         return $this->description;
     }
 
-    public function getPriority(): ?string
+    public function getPriority(): ?PriorityEnum
     {
         return $this->priority;
     }

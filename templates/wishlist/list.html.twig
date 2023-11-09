@@ -7,11 +7,12 @@
         <h1>Wishlists</h1>
         <a href="{{ path('wishlist_create') }}">Create new wishlist</a>
 
-{#        {% for wishlist_group in wishlist_groups %}#}
-{#            <div>#}
-{#                <h2>{{ wishlist_group.name }}</h2>#}
-{#                <a href="{{ path('wishlist_group_show', { id: wishlist_group.id}) }}">Show</a>#}
-{#            </div>#}
-{#        {% endfor %}#}
+        {% for wishlist in wishlists %}
+            <div>
+                <h2>{{ wishlist.name }}</h2>
+                <span>{{ wishlist.visibility }}</span>
+                <a href="{{ path('wishlist_show', { id: wishlist.id}) }}">Show</a>
+            </div>
+        {% endfor %}
     {% endblock %}
 {% endblock %}

@@ -22,8 +22,10 @@ final class ListWishlistController extends AbstractController
         $query = new GetListWishlistQuery();
         $query->setRequest(new GetListWishlistRequest());
 
-        $list = $queryBus->ask($query);
+        $wishlists = $queryBus->ask($query);
 
-        return $this->render('wishlist/list.html.twig');
+        return $this->render('wishlist/list.html.twig', [
+            'wishlists' => $wishlists
+        ]);
     }
 }

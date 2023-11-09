@@ -15,7 +15,7 @@ class WishlistGroupEntity implements EntityInterface
 
     use EntityDecoratorTrait;
 
-    #[ORM\Column('string', length: 255)]
+    #[ORM\Column(type:'string', length: 255)]
     private string $name;
 
     public function getName(): string
