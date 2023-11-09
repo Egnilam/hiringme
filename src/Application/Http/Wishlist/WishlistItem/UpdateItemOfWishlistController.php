@@ -36,7 +36,13 @@ final class UpdateItemOfWishlistController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $commandBus->dispatch($command);
+            try {
+                $commandBus->dispatch($command);
+
+                return $this->redirectToRoute('wishlist_show', ['id' => $wishlistId]);
+            }catch (\Exception $exception) {
+
+            }
         }
         return $this->render('wishlist/wishlist_item/update.html.twig', [
             'wishlist_id' => $wishlistId,
