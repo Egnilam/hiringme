@@ -10,6 +10,7 @@
             <div>
                 <h2>{{ wishlist_group.name }}</h2>
                 <a href="{{ path('wishlist_group_show', { id: wishlist_group.id}) }}">Show</a>
+                <a href="{{ path('wishlist_group_update', { id: wishlist_group.id}) }}">edit</a>
                 {% include 'wishlist/wishlist_group/_delete.html.twig' %}
             </div>
         {% endfor %}

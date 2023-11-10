@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Command;
 
+use App\Infrastructure\Framework\Doctrine\DataMapper\Command\WishlistGroupDataMapper;
+use App\Infrastructure\Framework\Doctrine\DataMapper\Command\WishlistGroupMemberDataMapper;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
@@ -20,57 +22,45 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
 {
     public function create(WishlistGroup $wishlistGroup): WishlistGroupId
     {
-        $wishlistGroupEntity = new WishlistGroupEntity();
-        $wishlistGroupEntity
-            ->setStringUuid($wishlistGroup->getId()->getId())
-            ->setName($wishlistGroup->getName());
+        $wishlistGroupEntity = $this->buildWishlistGroupEntity($wishlistGroup);
 
         $this->entityManager->persist($wishlistGroupEntity);
 
         foreach ($wishlistGroup->getMembers() as $member) {
-            $wishlistGroupMemberEntity = new WishlistGroupMemberEntity();
-            $wishlistGroupMemberEntity
-                ->setStringUuid($member->getId())
-                ->setWishlistMember($this->getWishlistMemberEntity($member->getWishlistMemberId()))
-                ->setWishlistGroup($wishlistGroupEntity)
-                ->setPseudonym($member->getPseudonym())
-                ->setOwner($member->isOwner());
+            $wishlistGroupMemberEntity = $this->buildWishlistGroupMemberEntity(
+                $member,
+                $wishlistGroupEntity,
+            );
 
             $this->entityManager->persist($wishlistGroupMemberEntity);
         }
 
-
         return $wishlistGroup->getId();
+    }
+
+    public function update(WishlistGroup $wishlistGroup): void
+    {
+        $this->buildWishlistGroupEntity(
+            $wishlistGroup,
+            $this->getWishlistGroupEntity($wishlistGroup->getId()->getId())
+        );
     }
 
     public function delete(WishlistGroupId $id): void
     {
-        $wishlistGroupEntity = $this->entityManager->getRepository(WishlistGroupEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($id->getId())]);
-
-        if(!$wishlistGroupEntity) {
-            throw new NotFoundException();
-        }
+        $wishlistGroupEntity = $this->getWishlistGroupEntity($id->getId());
 
         $this->entityManager->remove($wishlistGroupEntity);
     }
 
     public function addMember(WishlistGroupMember $wishlistGroupMember): string
     {
-        $wishlistGroupEntity = $this->entityManager->getRepository(WishlistGroupEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($wishlistGroupMember->getWishlistGroupId()->getId())]);
+        $wishlistGroupEntity = $this->getWishlistGroupEntity($wishlistGroupMember->getWishlistGroupId()->getId());
 
-        if(!$wishlistGroupEntity) {
-            throw new NotFoundException();
-        }
-
-        $wishlistGroupMemberEntity = new WishlistGroupMemberEntity();
-        $wishlistGroupMemberEntity
-            ->setStringUuid($wishlistGroupMember->getId())
-            ->setWishlistMember($this->getWishlistMemberEntity($wishlistGroupMember->getWishlistMemberId()))
-            ->setWishlistGroup($wishlistGroupEntity)
-            ->setPseudonym($wishlistGroupMember->getPseudonym())
-            ->setOwner($wishlistGroupMember->isOwner());
+        $wishlistGroupMemberEntity = $this->buildWishlistGroupMemberEntity(
+            $wishlistGroupMember,
+            $wishlistGroupEntity
+        );
 
         $this->entityManager->persist($wishlistGroupMemberEntity);
 
@@ -89,6 +79,18 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
         $this->entityManager->remove($wishlistGroupMemberEntity);
     }
 
+    private function getWishlistGroupEntity(string $id): WishlistGroupEntity
+    {
+        $wishlistGroupEntity = $this->entityManager->getRepository(WishlistGroupEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($id)]);
+
+        if(!$wishlistGroupEntity) {
+            throw new NotFoundException();
+        }
+
+        return $wishlistGroupEntity;
+    }
+
     /**
      * @throws NotFoundException
      */
@@ -103,5 +105,26 @@ final class WishlistGroupCommandRepository extends AbstractRepository implements
 
         return $this->entityManager->getRepository(WishlistMemberEntity::class)
             ->findOneBy(['uuid' => IdService::fromString($id->getId())]) ?? throw new NotFoundException();
+    }
+
+    private function buildWishlistGroupEntity(WishlistGroup $wishlistGroup, ?WishlistGroupEntity $wishlistGroupEntity = null): WishlistGroupEntity
+    {
+        return WishlistGroupDataMapper::fromDomain(
+            $wishlistGroup,
+            $wishlistGroupEntity
+        );
+    }
+
+    private function buildWishlistGroupMemberEntity(
+        WishlistGroupMember $wishlistGroupMember,
+        WishlistGroupEntity $wishlistGroupEntity,
+        ?WishlistGroupMemberEntity $wishlistGroupMemberEntity = null
+    ): WishlistGroupMemberEntity {
+        return WishlistGroupMemberDataMapper::fromDomain(
+            $wishlistGroupMember,
+            $wishlistGroupEntity,
+            $this->getWishlistMemberEntity($wishlistGroupMember->getWishlistMemberId()),
+            $wishlistGroupMemberEntity
+        );
     }
 }

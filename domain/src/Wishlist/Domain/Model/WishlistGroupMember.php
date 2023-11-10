@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Domain\Model;
 
+use Domain\Common\Domain\Exception\EmailFormatException;
 use Domain\Common\Domain\ValueObject\Email;
 use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
 use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
+use Domain\Wishlist\Response\WishlistGroupMemberResponse;
 
 final class WishlistGroupMember
 {
@@ -36,6 +38,21 @@ final class WishlistGroupMember
         $this->wishlistMemberId = $wishlistMemberId;
         $this->wishlistGroupId = $wishlistGroupId;
         $this->owner = $owner;
+    }
+
+    /**
+     * @throws EmailFormatException
+     */
+    public static function createFromResponse(WishlistGroupMemberResponse $member, WishlistGroupId $wishlistGroupId): self
+    {
+        return new WishlistGroupMember(
+            $member->getId(),
+            $member->getPseudonym(),
+            $member->getEmail() ? new Email($member->getEmail()) : null,
+            new WishlistMemberId($member->getWishlistMemberId()),
+            $wishlistGroupId,
+            $member->isOwner()
+        );
     }
 
     public function getId(): string

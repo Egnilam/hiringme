@@ -49,14 +49,7 @@ final readonly class AddMemberToWishlistGroupUseCase implements AddMemberToWishl
 
         $wishlistGroupMembers[] = $wishlistGroupMember;
         foreach ($wishlistGroupResponse->getMembers() as $member) {
-            $wishlistGroupMembers[] = new WishlistGroupMember(
-                $member->getId(),
-                $member->getPseudonym(),
-                $member->getEmail() ? new Email($member->getEmail()) : null,
-                new WishlistMemberId($member->getWishlistMemberId()),
-                $wishlistGroupId,
-                $member->isOwner()
-            );
+            $wishlistGroupMembers[] = WishlistGroupMember::createFromResponse($member, $wishlistGroupId);
         }
 
         new WishlistGroup(

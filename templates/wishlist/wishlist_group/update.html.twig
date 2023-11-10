@@ -5,5 +5,10 @@
 {% block content %}
     {% block body %}
         <h1>Update group</h1>
+        <a href="{{ path('wishlist_group_list') }}">Back to wishlist groups</a>
+        {{ form_start(form)}}
+        {{ form_widget(form) }}
+        <button type="submit">Envoyer</button>
+        {{ form_end(form) }}
     {% endblock %}
 {% endblock %}
