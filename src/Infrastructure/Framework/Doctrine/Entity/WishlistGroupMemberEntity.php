@@ -15,7 +15,7 @@ class WishlistGroupMemberEntity implements EntityInterface
 
     use EntityDecoratorTrait;
 
-    #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class)]
+    #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class, inversedBy: 'wishlistGroupMembers')]
     #[ORM\JoinColumn(name: 'wishlist_group_id')]
     private WishlistGroupEntity $wishlistGroup;
 

@@ -12,6 +12,8 @@ interface WishlistGroupCommandRepositoryInterface
 {
     public function create(WishlistGroup $wishlistGroup): WishlistGroupId;
 
+    public function delete(WishlistGroupId $id): void;
+
     public function addMember(WishlistGroupMember $wishlistGroupMember): string;
 
     public function removeMember(string $wishlistGroupMemberId): void;
