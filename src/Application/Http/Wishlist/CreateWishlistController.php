@@ -40,6 +40,8 @@ final class CreateWishlistController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             try {
                 $commandBus->dispatch($command);
+
+                return $this->redirectToRoute('wishlist_list');
             } catch (\Exception $exception) {
 
             }

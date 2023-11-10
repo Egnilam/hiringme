@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Command;
 
+use App\Infrastructure\Framework\Doctrine\DataMapper\Command\WishlistDataMapper;
 use App\Infrastructure\Framework\Doctrine\DataMapper\Command\WishlistItemDataMapper;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistItemEntity;
@@ -20,33 +21,24 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
 {
     public function create(Wishlist $wishlist): WishlistId
     {
-        $wishlistMemberEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($wishlist->getOwner()->getId())]);
-
-        if(!$wishlistMemberEntity) {
-            throw new NotFoundException();
-        }
-
-        $wishlistEntity = new WishlistEntity();
-        $wishlistEntity
-            ->setStringUuid($wishlist->getId()->getId())
-            ->setName($wishlist->getName())
-            ->setWishlistMember($wishlistMemberEntity)
-            ->setVisibility($wishlist->getVisibility()->value);
+        $wishlistEntity = $this->buildWishlistEntity($wishlist);
 
         $this->entityManager->persist($wishlistEntity);
 
         return $wishlist->getId();
     }
 
+    public function update(Wishlist $wishlist): void
+    {
+        $this->buildWishlistEntity(
+            $wishlist,
+            $this->getWishlistEntity($wishlist->getId()->getId())
+        );
+    }
+
     public function delete(WishlistId $id): void
     {
-        $wishlistEntity = $this->entityManager->getRepository(WishlistEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($id->getId())]);
-
-        if(!$wishlistEntity) {
-            throw new NotFoundException();
-        }
+        $wishlistEntity = $this->getWishlistEntity($id->getId());
 
         $this->entityManager->remove($wishlistEntity);
     }
@@ -75,19 +67,31 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
         $this->entityManager->remove($wishlistItemEntity);
     }
 
-    private function buildWishlistItemEntity(WishlistItem $wishlistItem, WishlistItemEntity $wishlistItemEntity = null): WishlistItemEntity
+    private function getWishlistEntity(string $id): WishlistEntity
     {
         $wishlistEntity = $this->entityManager->getRepository(WishlistEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($wishlistItem->getWishlistId()->getId())]);
+            ->findOneBy(['uuid' => IdService::fromString($id)]);
 
         if(!$wishlistEntity) {
             throw new NotFoundException();
         }
 
-        return WishlistItemDataMapper::fromDomain(
-            $wishlistItem,
-            $wishlistEntity,
-            $wishlistItemEntity
+        return $wishlistEntity;
+    }
+
+    private function buildWishlistEntity(Wishlist $wishlist, WishlistEntity $wishlistEntity = null): WishlistEntity
+    {
+        $wishlistMemberEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
+            ->findOneBy(['uuid' => IdService::fromString($wishlist->getOwner()->getId())]);
+
+        if(!$wishlistMemberEntity) {
+            throw new NotFoundException();
+        }
+
+        return WishlistDataMapper::fromDomain(
+            $wishlist,
+            $wishlistMemberEntity,
+            $wishlistEntity
         );
     }
 
@@ -101,5 +105,14 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
         }
 
         return $wishlistItemEntity;
+    }
+
+    private function buildWishlistItemEntity(WishlistItem $wishlistItem, WishlistItemEntity $wishlistItemEntity = null): WishlistItemEntity
+    {
+        return WishlistItemDataMapper::fromDomain(
+            $wishlistItem,
+            $this->getWishlistEntity($wishlistItem->getWishlistId()->getId()),
+            $wishlistItemEntity
+        );
     }
 }

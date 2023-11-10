@@ -7,7 +7,7 @@ namespace App\Application\Form\Wishlist\WishlistItem;
 use App\Action\Command\Wishlist\AddItemToWishlistCommand;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class AddItemToWishlistForm extends WishlistItemForm
+final class AddItemToWishlistForm extends AbstractWishlistItemForm
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

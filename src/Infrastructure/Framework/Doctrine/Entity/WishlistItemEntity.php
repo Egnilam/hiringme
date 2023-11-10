@@ -15,7 +15,7 @@ class WishlistItemEntity implements EntityInterface
 
     use EntityDecoratorTrait;
 
-    #[ORM\ManyToOne(targetEntity: WishlistEntity::class)]
+    #[ORM\ManyToOne(targetEntity: WishlistEntity::class, inversedBy: 'wishlistItems')]
     #[ORM\JoinColumn(name: 'wishlist_id', nullable: false)]
     private WishlistEntity $wishlist;
 

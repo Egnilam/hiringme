@@ -7,7 +7,7 @@ namespace App\Application\Form\Wishlist\WishlistItem;
 use App\Action\Command\Wishlist\UpdateItemOfWishlistCommand;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class UpdateItemOfWishlistForm extends WishlistItemForm
+final class UpdateItemOfWishlistForm extends AbstractWishlistItemForm
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
