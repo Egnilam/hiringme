@@ -22,7 +22,7 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
     {
         $wishlistGroupEntity = $this->entityManager->getRepository(WishlistGroupEntity::class)
             ->findOneBy(['uuid' => IdService::fromString($request->getId())]);
-        if($wishlistGroupEntity === null) {
+        if(!$wishlistGroupEntity) {
             throw new NotFoundException();
         }
 
@@ -36,6 +36,7 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
                 $wishlistGroupMemberEntity->getPseudonym(),
                 $wishlistGroupMemberEntity->getWishlistMember()->getEmail(),
                 $wishlistGroupMemberEntity->getWishlistMember()->getStringUuid(),
+                $wishlistGroupMemberEntity->getWishlist()?->getStringUuid(),
                 $wishlistGroupMemberEntity->isOwner()
             );
         }

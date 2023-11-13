@@ -13,7 +13,11 @@
                     <h3>{{ wishlist_group_member.pseudonym }}</h3>
                     <span>{{ wishlist_group_member.email }}</span>
                     <span>{{ wishlist_group_member.owner ? 'Owner' }}</span>
-                    <button>Show wishlist</button>
+                    {% if wishlist_group_member.wishlistId %}
+                        <a href="{{ path('wishlist_show', { 'id' : wishlist_group_member.wishlistId}) }}">Show wishlist</a>
+                    {% else %}
+                        <a href="{{ path('wishlist_create', { 'group' : wishlist_group.id }) }}">Create wishlist</a>
+                    {% endif %}
                     <div>
                         {% include 'wishlist/wishlist_group/wishlist_group_member/_remove.html.twig' %}
                     </div>
