@@ -14,6 +14,8 @@ abstract class AbstractWishlistCommand
 
     private VisibilityEnum $visibility;
 
+    private ?string $wishlistGroupId = null;
+
     public function getWishlistMemberId(): string
     {
         return $this->wishlistMemberId;
@@ -44,6 +46,17 @@ abstract class AbstractWishlistCommand
     public function setVisibility(VisibilityEnum $visibility): self
     {
         $this->visibility = $visibility;
+        return $this;
+    }
+
+    public function getWishlistGroupId(): ?string
+    {
+        return $this->wishlistGroupId;
+    }
+
+    public function setWishlistGroupId(?string $wishlistGroupId): self
+    {
+        $this->wishlistGroupId = $wishlistGroupId;
         return $this;
     }
 }

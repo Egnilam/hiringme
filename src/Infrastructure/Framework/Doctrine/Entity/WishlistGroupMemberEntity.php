@@ -16,11 +16,11 @@ class WishlistGroupMemberEntity implements EntityInterface
     use EntityDecoratorTrait;
 
     #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class, inversedBy: 'wishlistGroupMembers')]
-    #[ORM\JoinColumn(name: 'wishlist_group_id')]
+    #[ORM\JoinColumn(name: 'wishlist_group_id', nullable: false)]
     private WishlistGroupEntity $wishlistGroup;
 
     #[ORM\ManyToOne(targetEntity: WishlistMemberEntity::class)]
-    #[ORM\JoinColumn(name: 'wishlist_member_id')]
+    #[ORM\JoinColumn(name: 'wishlist_member_id', nullable: false)]
     private WishlistMemberEntity $wishlistMember;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -28,6 +28,10 @@ class WishlistGroupMemberEntity implements EntityInterface
 
     #[ORM\Column(type: 'boolean')]
     private bool $owner = false;
+
+    #[ORM\ManyToOne(targetEntity: WishlistEntity::class)]
+    #[ORM\JoinColumn(name: 'wishlist_id', nullable: true)]
+    private ?WishlistEntity $wishlist = null;
 
     public function getWishlistGroup(): WishlistGroupEntity
     {
@@ -70,6 +74,17 @@ class WishlistGroupMemberEntity implements EntityInterface
     public function setOwner(bool $owner): self
     {
         $this->owner = $owner;
+        return $this;
+    }
+
+    public function getWishlist(): ?WishlistEntity
+    {
+        return $this->wishlist;
+    }
+
+    public function setWishlist(?WishlistEntity $wishlist): self
+    {
+        $this->wishlist = $wishlist;
         return $this;
     }
 }

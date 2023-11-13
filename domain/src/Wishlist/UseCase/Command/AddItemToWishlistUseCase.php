@@ -52,10 +52,11 @@ final readonly class AddItemToWishlistUseCase implements AddItemToWishlistInterf
             $wishlistItems[$item->getId()] = WishlistItem::createFromResponse($item, $wishlistId);
         }
 
-        $wishlist = new Wishlist(
+        new Wishlist(
             $wishlistId,
             new WishlistMemberId($wishlistResponse->getOwner()),
             $wishlistResponse->getName(),
+            [],
             $wishlistItems,
             VisibilityEnum::from($wishlistResponse->getVisibility())
         );

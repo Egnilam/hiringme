@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\UseCase\Command;
 
+use Domain\Common\Domain\Exception\DomainException;
 use Domain\Common\Service\IdServiceInterface;
 use Domain\Wishlist\Domain\Model\Wishlist;
 use Domain\Wishlist\Domain\ValueObject\WishlistId;
@@ -15,11 +16,14 @@ use Domain\Wishlist\Request\Command\CreateWishlistRequest;
 final readonly class CreateWishlistUseCase implements CreateWishlistInterface
 {
     public function __construct(
-        private IdServiceInterface $idService,
-        private WishlistCommandRepositoryInterface $wishlistCommandRepository,
+        private IdServiceInterface                      $idService,
+        private WishlistCommandRepositoryInterface      $wishlistCommandRepository,
     ) {
     }
 
+    /**
+     * @throws DomainException
+     */
     public function execute(CreateWishlistRequest $request): WishlistId
     {
         $wishlistId = new WishlistId($this->idService->next());
@@ -29,6 +33,7 @@ final readonly class CreateWishlistUseCase implements CreateWishlistInterface
             $wishlistId,
             $owner,
             $request->getName(),
+            [],
             [],
             $request->getVisibility()
         );

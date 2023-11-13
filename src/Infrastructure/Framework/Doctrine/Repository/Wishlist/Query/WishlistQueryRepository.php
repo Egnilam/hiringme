@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Framework\Doctrine\Repository\Wishlist\Query;
 
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistEntity;
+use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistItemEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
@@ -20,8 +21,14 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
 {
     public function get(GetWishlistRequest $request): WishlistResponse
     {
-        $wishlistEntity = $this->entityManager->getRepository(WishlistEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($request->getId())]);
+        if($this->storePersistEntityService->has($request->getId())) {
+            /** @var WishlistEntity $wishlistEntity */
+            $wishlistEntity = $this->storePersistEntityService->search($request->getId());
+
+        } else {
+            $wishlistEntity = $this->entityManager->getRepository(WishlistEntity::class)
+                ->findOneBy(['uuid' => IdService::fromString($request->getId())]);
+        }
 
         if(!$wishlistEntity) {
             throw new NotFoundException();
@@ -31,6 +38,7 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
             $wishlistEntity->getStringUuid(),
             $wishlistEntity->getWishlistMember()->getStringUuid(),
             $wishlistEntity->getName(),
+            $this->getWishlistGroups($wishlistEntity),
             $this->getWishlistItems($request->getId()),
             $wishlistEntity->getVisibility()
         );
@@ -60,6 +68,7 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
                 $wishlistEntity->getStringUuid(),
                 $wishlistEntity->getWishlistMember()->getStringUuid(),
                 $wishlistEntity->getName(),
+                [],
                 $this->getWishlistItems($wishlistEntity->getStringUuid()),
                 $wishlistEntity->getVisibility()
             );
@@ -95,5 +104,21 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
         }
 
         return $wishlistItems;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getWishlistGroups(WishlistEntity $wishlistEntity): array
+    {
+        $wishlistGroupMembers = $this->entityManager->getRepository(WishlistGroupMemberEntity::class)
+            ->findBy(['wishlist' => $wishlistEntity]);
+
+        $groups = [];
+        foreach ($wishlistGroupMembers as $wishlistGroupMember) {
+            $groups[] = $wishlistGroupMember->getWishlistGroup()->getStringUuid();
+        }
+
+        return $groups;
     }
 }

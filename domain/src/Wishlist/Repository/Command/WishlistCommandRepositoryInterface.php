@@ -6,6 +6,7 @@ namespace Domain\Wishlist\Repository\Command;
 
 use Domain\Wishlist\Domain\Model\Wishlist;
 use Domain\Wishlist\Domain\Model\WishlistItem;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
 use Domain\Wishlist\Domain\ValueObject\WishlistId;
 
 interface WishlistCommandRepositoryInterface
@@ -21,4 +22,6 @@ interface WishlistCommandRepositoryInterface
     public function updateItem(WishlistItem $wishlistItem): void;
 
     public function removeItem(string $wishlistItemId): void;
+
+    public function associateGroupMember(WishlistId $id, WishlistGroupId $wishlistGroupId): void;
 }

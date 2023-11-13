@@ -35,6 +35,10 @@ final class CreateWishlistController extends AbstractController
         $command = new CreateWishlistCommand();
         $command->setWishlistMemberId($wishlistMemberResponse->getId());
 
+        if($request->query->has('group')) {
+            $command->setWishlistGroupId((string)$request->query->get('group'));
+        }
+
         $form = $this->createForm(CreateWishlistForm::class, $command);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
