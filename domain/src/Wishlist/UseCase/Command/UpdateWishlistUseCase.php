@@ -42,6 +42,7 @@ final readonly class UpdateWishlistUseCase implements UpdateWishlistInterface
             $wishlistId,
             $owner,
             $request->getName(),
+            [],
             $wishlistItems,
             $request->getVisibility()
         );

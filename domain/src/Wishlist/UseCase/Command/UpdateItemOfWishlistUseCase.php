@@ -59,10 +59,11 @@ final readonly class UpdateItemOfWishlistUseCase implements UpdateItemOfWishlist
         );
         $wishlistItems[] = $wishlistItem;
 
-        $wishlist = new Wishlist(
+        new Wishlist(
             $wishlistId,
             new WishlistMemberId($wishlistResponse->getOwner()),
             $wishlistResponse->getName(),
+            [],
             $wishlistItems,
             VisibilityEnum::from($wishlistResponse->getVisibility())
         );

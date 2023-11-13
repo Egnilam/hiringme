@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace Domain\Wishlist\UseCase\Command;
 
 use Domain\Common\Domain\Exception\DomainException;
-use Domain\Wishlist\Domain\Model\PriorityEnum;
 use Domain\Wishlist\Domain\Model\VisibilityEnum;
 use Domain\Wishlist\Domain\Model\Wishlist;
-use Domain\Wishlist\Domain\Model\WishlistItem;
-use Domain\Wishlist\Domain\ValueObject\LinkItem;
-use Domain\Wishlist\Domain\ValueObject\PriceItem;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
 use Domain\Wishlist\Domain\ValueObject\WishlistId;
 use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
-use Domain\Wishlist\Port\Command\RemoveItemToWishlistInterface;
+use Domain\Wishlist\Port\Command\AssociateGroupMemberToWishlistInterface;
 use Domain\Wishlist\Repository\Command\WishlistCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
-use Domain\Wishlist\Request\Command\RemoveItemToWishlistRequest;
+use Domain\Wishlist\Request\Command\AssociateGroupMemberToWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
 
-final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlistInterface
+final readonly class AssociateGroupMemberMemberToWishlistUseCase implements AssociateGroupMemberToWishlistInterface
 {
     public function __construct(
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
@@ -31,27 +28,31 @@ final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlist
     /**
      * @throws DomainException
      */
-    public function execute(RemoveItemToWishlistRequest $request): void
+    public function execute(AssociateGroupMemberToWishlistRequest $request): void
     {
         $wishlistId = new WishlistId($request->getWishlistId());
-        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($wishlistId->getId()));
 
-        $wishlistItems = [];
-        foreach ($wishlistResponse->getItems() as $item) {
-            $wishlistItems[$item->getId()] = WishlistItem::createFromResponse($item, $wishlistId);
+        $wishlistGroupId = new WishlistGroupId($request->getWishlistGroupId());
+
+        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($request->getWishlistId()));
+
+        $groups[] = $wishlistGroupId;
+        foreach ($wishlistResponse->getGroups() as $group) {
+            $groups[] = new WishlistGroupId($group);
         }
-
-        unset($wishlistItems[$request->getWishlistItemId()]);
 
         new Wishlist(
             $wishlistId,
             new WishlistMemberId($wishlistResponse->getOwner()),
             $wishlistResponse->getName(),
+            $groups,
             [],
-            $wishlistItems,
             VisibilityEnum::from($wishlistResponse->getVisibility())
         );
 
-        $this->wishlistCommandRepository->removeItem($request->getWishlistItemId());
+        $this->wishlistCommandRepository->associateGroupMember(
+            $wishlistId,
+            $wishlistGroupId
+        );
     }
 }
