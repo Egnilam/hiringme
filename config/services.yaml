@@ -18,14 +18,25 @@ services:
         App\Infrastructure\Framework\Messenger\Query\QueryHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
+    SessionHandlerInterface:
+        alias: 'session.handler.native_file'
+
+    app.session_handler:
+        class: App\Session\CustomSessionHandlerProxy
+        arguments:
+            - '@SessionHandlerInterface'
+            - '@Symfony\Bundle\SecurityBundle\Security'
+
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Infrastructure/Framework/Doctrine/Entity/'
             - '../src/Kernel.php'
+            - '../src/Session/'
 
     Domain\:
         resource: '../domain/src/'
