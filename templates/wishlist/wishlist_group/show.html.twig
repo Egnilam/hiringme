@@ -14,9 +14,9 @@
                     <span>{{ wishlist_group_member.email }}</span>
                     <span>{{ wishlist_group_member.owner ? 'Owner' }}</span>
                     {% if wishlist_group_member.wishlistId %}
-                        <a href="{{ path('wishlist_show', { 'id' : wishlist_group_member.wishlistId}) }}">Show wishlist</a>
+                        <a href="{{ path('wishlist_show', { 'id' : wishlist_group_member.wishlistId }) }}">Show wishlist</a>
                     {% else %}
-                        <a href="{{ path('wishlist_create', { 'group' : wishlist_group.id }) }}">Create wishlist</a>
+                        <a href="{{ path('wishlist_group_member_associate_wishlist', { 'groupId' : wishlist_group.id, id: wishlist_group_member.wishlistMemberId }) }}">Create wishlist</a>
                     {% endif %}
                     <div>
                         {% include 'wishlist/wishlist_group/wishlist_group_member/_remove.html.twig' %}

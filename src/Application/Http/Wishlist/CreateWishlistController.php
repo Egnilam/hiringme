@@ -20,6 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlists')]
 final class CreateWishlistController extends AbstractController
 {
+    public const QUERY_PARAM_GROUP = 'group';
+
     #[Route('/create', name: 'wishlist_create', methods: ['GET', 'POST'])]
     public function __invoke(Request $request, CommandBusInterface $commandBus, QueryBusInterface $queryBus): Response
     {
@@ -35,8 +37,8 @@ final class CreateWishlistController extends AbstractController
         $command = new CreateWishlistCommand();
         $command->setWishlistMemberId($wishlistMemberResponse->getId());
 
-        if($request->query->has('group')) {
-            $command->setWishlistGroupId((string)$request->query->get('group'));
+        if($request->query->has(self::QUERY_PARAM_GROUP)) {
+            $command->setWishlistGroupId((string)$request->query->get(self::QUERY_PARAM_GROUP));
         }
 
         $form = $this->createForm(CreateWishlistForm::class, $command);
