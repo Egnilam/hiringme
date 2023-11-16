@@ -35,6 +35,14 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+
+      - name: Print Public IP
+        run: |
+          echo ${{ steps.ip.outputs.ipv4 }}
+
       - name: Copying files to server
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -46,13 +54,6 @@ jobs:
             source: "./"
             target: ${{ secrets.REMOTE_TARGET }}
             timeout: 240s
-      - name: Public IP
-        id: ip
-        uses: haythem/public-ip@v1.3
-
-      - name: Print Public IP
-        run: |
-          echo ${{ steps.ip.outputs.ipv4 }}
 
       - name: Executing remote ssh commands
         uses: appleboy/scp-action@v0.1.4
