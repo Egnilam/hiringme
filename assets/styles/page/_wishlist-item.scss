@@ -1,0 +1,40 @@
+.item-card {
+  display: flex;
+  flex-direction: column;
+  row-gap: $default-gap;
+  position: relative;
+  min-height: 4rem;
+  padding: 1.5rem;
+  border-radius: 4px;
+  background-color: $second-color;
+  margin-bottom: 1.5rem;
+  overflow-wrap: anywhere;
+
+  &__title-link {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.3rem;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+  }
+
+
+  &__label {
+    padding: 0.5rem;
+    border-radius: $default-border-radius;
+    background-color: $main-color;
+  }
+
+  &__actions {
+    position: absolute;
+    bottom: -1rem;
+    display:flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    left: 50%;
+  }
+}

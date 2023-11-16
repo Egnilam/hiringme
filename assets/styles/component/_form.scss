@@ -1,0 +1,47 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 0 $default-padding;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+
+  & > label {
+    &.required::after {
+      content: ' *';
+    }
+  }
+
+  input {
+    padding: 0.5rem;
+    border: solid 1px darken($main-color, 3%);
+
+    &:focus-visible {
+      outline: solid 1px darken($second-color, 10%);;
+    }
+  }
+
+  select {
+    padding: 0.5rem;
+
+    border: solid 1px darken($main-color, 3%);
+
+    &:focus-visible {
+      outline: solid 1px darken($second-color, 10%);;
+    }
+  }
+
+  textarea {
+    padding: 0.5rem;
+    height: 4rem;
+    border: solid 1px darken($main-color, 3%);
+
+    &:focus-visible {
+      outline: solid 1px darken($second-color, 10%);;
+    }
+  }
+}

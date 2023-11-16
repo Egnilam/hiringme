@@ -4,15 +4,21 @@
 
 {% block content %}
     {% block body %}
-        <h1>Wishlist groups</h1>
-        <a href="{{ path('wishlist_group_create') }}">Create new group</a>
-        {% for wishlist_group in wishlist_groups %}
-            <div>
-                <h2>{{ wishlist_group.name }}</h2>
-                <a href="{{ path('wishlist_group_show', { id: wishlist_group.id}) }}">Show</a>
-                <a href="{{ path('wishlist_group_update', { id: wishlist_group.id}) }}">edit</a>
-                {% include 'wishlist/wishlist_group/_delete.html.twig' %}
-            </div>
-        {% endfor %}
+        <h1 class="main__title">Wishlist groups</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_group_create') }}">Create new group</a>
+        </div>
+        <div class="wg__container">
+            {% for wishlist_group in wishlist_groups %}
+                <div class="wg-card">
+                    <h2 class="wg-card__title">{{ wishlist_group.name }}</h2>
+                    <div class="wg-card__actions">
+                        <a class="button" href="{{ path('wishlist_group_show', { id: wishlist_group.id}) }}">Show</a>
+                        <a class="button" href="{{ path('wishlist_group_update', { id: wishlist_group.id}) }}">edit</a>
+                        {% include 'wishlist/wishlist_group/_delete.html.twig' %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% endblock %}
 {% endblock %}

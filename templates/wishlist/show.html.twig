@@ -4,10 +4,14 @@
 
 {% block content %}
     {% block body %}
-        <h1>Wishlist</h1>
-        <a href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
-        {% for item in wishlist.items %}
-            {% include 'wishlist/wishlist_item/_show.html.twig' %}
-        {% endfor %}
+        <h1 class="main__title">Wishlist</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
+        </div>
+        <div class="card-container">
+            {% for item in wishlist.items %}
+                {% include 'wishlist/wishlist_item/_show.html.twig' %}
+            {% endfor %}
+        </div>
     {% endblock %}
 {% endblock %}

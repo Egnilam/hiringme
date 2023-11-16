@@ -4,16 +4,40 @@
 
 {% block content %}
     {% block body %}
-        <h1>Register user</h1>
+        <h1 class="main__title">Register user</h1>
         {% if domain_error %}
             {% for error in domain_error.messages %}
                 <div>{{ error }}</div>
             {% endfor %}
         {% endif %}
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit">Envoyer</button>
+        {{ form_start(form, { attr : { class : 'form' } }) }}
+        <div class="form-control">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.birthDate) }}
+            {{ form_widget(form.birthDate) }}
+            {{ form_errors(form.birthDate) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+            {{ form_errors(form.password) }}
+        </div>
+        <button class="button" type="submit">Save</button>
         {{ form_end(form) }}
-        <a href="{{ path('app_login') }}">sign in</a>
+        <a class="button button--accent" href="{{ path('app_login') }}">sign in</a>
     {% endblock %}
 {% endblock %}

@@ -1,11 +1,25 @@
-<div>
-    <h2>{{ item.label }}</h2>
+<div class="item-card">
     {% if item.link %}
-        <a href="{{ item.link }}" target="_blank">Access to the link</a>
+        <a class="item-card__title-link" href="{{ item.link }}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 17c-3.859 0-7-3.14-7-7s3.141-7 7-7 7 3.14 7 7-3.141 7-7 7z"></path><path d="M12 7c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zm0 7c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z"></path></svg>
+            <span class="item-card__title">{{ item.label }}</span>
+        </a>
+        {% else %}
+        <p class="item-card__title">{{ item.label }}</p>
     {% endif %}
-    <span>{{ item.priority }}</span>
-    <span>{{ item.description }}</span>
-    <span>{{ item.price }}</span>
-    <a href="{{ path('wishlist_item_update', {'wishlistId' : wishlist.id, 'id' : item.id}) }}">edit</a>
-    {% include 'wishlist/wishlist_item/_remove.html.twig' %}
+    <div class="item-card__label-container">
+        {% if item.price %}
+            <span class="item-card__label">{{ item.price|number_format(2, ',', ' ') }}€</span>
+        {% endif %}
+        {% if item.priority %}
+            <span class="item-card__label">{{ item.priority }}</span>
+        {% endif %}
+    </div>
+    {% if item.description %}
+        <span>{{ item.description }}</span>
+    {% endif %}
+    <div class="item-card__actions">
+        <a class="button" href="{{ path('wishlist_item_update', {'wishlistId' : wishlist.id, 'id' : item.id}) }}">Edit</a>
+        {% include 'wishlist/wishlist_item/_remove.html.twig' %}
+    </div>
 </div>

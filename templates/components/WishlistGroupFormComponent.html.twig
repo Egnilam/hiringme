@@ -1,6 +1,7 @@
 <div {{ attributes }}>
     {{ form_start(form, {
         attr: {
+            'class' : 'form',
             'data-action': 'live#action',
             'data-action-name': 'prevent|save',
             'data-model': 'norender|*'
@@ -10,25 +11,40 @@
         {{ error }}
     {% endif %}
     {{ form_errors(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.ownerPseudonym) }}
+    <div class="form-control">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-control">
+        {{ form_label(form.ownerPseudonym) }}
+        {{ form_widget(form.ownerPseudonym) }}
+        {{ form_errors(form.ownerPseudonym) }}
+    </div>
     {% for key, memberForm in form.members %}
-        <div>
-            {{ form_errors(memberForm) }}
-
-            {{ form_row(memberForm) }}
-            <button
-                    data-action="live#action"
-                    data-action-name="removeWishlistGroupMember(index={{ key }})"
-                    type="button"
-            >X</button>
+        <div class="form-control">
+            {{ form_label(memberForm.pseudonym) }}
+            {{ form_widget(memberForm.pseudonym) }}
+            {{ form_errors(memberForm.pseudonym) }}
         </div>
+        <div class="form-control">
+            {{ form_label(memberForm.email) }}
+            {{ form_widget(memberForm.email) }}
+            {{ form_errors(memberForm.email) }}
+        </div>
+        <button
+                class="button button--accent"
+                data-action="live#action"
+                data-action-name="removeWishlistGroupMember(index={{ key }})"
+                type="button"
+        >X</button>
     {% endfor %}
     <button
+            class="button"
             data-action="live#action"
             data-action-name="addWishlistGroupMember"
             type="button"
     >+ Add member</button>
-    <button type="submit">Envoyer</button>
+    <button class="button" type="submit">Envoyer</button>
     {{ form_end(form) }}
 </div>
