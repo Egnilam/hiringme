@@ -1,0 +1,27 @@
+name: SSH Deploy
+
+on:
+  push:
+    branches: ["develop"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer:v2
+        env:
+          update: true
+      - name: Check PHP version
+        run: php -v
+      - name: Validate composer
+        run: composer validate
+      - name: Composer install
+        run: composer install
+        
+        
+        
+  
