@@ -45,6 +45,7 @@ jobs:
             rm: true
             source: "./"
             target: ${{ secrets.REMOTE_TARGET }}
+            timeout: 240s
 
       - name: Executing remote ssh commands
         uses: appleboy/scp-action@v0.1.4
