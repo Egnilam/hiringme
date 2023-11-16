@@ -15,10 +15,14 @@ abstract class AbstractWishlistForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Name',
+            ])
             ->add('visibility', EnumType::class, [
                 'class' => VisibilityEnum::class,
-                'placeholder' => 'Choose an option',
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Visibility',
             ])
         ;
     }

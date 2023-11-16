@@ -1,0 +1,20 @@
+.main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  row-gap: $default-gap;
+  padding: $default-padding 0;
+
+  &__title {
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    row-gap: $default-gap;
+    padding: 0 $default-padding;
+  }
+}

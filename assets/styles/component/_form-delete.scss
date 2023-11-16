@@ -1,0 +1,10 @@
+.form-delete{
+  display: inline;
+
+  &__btn {
+    background-color: transparent;
+    border-width: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}

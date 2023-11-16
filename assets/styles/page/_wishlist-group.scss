@@ -1,0 +1,33 @@
+.wg {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+  }
+}
+
+.wg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: $default-gap;
+  padding: 1.5rem;
+  background-color: $second-color;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.3rem;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  &__actions {
+    position: absolute;
+    bottom: -1rem;
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    left: 50%;
+  }
+}

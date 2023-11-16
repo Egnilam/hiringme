@@ -2,17 +2,21 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="body">
+    <div class="container">
         {% if app.user %}
             {% include 'header.html.twig' %}
         {% endif %}
-
-        {% block body %}{% endblock %}
+        <main class="main">
+            {% block body %}{% endblock %}
+        </main>
+    </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

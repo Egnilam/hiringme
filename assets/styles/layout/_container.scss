@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  grid-template-areas:
+    'main'
+    'header';
+  grid-template-rows: auto 4rem;
+  min-height: 100vh;
+  background-color: $main-color;
+}

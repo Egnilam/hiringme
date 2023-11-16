@@ -4,11 +4,17 @@
 
 {% block content %}
     {% block body %}
-        <h1>Update group</h1>
-        <a href="{{ path('wishlist_group_list') }}">Back to wishlist groups</a>
-        {{ form_start(form)}}
-        {{ form_widget(form) }}
-        <button type="submit">Envoyer</button>
+        <h1 class="main__title">Update group</h1>
+        <div class="main__actions">
+            <a class="button button--accent" href="{{ path('wishlist_group_list') }}">Back to wishlist groups</a>
+        </div>
+        {{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+        <div class="form-control">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <button class="button" type="submit">Envoyer</button>
         {{ form_end(form) }}
     {% endblock %}
 {% endblock %}

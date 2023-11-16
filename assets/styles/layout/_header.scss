@@ -1,0 +1,10 @@
+.header {
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+  grid-area: header;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: $second-color;
+}

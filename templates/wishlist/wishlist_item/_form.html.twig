@@ -1,0 +1,28 @@
+{{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+<div class="form-control">
+    {{ form_label(form.label) }}
+    {{ form_widget(form.label) }}
+    {{ form_errors(form.label) }}
+</div>
+<div class="form-control">
+    {{ form_label(form.link) }}
+    {{ form_widget(form.link) }}
+    {{ form_errors(form.link) }}
+</div>
+<div class="form-control">
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+</div>
+<div class="form-control">
+    {{ form_label(form.priority) }}
+    {{ form_widget(form.priority) }}
+    {{ form_errors(form.priority) }}
+</div>
+<div class="form-control">
+    {{ form_label(form.price) }}
+    {{ form_widget(form.price) }}
+    {{ form_errors(form.price) }}
+</div>
+<button class="button" type="submit">Save</button>
+{{ form_end(form) }}

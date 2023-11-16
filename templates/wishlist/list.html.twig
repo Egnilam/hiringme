@@ -4,17 +4,22 @@
 
 {% block content %}
     {% block body %}
-        <h1>Wishlists</h1>
-        <a href="{{ path('wishlist_create') }}">Create new wishlist</a>
-
-        {% for wishlist in wishlists %}
-            <div>
-                <h2>{{ wishlist.name }}</h2>
-                <span>{{ wishlist.visibility }}</span>
-                <a href="{{ path('wishlist_show', { id: wishlist.id}) }}">Show</a>
-                <a href="{{ path('wishlist_update', { id: wishlist.id}) }}">edit</a>
-                {% include 'wishlist//_delete.html.twig' %}
-            </div>
-        {% endfor %}
+        <h1 class="main__title">Wishlists</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_create') }}">Create new wishlist</a>
+        </div>
+        <div class="card-container">
+            {% for wishlist in wishlists %}
+                <div class="wishlist-card">
+                    <h2 class="wishlist-card__title">{{ wishlist.name }}</h2>
+                    <span class="wishlist-card__state">{{ wishlist.visibility }}</span>
+                    <div class="wishlist-card__actions">
+                        <a class="wishlist-card__btn" href="{{ path('wishlist_show', { id: wishlist.id}) }}">Show</a>
+                        <a class="wishlist-card__btn" href="{{ path('wishlist_update', { id: wishlist.id}) }}">edit</a>
+                        {% include 'wishlist/_delete.html.twig' %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% endblock %}
 {% endblock %}

@@ -18,12 +18,14 @@ final class AssociateWishlistToGroupMemberForm extends AbstractType
     {
         $builder
             ->add('wishlistId', ChoiceType::class, [
+                'placeholder' => 'Choose an option',
+                'label' => 'Wishlists',
                 'choices' => $options['wishlists'],
                 'choice_value' => 'id',
-                'choice_label' => 'name'
+                'choice_label' => 'name',
             ])
             ->get('wishlistId')->addModelTransformer(new CallbackTransformer(
-                function(){},
+                function () {},
                 function (WishlistResponse $wishlistResponse) {
                     return $wishlistResponse->getId();
                 }
