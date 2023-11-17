@@ -39,8 +39,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'latest'
-
-      - name: Run NPM install
+          
+      - name: Install encore
+        run: npm install encore
+        
+      - name: Run encore
         run: npm run encore dev
 
       - name: Public IP
