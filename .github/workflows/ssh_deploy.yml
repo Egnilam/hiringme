@@ -61,14 +61,6 @@ jobs:
             target: ${{ secrets.REMOTE_TARGET }}
             timeout: 240s
 
-#      - name: Executing remote ssh commands
-#        uses: appleboy/scp-action@v0.1.4
-#        with:
-#          host: ${{ secrets.REMOTE_HOST }}
-#          username: ${{ secrets.REMOTE_USER }}
-#          key: ${{ secrets.SERVER_SSH_KEY }}
-#          passphrase: ${{ secrets.PASSPHRASE }}
-#          script: rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }} ${{ secrets.REMOTE_TARGET }}
         
         
         
