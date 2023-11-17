@@ -33,18 +33,18 @@
             {{ form_errors(memberForm.email) }}
         </div>
         <button
-                class="button button--accent"
+                class="button"
                 data-action="live#action"
                 data-action-name="removeWishlistGroupMember(index={{ key }})"
                 type="button"
-        >X</button>
+        > - remove</button>
     {% endfor %}
     <button
-            class="button"
+            class="button button--accent"
             data-action="live#action"
             data-action-name="addWishlistGroupMember"
             type="button"
-    >+ Add member</button>
-    <button class="button" type="submit">Envoyer</button>
+    >+ add member</button>
+    <button class="button button--accent" type="submit">Envoyer</button>
     {{ form_end(form) }}
 </div>

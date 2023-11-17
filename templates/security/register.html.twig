@@ -36,8 +36,8 @@
             {{ form_widget(form.password) }}
             {{ form_errors(form.password) }}
         </div>
-        <button class="button" type="submit">Save</button>
+        <button class="button button--accent" type="submit">Save</button>
         {{ form_end(form) }}
-        <a class="button button--accent" href="{{ path('app_login') }}">sign in</a>
+        <a class="button" href="{{ path('app_login') }}">sign in</a>
     {% endblock %}
 {% endblock %}

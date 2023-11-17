@@ -6,7 +6,7 @@
     {% block body %}
         <h1 class="main__title">Wishlist</h1>
         <div class="main__actions">
-            <a class="button" href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
+            <a class="button button--accent" href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
         </div>
         <div class="card-container">
             {% for item in wishlist.items %}

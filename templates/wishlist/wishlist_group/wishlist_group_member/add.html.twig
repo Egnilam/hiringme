@@ -6,7 +6,7 @@
     {% block body %}
         <h1 class="main__title">Add member</h1>
         <div class="main__actions">
-            <a class="button button--accent" href="{{ path('wishlist_group_show', { 'id' : wishlist_group_id }) }}">Back to the group</a>
+            <a class="button" href="{{ path('wishlist_group_show', { 'id' : wishlist_group_id }) }}">Back to the group</a>
         </div>
         {% if domain_error %}
             {% for error in domain_error.messages %}
@@ -24,7 +24,7 @@
             {{ form_widget(form.email) }}
             {{ form_errors(form.email) }}
         </div>
-        <button class="button" type="submit">Envoyer</button>
+        <button class="button button--accent" type="submit">Envoyer</button>
         {{ form_end(form) }}
     {% endblock %}
 {% endblock %}

@@ -6,24 +6,28 @@
     {% block body %}
         <h1 class="main__title">{{ wishlist_group.name }}</h1>
         <div class="main__actions">
-            <a class="button button--accent" href="{{ path('wishlist_group_list') }}">Back to groups</a>
-            <a class="button" href="{{ path('wishlist_group_member_add', { 'groupId' : wishlist_group.id }) }}">Add member</a>
+            <a class="button" href="{{ path('wishlist_group_list') }}">Back to groups</a>
+            <a class="button button--accent" href="{{ path('wishlist_group_member_add', { 'groupId' : wishlist_group.id }) }}">Add member</a>
         </div>
-        <div class="wg__container">
+        <div class="card-container">
             {% for wishlist_group_member in wishlist_group.members %}
-                <div class="wg-card">
-                    <h2 class="wg-card__title">
+                <div class="card">
+                    <h2 class="card__title">
                         {% if wishlist_group_member.owner %}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M9.5 12c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4zm1.5 1H8c-3.309 0-6 2.691-6 6v1h15v-1c0-3.309-2.691-6-6-6z"></path><path d="M16.604 11.048a5.67 5.67 0 0 0 .751-3.44c-.179-1.784-1.175-3.361-2.803-4.44l-1.105 1.666c1.119.742 1.8 1.799 1.918 2.974a3.693 3.693 0 0 1-1.072 2.986l-1.192 1.192 1.618.475C18.951 13.701 19 17.957 19 18h2c0-1.789-.956-5.285-4.396-6.952z"></path></svg>
                         {% endif %}
                         <span>{{ wishlist_group_member.pseudonym }}</span>
                     </h2>
                     <span>{{ wishlist_group_member.email }}</span>
-                    <div class="wg-card__actions">
+                    <div class="card__actions">
                         {% if wishlist_group_member.wishlistId %}
-                            <a class="button" href="{{ path('wishlist_show', { 'id' : wishlist_group_member.wishlistId }) }}">wishlist</a>
+                            <a class="button button--accent button--round" href="{{ path('wishlist_show', { 'id' : wishlist_group_member.wishlistId }) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);"><path d="M12 9a3.02 3.02 0 0 0-3 3c0 1.642 1.358 3 3 3 1.641 0 3-1.358 3-3 0-1.641-1.359-3-3-3z"></path><path d="M12 5c-7.633 0-9.927 6.617-9.948 6.684L1.946 12l.105.316C2.073 12.383 4.367 19 12 19s9.927-6.617 9.948-6.684l.106-.316-.105-.316C21.927 11.617 19.633 5 12 5zm0 12c-5.351 0-7.424-3.846-7.926-5C4.578 10.842 6.652 7 12 7c5.351 0 7.424 3.846 7.926 5-.504 1.158-2.578 5-7.926 5z"></path></svg>
+                            </a>
                         {% else %}
-                            <a class= "button" href="{{ path('wishlist_group_member_associate_wishlist', { 'groupId' : wishlist_group.id, id: wishlist_group_member.wishlistMemberId }) }}">wishlist</a>
+                            <a class= "button button--accent button--round" href="{{ path('wishlist_group_member_associate_wishlist', { 'groupId' : wishlist_group.id, id: wishlist_group_member.wishlistMemberId }) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1)"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+                            </a>
                         {% endif %}
                         {% include 'wishlist/wishlist_group/wishlist_group_member/_remove.html.twig' %}
                     </div>

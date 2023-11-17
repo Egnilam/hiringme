@@ -19,7 +19,7 @@
         </div>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button class="button" type="submit">Sign in</button>
+        <button class="button button--accent" type="submit">Sign in</button>
     </form>
     <a class="button" href="{{ path('app_register') }}">Register</a>
 {% endblock %}

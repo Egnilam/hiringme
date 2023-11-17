@@ -6,7 +6,7 @@
     {% block body %}
         <h1 class="main__title">Create new group</h1>
         <div class="main__actions">
-            <a class="button button--accent" href="{{ path('wishlist_group_list') }}">Back to groups</a>
+            <a class="button" href="{{ path('wishlist_group_list') }}">Back to groups</a>
         </div>
         {{ component('WishlistGroupFormComponent') }}
         {% if domain_error %}
