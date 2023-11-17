@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update group{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Update group</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_group_list') }}">Back to wishlist groups</a>
+        </div>
+        {{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+        <div class="form-control">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <button class="button button--accent" type="submit">Save</button>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

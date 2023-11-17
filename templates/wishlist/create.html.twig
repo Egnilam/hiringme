@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create new wishlist{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Create new wishlist</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_list') }}">Back to wishlists</a>
+        </div>
+        {% include 'wishlist/_form.html.twig' %}
+    {% endblock %}
+{% endblock %}

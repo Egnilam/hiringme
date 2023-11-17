@@ -1,0 +1,21 @@
+{{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+<div class="form-control">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    {{ form_errors(form.name) }}
+</div>
+<div class="form-control">
+    {{ form_errors(form.visibility) }}
+    {{ form_label(form.visibility) }}
+    <div class="wishlist-form__card-container">
+        {% for form_visibility in form.visibility %}
+            <div class="wishlist-form__radio-card">
+                {{ form_widget(form_visibility) }}
+                {{ form_label(form_visibility) }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<button class="button button--accent" type="submit">Save</button>
+{{ form_end(form) }}

@@ -1,0 +1,72 @@
+name: SSH Deploy
+
+on:
+  push:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+        env:
+          update: true
+
+      - name: Check PHP version
+        run: php -v
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          
+      - name: Install encore
+        run: npm install encore
+        
+      - name: Run encore
+        run: npm run encore dev
+
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+
+      - name: Print Public IP
+        run: |
+          echo ${{ steps.ip.outputs.ipv4 }}
+
+      - name: Copying files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+            host: ${{ secrets.REMOTE_HOST }}
+            username: ${{ secrets.REMOTE_USER }}
+            key: ${{ secrets.SERVER_SSH_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            rm: true
+            source: "./"
+            target: ${{ secrets.REMOTE_TARGET }}
+            timeout: 240s
+
+        
+        
+        
+  

@@ -1,0 +1,31 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  background-color: $second-color;
+  overflow-wrap: anywhere;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.3rem;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+  }
+
+  &__label {
+    padding: 0.5rem;
+    border-radius: $default-border-radius;
+    background-color: $main-color;
+  }
+
+  &__actions {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    column-gap: 0.5rem;
+  }
+}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add group member{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Add member</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_group_show', { 'id' : wishlist_group_id }) }}">Back to the group</a>
+        </div>
+        {% if domain_error %}
+            {% for error in domain_error.messages %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {{ form_start(form, { attr : { class : 'form' } }) }}
+        <div class="form-control">
+            {{ form_label(form.pseudonym) }}
+            {{ form_widget(form.pseudonym) }}
+            {{ form_errors(form.pseudonym) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <button class="button button--accent" type="submit">Envoyer</button>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

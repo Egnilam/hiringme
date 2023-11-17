@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create new group{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Create new group</h1>
+        <div class="main__actions">
+            <a class="button" href="{{ path('wishlist_group_list') }}">Back to groups</a>
+        </div>
+        {{ component('WishlistGroupFormComponent') }}
+        {% if domain_error %}
+            {% for error in domain_error.messages %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

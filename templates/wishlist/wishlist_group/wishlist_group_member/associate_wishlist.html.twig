@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist group{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Associate wishlist</h1>
+        <div class="main__actions">
+            <a class="button button--accent" href="{{ path('wishlist_create', { 'group' : wishlist_group_id }) }}">Create wishlist</a>
+        </div>
+        {{ form_start(form, { attr : { class : 'form' } }) }}
+        <div class="form-control">
+            {{ form_label(form.wishlistId) }}
+            {{ form_widget(form.wishlistId) }}
+            {{ form_errors(form.wishlistId) }}
+        </div>
+        <button class="button button--accent" type="submit">Save</button>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

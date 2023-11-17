@@ -1,0 +1,27 @@
+<div class="card">
+    {% if item.link %}
+        <a class="card__title" href="{{ item.link }}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m13 3 3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"></path><path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"></path></svg>
+            <span>{{ item.label }}</span>
+        </a>
+        {% else %}
+        <p class="card__title">{{ item.label }}</p>
+    {% endif %}
+    <div>
+        {% if item.price %}
+            <span class="card__label">{{ item.price|number_format(2, ',', ' ') }}€</span>
+        {% endif %}
+        {% if item.priority %}
+            <span class="card__label">{{ item.priority }}</span>
+        {% endif %}
+    </div>
+    {% if item.description %}
+        <span>{{ item.description }}</span>
+    {% endif %}
+    <div class="card__actions">
+        <a class="button button--round" href="{{ path('wishlist_item_update', {'wishlistId' : wishlist.id, 'id' : item.id}) }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1)"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
+        </a>
+        {% include 'wishlist/wishlist_item/_remove.html.twig' %}
+    </div>
+</div>
