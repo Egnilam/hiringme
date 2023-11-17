@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+        run: npm run encore dev
+
       - name: Public IP
         id: ip
         uses: haythem/public-ip@v1.3
@@ -55,14 +61,14 @@ jobs:
             target: ${{ secrets.REMOTE_TARGET }}
             timeout: 240s
 
-      - name: Executing remote ssh commands
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }}
+#      - name: Executing remote ssh commands
+#        uses: appleboy/scp-action@v0.1.4
+#        with:
+#          host: ${{ secrets.REMOTE_HOST }}
+#          username: ${{ secrets.REMOTE_USER }}
+#          key: ${{ secrets.SERVER_SSH_KEY }}
+#          passphrase: ${{ secrets.PASSPHRASE }}
+#          script: rsync -a --exclude={'var','temp'} --delete ${{ secrets.REMOTE_TARGET }} ${{ secrets.REMOTE_TARGET }}
         
         
         
