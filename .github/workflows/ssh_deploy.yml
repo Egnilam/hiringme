@@ -2,7 +2,7 @@ name: SSH Deploy
 
 on:
   push:
-    branches: ["develop"]
+    branches: ["main"]
 jobs:
   build:
     runs-on: ubuntu-latest
