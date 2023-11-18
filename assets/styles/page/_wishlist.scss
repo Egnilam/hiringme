@@ -22,8 +22,8 @@
     }
 
     input:checked + label{
-      background-color: $accent-color;
-      color: $second-typo-color;
+      background-color: $second-accent-color;
+      color: #fff;
       transform: scaleX(1.1);
       transition: all 200ms linear;
     }
