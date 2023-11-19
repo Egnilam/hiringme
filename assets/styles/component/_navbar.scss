@@ -8,6 +8,22 @@
   }
 
   &__link {
-    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.3rem;
+
+    & > span {
+      font-size: 13px;
+      color: darken($second-color, 40%);
+    }
+
+    & > svg {
+      fill: darken($second-color, 40%);
+    }
+
+    &--active > svg {
+      fill: $second-accent-color;
+    }
   }
 }
