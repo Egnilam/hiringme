@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace App\Application\Http\Wishlist\WishlistItem;
 
 use App\Action\Command\Wishlist\RemoveItemToWishlistCommand;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Http\CustomAbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/wishlists/{wishlistId}/items')]
-final class RemoveItemToWishlistController extends AbstractController
+final class RemoveItemToWishlistController extends CustomAbstractController
 {
     #[Route('/{id}', name: 'wishlist_item_remove', methods: ['DELETE'])]
-    public function __invoke(Request $request, string $wishlistId, string $id, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, string $wishlistId, string $id): Response
     {
         if($this->isCsrfTokenValid(sprintf('remove.%s', $id), (string)$request->request->get('_token'))) {
             try {
@@ -24,9 +23,9 @@ final class RemoveItemToWishlistController extends AbstractController
                     ->setWishlistId($wishlistId)
                     ->setWishlistItemId($id);
 
-                $commandBus->dispatch($command);
+                $this->commandBus->dispatch($command);
             } catch (\Exception $exception) {
-
+                $this->exceptionService->execute($exception);
             }
         }
 

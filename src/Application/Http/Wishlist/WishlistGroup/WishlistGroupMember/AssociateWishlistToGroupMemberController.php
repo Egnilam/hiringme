@@ -7,29 +7,26 @@ namespace App\Application\Http\Wishlist\WishlistGroup\WishlistGroupMember;
 use App\Action\Command\Wishlist\AssociateGroupMemberToWishlistCommand;
 use App\Action\Query\Wishlist\GetListWishlistQuery;
 use App\Application\Form\Wishlist\WishlistGroup\WishlistGroupMember\AssociateWishlistToGroupMemberForm;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
+use App\Application\Http\CustomAbstractController;
 use Domain\Wishlist\Request\Query\GetListWishlistRequest;
 use Domain\Wishlist\Response\WishlistResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlist_groups/{groupId}/members')]
-final class AssociateWishlistToGroupMemberController extends AbstractController
+final class AssociateWishlistToGroupMemberController extends CustomAbstractController
 {
     #[Route('/{id}/wishlist', name: 'wishlist_group_member_associate_wishlist', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, string $groupId, string $id, QueryBusInterface $queryBus, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, string $groupId, string $id): Response
     {
-
         $command = new AssociateGroupMemberToWishlistCommand();
         $command->setWishlistGroupId($groupId);
 
         $query = new GetListWishlistQuery();
 
         /** @var array<WishlistResponse> $wishlists */
-        $wishlists = $queryBus->ask($query->setRequest(new GetListWishlistRequest($id)));
+        $wishlists = $this->queryBus->ask($query->setRequest(new GetListWishlistRequest($id)));
         if(count($wishlists) === 0) {
             return $this->redirectToRoute('wishlist_create', ['group' => $groupId]);
         }
@@ -38,11 +35,11 @@ final class AssociateWishlistToGroupMemberController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             try {
-                $commandBus->dispatch($command);
+                $this->commandBus->dispatch($command);
 
                 return $this->redirectToRoute('wishlist_group_show', ['id' => $groupId]);
             } catch (\Exception $exception) {
-
+                $this->exceptionService->execute($exception);
             }
         }
 

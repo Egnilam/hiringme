@@ -7,26 +7,23 @@ namespace App\Application\Http\Wishlist;
 use App\Action\Command\Wishlist\UpdateWishlistCommand;
 use App\Action\Query\Wishlist\GetWishlistQuery;
 use App\Application\Form\Wishlist\UpdateWishlistForm;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
+use App\Application\Http\CustomAbstractController;
 use Domain\Wishlist\Domain\Model\VisibilityEnum;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
 use Domain\Wishlist\Response\WishlistResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('wishlists')]
-final class UpdateWishlistController extends AbstractController
+final class UpdateWishlistController extends CustomAbstractController
 {
     #[Route('/{id}/update', name: 'wishlist_update', methods: ['GET', 'PUT'])]
-    public function __invoke(Request $request, string $id, QueryBusInterface $queryBus, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, string $id): Response
     {
-
         $query = new GetWishlistQuery();
         /** @var WishlistResponse $wishlist */
-        $wishlist = $queryBus->ask($query->setRequest(new GetWishlistRequest($id)));
+        $wishlist = $this->queryBus->ask($query->setRequest(new GetWishlistRequest($id)));
 
         $command = new UpdateWishlistCommand();
         $command
@@ -39,11 +36,11 @@ final class UpdateWishlistController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             try {
-                $commandBus->dispatch($command);
+                $this->commandBus->dispatch($command);
 
                 return $this->redirectToRoute('wishlist_list');
             } catch (\Exception $exception) {
-
+                $this->exceptionService->execute($exception);
             }
         }
 

@@ -9,10 +9,5 @@
             <a class="button" href="{{ path('wishlist_group_list') }}">Back to groups</a>
         </div>
         {{ component('WishlistGroupFormComponent') }}
-        {% if domain_error %}
-            {% for error in domain_error.messages %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
     {% endblock %}
 {% endblock %}

@@ -3,16 +3,13 @@
 {% block title %}Add group member{% endblock %}
 
 {% block content %}
-    {% block body %}
+    {% block main %}
         <h1 class="main__title">Add member</h1>
         <div class="main__actions">
             <a class="button" href="{{ path('wishlist_group_show', { 'id' : wishlist_group_id }) }}">Back to the group</a>
         </div>
-        {% if domain_error %}
-            {% for error in domain_error.messages %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
+    {% endblock %}
+    {% block body %}
         {{ form_start(form, { attr : { class : 'form' } }) }}
         <div class="form-control">
             {{ form_label(form.pseudonym) }}

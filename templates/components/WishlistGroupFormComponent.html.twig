@@ -1,4 +1,6 @@
 <div {{ attributes }}>
+    {% include 'message.html.twig' %}
+
     {{ form_start(form, {
         attr: {
             'class' : 'form',
@@ -7,9 +9,6 @@
             'data-model': 'norender|*'
         }
     }) }}
-    {% if error %}
-        {{ error }}
-    {% endif %}
     {{ form_errors(form) }}
     <div class="form-control">
         {{ form_label(form.name) }}

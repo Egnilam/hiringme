@@ -6,17 +6,16 @@ namespace App\Application\Http\Wishlist\WishlistItem;
 
 use App\Action\Command\Wishlist\AddItemToWishlistCommand;
 use App\Application\Form\Wishlist\WishlistItem\AddItemToWishlistForm;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Http\CustomAbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/wishlists/{wishlistId}/items')]
-final class AddItemToWishlistController extends AbstractController
+final class AddItemToWishlistController extends CustomAbstractController
 {
     #[Route('/add', name: 'wishlist_item_add', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, string $wishlistId, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, string $wishlistId): Response
     {
         $command = new AddItemToWishlistCommand();
         $command->setWishlistId($wishlistId);
@@ -26,11 +25,11 @@ final class AddItemToWishlistController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             try {
-                $commandBus->dispatch($command);
+                $this->commandBus->dispatch($command);
 
                 return $this->redirectToRoute('wishlist_show', ['id' => $wishlistId]);
             } catch (\Exception $exception) {
-
+                $this->exceptionService->execute($exception);
             }
         }
 

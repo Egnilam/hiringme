@@ -14,6 +14,8 @@
             {% include 'header.html.twig' %}
         {% endif %}
         <main class="main">
+            {% block main %}{% endblock %}
+            {% include 'message.html.twig' %}
             {% block body %}{% endblock %}
         </main>
     </div>

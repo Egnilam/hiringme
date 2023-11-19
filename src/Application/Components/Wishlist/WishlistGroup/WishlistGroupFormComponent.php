@@ -7,8 +7,7 @@ namespace App\Application\Components\Wishlist\WishlistGroup;
 use App\Action\Command\Wishlist\WishlistGroup\AddMemberToWishlistGroupCommand;
 use App\Action\Command\Wishlist\WishlistGroup\CreateWishlistGroupCommand;
 use App\Application\Form\Wishlist\WishlistGroup\CreateWishlistGroupForm;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Application\Http\CustomAbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -19,7 +18,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-class WishlistGroupFormComponent extends AbstractController
+class WishlistGroupFormComponent extends CustomAbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
@@ -29,8 +28,6 @@ class WishlistGroupFormComponent extends AbstractController
      */
     #[LiveProp]
     public ?CreateWishlistGroupCommand $initialFormData = null;
-
-    public ?string $error = null;
 
     protected function instantiateForm(): FormInterface
     {
@@ -53,7 +50,7 @@ class WishlistGroupFormComponent extends AbstractController
      * @throws \Exception
      */
     #[LiveAction]
-    public function save(CommandBusInterface $commandBus): ?Response
+    public function save(): ?Response
     {
         try {
             $this->submitForm();
@@ -67,11 +64,11 @@ class WishlistGroupFormComponent extends AbstractController
             }
             $command->setOwnerEmail($user->getUserIdentifier());
 
-            $commandBus->dispatch($command);
+            $this->commandBus->dispatch($command);
 
             return $this->redirectToRoute('wishlist_group_list');
         } catch (\Exception $exception) {
-            $this->error = $exception->getMessage();
+            $this->exceptionService->execute($exception);
             return null;
         }
     }

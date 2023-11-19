@@ -1,0 +1,19 @@
+.message {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 24px;
+    overflow-wrap: anywhere;
+    background-color: $accent-color;
+
+    &--error {
+    }
+  }
+
+  &__item {
+    list-style: inside;
+    line-height: 1.2rem;
+  }
+}

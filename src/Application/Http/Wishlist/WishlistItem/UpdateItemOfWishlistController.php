@@ -7,6 +7,7 @@ namespace App\Application\Http\Wishlist\WishlistItem;
 use App\Action\Command\Wishlist\UpdateItemOfWishlistCommand;
 use App\Action\Query\Wishlist\WishlistItem\GetWishlistItemQuery;
 use App\Application\Form\Wishlist\WishlistItem\UpdateItemOfWishlistForm;
+use App\Application\Http\CustomAbstractController;
 use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
 use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
 use Domain\Wishlist\Domain\Model\PriorityEnum;
@@ -18,17 +19,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/wishlists/{wishlistId}/items')]
-final class UpdateItemOfWishlistController extends AbstractController
+final class UpdateItemOfWishlistController extends CustomAbstractController
 {
     #[Route('/{id}/update', name: 'wishlist_item_update', methods: ['GET', 'PUT'])]
-    public function __invoke(Request $request, string $wishlistId, string $id, QueryBusInterface $queryBus, CommandBusInterface $commandBus): Response
+    public function __invoke(Request $request, string $wishlistId, string $id): Response
     {
 
         $query = new GetWishlistItemQuery();
         $query->setRequest(new GetWishlistItemRequest($id));
 
         /** @var WishlistItemResponse $wishlistItem */
-        $wishlistItem = $queryBus->ask($query);
+        $wishlistItem = $this->queryBus->ask($query);
 
         $command = $this->createCommand($wishlistItem, $wishlistId);
 
@@ -37,11 +38,11 @@ final class UpdateItemOfWishlistController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             try {
-                $commandBus->dispatch($command);
+                $this->commandBus->dispatch($command);
 
                 return $this->redirectToRoute('wishlist_show', ['id' => $wishlistId]);
             } catch (\Exception $exception) {
-
+                $this->exceptionService->execute($exception);
             }
         }
         return $this->render('wishlist/wishlist_item/update.html.twig', [

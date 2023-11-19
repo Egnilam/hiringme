@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   row-gap: $default-gap;
-  padding: $default-padding 0;
+  padding: $default-padding;
 
   &__title {
     font-size: 1.5rem;
@@ -15,6 +15,9 @@
     display: flex;
     flex-direction: column;
     row-gap: $default-gap;
-    padding: 0 $default-padding;
+  }
+
+  &__messages {
+
   }
 }
