@@ -6,6 +6,7 @@ namespace App\Application\Http\Wishlist\WishlistGroup;
 
 use App\Action\Query\Wishlist\WishlistGroup\GetWishlistGroupQuery;
 use App\Application\Http\CustomAbstractController;
+use App\Application\View\NavbarView;
 use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
 use Domain\Wishlist\Request\Query\WishlistGroup\GetWishlistGroupRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,8 @@ final class ShowWishlistGroupController extends CustomAbstractController
         $wishlistGroup = $this->queryBus->ask($getWishlistGroupQuery);
 
         return $this->render('wishlist/wishlist_group/show.html.twig', [
-            'wishlist_group' => $wishlistGroup
+            'wishlist_group' => $wishlistGroup,
+            'navbar' => new NavbarView('groups')
         ]);
     }
 }

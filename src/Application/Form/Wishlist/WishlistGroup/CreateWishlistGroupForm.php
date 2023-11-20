@@ -14,19 +14,29 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CreateWishlistGroupForm extends AbstractType
 {
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('ownerPseudonym', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => $this->translator->trans('form.name')
+            ])
+            ->add('ownerPseudonym', TextType::class, [
+                'label' => $this->translator->trans('form.owner_pseudonym')
+            ])
             ->add('members', CollectionType::class, [
                 'entry_type' => AddWishlistGroupMemberForm::class,
                 'entry_options' => ['label' => false, 'pseudonym_mandatory' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
+                'label' => false
             ])
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
                 $event->getForm()->get('members')->setData([new AddMemberToWishlistGroupCommand()]);

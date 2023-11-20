@@ -7,6 +7,7 @@ namespace App\Application\Http\Wishlist\WishlistGroup;
 use App\Action\Query\Wishlist\WishlistGroup\GetListWishlistGroupQuery;
 use App\Action\Query\Wishlist\WishlistMember\GetWishlistMemberQuery;
 use App\Application\Http\CustomAbstractController;
+use App\Application\View\NavbarView;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use Domain\Wishlist\Request\Query\WishlistGroup\GetListWishlistGroupRequest;
 use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
@@ -35,7 +36,8 @@ final class ListWishlistGroupController extends CustomAbstractController
         $wishlistGroups = $this->queryBus->ask($getListWishlistGroupQuery);
 
         return $this->render('wishlist/wishlist_group/list.html.twig', [
-            'wishlist_groups' => $wishlistGroups
+            'wishlist_groups' => $wishlistGroups,
+            'navbar' => new NavbarView('groups')
         ]);
     }
 }
