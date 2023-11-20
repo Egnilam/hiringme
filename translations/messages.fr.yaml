@@ -1,0 +1,41 @@
+ui:
+  navbar:
+    wishlists: 'Listes'
+    groups: 'Groupes'
+    basket: 'Panier'
+    logout: 'Déconnexion'
+
+  wishlist:
+    create: 'Créer une nouvelle liste'
+    list:
+      title: 'Mes listes'
+
+
+wishlist:
+  visibility:
+    label: 'Visibilité'
+    ENUM:
+      PUBLIC: 'Publique'
+      PRIVATE: 'Privée'
+      RESTRICT: 'Limitée'
+  item:
+    price:
+      label: 'Prix'
+    priority:
+      label: 'Priorité'
+      ENUM:
+        LOW: 'Basse'
+        MEDIUM: 'Moyenne'
+        HIGH: 'Haute'
+
+form:
+  name: 'Nom'
+  email: 'Email'
+  label: 'Libellé'
+  link: 'Lien'
+  description: 'Description'
+  save: 'Enregister'
+  pseudonym: 'Pseudonyme'
+  owner_pseudonym: 'Pseudonyme du créateur'
+
+

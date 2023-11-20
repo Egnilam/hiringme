@@ -4,12 +4,12 @@
 
 {% block content %}
     {% block body %}
-        <h1 class="main__title">Wishlists</h1>
+        <h1 class="main__title">{{ view.title|trans }}</h1>
         <div class="main__actions">
-            <a class="button button--accent" href="{{ path('wishlist_create') }}">Create new wishlist</a>
+            <a class="button button--accent" href="{{ view.createWishlist.link }}">{{ view.createWishlist.message|trans }}</a>
         </div>
         <div class="card-container">
-            {% for wishlist in wishlists %}
+            {% for wishlist in view.wishlists %}
                 <div class="card">
                     <h2 class="card__title">{{ wishlist.name }}</h2>
                     <div>

@@ -8,6 +8,8 @@
   }
 
   &__link {
+    flex: 1 1 0;
+    width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;

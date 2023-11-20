@@ -8,6 +8,7 @@ use App\Action\Command\Wishlist\WishlistGroup\UpdateWishlistGroupCommand;
 use App\Action\Query\Wishlist\WishlistGroup\GetWishlistGroupQuery;
 use App\Application\Form\Wishlist\WishlistGroup\UpdateWishlistGroupForm;
 use App\Application\Http\CustomAbstractController;
+use App\Application\View\NavbarView;
 use Domain\Wishlist\Request\Query\WishlistGroup\GetWishlistGroupRequest;
 use Domain\Wishlist\Response\WishlistGroupResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ final class UpdateWishlistGroupController extends CustomAbstractController
 
         return $this->render('wishlist/wishlist_group/update.html.twig', [
             'form' => $form,
+            'navbar' => new NavbarView('groups')
         ]);
     }
 }
