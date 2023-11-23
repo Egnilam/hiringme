@@ -8,7 +8,6 @@ use App\Action\Query\Wishlist\GetListWishlistQuery;
 use App\Action\Query\Wishlist\WishlistMember\GetWishlistMemberQuery;
 use App\Application\Http\CustomAbstractController;
 use App\Application\View\LinkItemView;
-use App\Application\View\NavbarView;
 use App\Application\View\Wishlist\ListWishlistView;
 use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use Domain\Wishlist\Request\Query\GetListWishlistRequest;
@@ -29,7 +28,7 @@ final class ListWishlistController extends CustomAbstractController
         $user = $this->getUser();
 
         $getWishlistMemberQuery = new GetWishlistMemberQuery();
-        $getWishlistMemberQuery->setRequest(new GetWishlistMemberRequest($user->getStringUuid()));
+        $getWishlistMemberQuery->setRequest(new GetWishlistMemberRequest(null, $user->getStringUuid()));
 
         /** @var WishlistMemberResponse $wishlistMemberResponse */
         $wishlistMemberResponse = $this->queryBus->ask($getWishlistMemberQuery);

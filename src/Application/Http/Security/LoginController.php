@@ -13,7 +13,7 @@ class LoginController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if($this->getUser()) {
-            return $this->redirectToRoute('user_account');
+            return $this->redirectToRoute('wishlist_list');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();

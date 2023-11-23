@@ -61,7 +61,7 @@ final readonly class RegisterWishlistMemberUseCase implements RegisterWishlistMe
     private function updateWishlistMemberIfExist(string $email, ?string $userId, bool $registered): ?string
     {
         try {
-            $getWishlistMemberRequest = new GetWishlistMemberRequest(null, $email);
+            $getWishlistMemberRequest = new GetWishlistMemberRequest(null, null, $email);
             $wishlistMemberResponse = $this->wishlistMemberQueryRepository->get($getWishlistMemberRequest);
         } catch (NotFoundException $exception) {
             return null;
