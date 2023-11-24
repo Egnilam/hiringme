@@ -34,12 +34,19 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
             throw new NotFoundException();
         }
 
+
+        if(
+            $request->hasOption(GetWishlistRequest::OPT_LOAD_ITEMS)
+            && $request->getOptionValue(GetWishlistRequest::OPT_LOAD_ITEMS)
+        ) {
+            $items = $this->getWishlistItems($request->getId());
+        }
         return new WishlistResponse(
             $wishlistEntity->getStringUuid(),
             $wishlistEntity->getWishlistMember()->getStringUuid(),
             $wishlistEntity->getName(),
             $this->getWishlistGroups($wishlistEntity),
-            $this->getWishlistItems($request->getId()),
+            $items ?? [],
             $wishlistEntity->getVisibility()
         );
     }

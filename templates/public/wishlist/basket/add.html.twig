@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add item{% endblock %}
+
+{% block content %}
+    {% block main %}
+        <h1 class="main__title">Add member</h1>
+        <div class="main__actions">
+        </div>
+    {% endblock %}
+    {% block body %}
+        {{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+        <div class="form-control">
+            {{ form_label(form.visible) }}
+            {{ form_widget(form.visible) }}
+            {{ form_errors(form.visible) }}
+        </div>
+        <div class="form-control">
+            {{ form_label(form.lock) }}
+            {{ form_widget(form.lock) }}
+            {{ form_errors(form.lock) }}
+        </div>
+        <button class="button button--accent" type="submit">{{ 'form.save'|trans }}</button>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

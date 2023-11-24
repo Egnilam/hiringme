@@ -1,0 +1,31 @@
+<div class="card">
+    {% if item.link %}
+        <a class="card__title" href="{{ item.link }}" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1)"><path d="m13 3 3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"></path><path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"></path></svg>
+            <span>{{ item.label }}</span>
+        </a>
+    {% else %}
+        <p class="card__title">{{ item.label }}</p>
+    {% endif %}
+    <div>
+        {% if item.price %}
+            <span class="card__label">{{ item.price|number_format(2, ',', ' ') }}€</span>
+        {% endif %}
+        {% if item.priority %}
+            <span class="card__label">{{ item.priority }}</span>
+        {% endif %}
+    </div>
+    {% if item.description %}
+        <span>{{ item.description }}</span>
+    {% endif %}
+    <div class="card__actions">
+        <a class="button button--accent" href="{{ path('public_wishlist_item_basket_add', { 'wishlist': wishlist.id, 'item' : item.id } )}}">Take it</a>
+    </div>
+    <div>
+        <ul>
+            {% for basketItem in item.basketItems %}
+                <li>{{ basketItem.memberName }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

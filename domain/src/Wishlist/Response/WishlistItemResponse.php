@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Response;
 
-final readonly class WishlistItemResponse
+final class WishlistItemResponse
 {
+    /**
+     * @var array<WishlistBasketItemResponse>
+     */
+    private array $basketItems = [];
+
     public function __construct(
         private string $id,
         private string $label,
         private ?string $link,
         private ?string $description,
         private ?string $priority,
-        private ?float $price
+        private ?float $price,
     ) {
     }
 
@@ -44,5 +49,22 @@ final readonly class WishlistItemResponse
     public function getPrice(): ?float
     {
         return $this->price;
+    }
+
+    /**
+     * @return array<WishlistBasketItemResponse>
+     */
+    public function getBasketItems(): array
+    {
+        return $this->basketItems;
+    }
+
+    /**
+     * @param array<WishlistBasketItemResponse> $basketItems
+     */
+    public function attachBasketItems(array $basketItems): self
+    {
+        $this->basketItems = $basketItems;
+        return $this;
     }
 }

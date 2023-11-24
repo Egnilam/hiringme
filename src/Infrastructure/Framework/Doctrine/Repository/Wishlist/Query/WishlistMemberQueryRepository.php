@@ -24,6 +24,12 @@ final class WishlistMemberQueryRepository extends AbstractRepository implements 
         $entityRequest = $this->entityManager->getRepository(WishlistMemberEntity::class)
             ->createQueryBuilder('wishlist_member');
 
+        if($request->getId()) {
+            $entityRequest
+                ->andWhere('wishlist_member.uuid = :id')
+                ->setParameter('id', IdService::fromStringToBinary($request->getId()));
+        }
+
         if($request->getUserId()) {
             $entityRequest
                 ->innerJoin(UserEntity::class, 'user', 'WITH', 'user.id = wishlist_member.user')

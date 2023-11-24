@@ -26,7 +26,7 @@ final class ListWishlistGroupController extends CustomAbstractController
         $user = $this->getUser();
 
         $getWishlistMemberQuery = new GetWishlistMemberQuery();
-        $getWishlistMemberQuery->setRequest(new GetWishlistMemberRequest($user->getStringUuid()));
+        $getWishlistMemberQuery->setRequest(new GetWishlistMemberRequest(null, $user->getStringUuid()));
         /** @var WishlistMemberResponse $wishlistMemberResponse */
         $wishlistMemberResponse = $this->queryBus->ask($getWishlistMemberQuery);
 
