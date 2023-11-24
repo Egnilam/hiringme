@@ -18,7 +18,15 @@ final class ShowPublicWishlistController extends CustomAbstractController
     public function __invoke(Request $request, string $id): Response
     {
         $query = new GetWishlistQuery();
-        $query->setRequest(new GetWishlistRequest($id));
+        $query->setRequest(
+            new GetWishlistRequest(
+                $id,
+                [
+                    GetWishlistRequest::OPT_LOAD_ITEMS => true,
+                    GetWishlistRequest::OPT_ITEMS_LOAD_BASKET_ITEMS => true
+                ]
+            )
+        );
 
         $wishlist = $this->queryBus->ask($query);
 

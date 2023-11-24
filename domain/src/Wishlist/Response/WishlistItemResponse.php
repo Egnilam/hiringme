@@ -6,6 +6,9 @@ namespace Domain\Wishlist\Response;
 
 final class WishlistItemResponse
 {
+    /**
+     * @var array<WishlistBasketItemResponse>
+     */
     private array $basketItems = [];
 
     public function __construct(
@@ -48,11 +51,17 @@ final class WishlistItemResponse
         return $this->price;
     }
 
+    /**
+     * @return array<WishlistBasketItemResponse>
+     */
     public function getBasketItems(): array
     {
         return $this->basketItems;
     }
 
+    /**
+     * @param array<WishlistBasketItemResponse> $basketItems
+     */
     public function attachBasketItems(array $basketItems): self
     {
         $this->basketItems = $basketItems;
