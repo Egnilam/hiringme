@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Basket{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">My basket</h1>
+        <div class="card-container">
+            {% for basket_item in wishlist_member_basket.items %}
+                <div class="card">
+                    <p class="card__title">{{ basket_item.itemName }}</p>
+                    <p>{{ basket_item.wishlistName }}</p>
+                    <p>{{ basket_item.memberName }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endblock %}
