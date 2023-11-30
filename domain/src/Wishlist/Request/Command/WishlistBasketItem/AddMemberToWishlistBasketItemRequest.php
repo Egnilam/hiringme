@@ -7,19 +7,14 @@ namespace Domain\Wishlist\Request\Command\WishlistBasketItem;
 final readonly class AddMemberToWishlistBasketItemRequest
 {
     public function __construct(
-        private ?string $userId,
         private string  $wishlistMemberId,
         private string  $wishlistId,
         private string  $wishlistItemId,
+        private ?string $wishlistGroupId,
         private bool    $visibleName,
         private bool $canBeShared
     ) {
 
-    }
-
-    public function getUserId(): ?string
-    {
-        return $this->userId;
     }
 
     public function getWishlistMemberId(): string
@@ -35,6 +30,11 @@ final readonly class AddMemberToWishlistBasketItemRequest
     public function getWishlistItemId(): string
     {
         return $this->wishlistItemId;
+    }
+
+    public function getWishlistGroupId(): ?string
+    {
+        return $this->wishlistGroupId;
     }
 
     public function isVisibleName(): bool

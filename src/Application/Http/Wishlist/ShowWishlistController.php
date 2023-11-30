@@ -21,15 +21,20 @@ final class ShowWishlistController extends CustomAbstractController
     #[Route('/{id}', name: self::NAME, methods: ['GET'])]
     public function __invoke(Request $request, string $id, WishlistPresenter $presenter): Response
     {
+        $wishlistGroupId = $request->query->has('group') ? (string)$request->query->get('group') : null;
+
         $query = new GetWishlistQuery();
+        $requestOptions = [
+            GetWishlistRequest::OPT_LOAD_ITEMS => true,
+            GetWishlistRequest::OPT_ITEMS_LOAD_BASKET_ITEMS => true,
+        ];
+
+        if($wishlistGroupId) {
+            $requestOptions[GetWishlistRequest::OPT_GROUP] = $wishlistGroupId;
+        }
+
         $query->setRequest(
-            new GetWishlistRequest(
-                $id,
-                [
-                    GetWishlistRequest::OPT_LOAD_ITEMS => true,
-                    GetWishlistRequest::OPT_ITEMS_LOAD_BASKET_ITEMS => true
-                ]
-            )
+            new GetWishlistRequest($id, $requestOptions)
         );
 
         /** @var WishlistResponse $wishlist */
@@ -37,7 +42,10 @@ final class ShowWishlistController extends CustomAbstractController
 
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
-            'wishlist_view' => $presenter->present($wishlist)
+            'wishlist_view' => $presenter->present(
+                $wishlist,
+                $wishlistGroupId
+            )
         ]);
     }
 }

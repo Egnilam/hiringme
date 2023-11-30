@@ -8,28 +8,17 @@ use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
 final class AddMemberToWishlistBasketItemCommand implements CommandInterface
 {
-    private ?string $userId = null;
-
     private string $wishlistMemberId;
 
     private string $wishlistId;
 
     private string $wishlistItemId;
 
+    private ?string $wishlistGroupId = null;
+
     private bool $visible;
 
     private bool $lock;
-
-    public function getUserId(): ?string
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?string $userId): self
-    {
-        $this->userId = $userId;
-        return $this;
-    }
 
     public function getWishlistMemberId(): string
     {
@@ -61,6 +50,17 @@ final class AddMemberToWishlistBasketItemCommand implements CommandInterface
     public function setWishlistItemId(string $wishlistItemId): self
     {
         $this->wishlistItemId = $wishlistItemId;
+        return $this;
+    }
+
+    public function getWishlistGroupId(): ?string
+    {
+        return $this->wishlistGroupId;
+    }
+
+    public function setWishlistGroupId(?string $wishlistGroupId): self
+    {
+        $this->wishlistGroupId = $wishlistGroupId;
         return $this;
     }
 

@@ -10,6 +10,7 @@ final readonly class WishlistBasketItemResponse
         private string $id,
         private string $wishlistItemId,
         private string $wishlistMemberId,
+        private ?string $wishlistGroupId,
         private string $memberName,
         private bool $visibleName,
         private bool $canBeShared,
@@ -29,6 +30,11 @@ final readonly class WishlistBasketItemResponse
     public function getWishlistMemberId(): string
     {
         return $this->wishlistMemberId;
+    }
+
+    public function getWishlistGroupId(): ?string
+    {
+        return $this->wishlistGroupId;
     }
 
     public function getMemberName(): string

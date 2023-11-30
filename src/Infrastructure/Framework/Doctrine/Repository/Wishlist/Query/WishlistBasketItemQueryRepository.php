@@ -9,6 +9,7 @@ use App\Infrastructure\Framework\Doctrine\Entity\WishlistGroupMemberEntity;
 use App\Infrastructure\Framework\Doctrine\Entity\WishlistItemEntity;
 use App\Infrastructure\Framework\Doctrine\Repository\AbstractRepository;
 use App\Infrastructure\Framework\Uuid\IdService;
+use Domain\Common\Domain\Exception\NotFoundException;
 use Domain\Wishlist\Repository\Query\WishlistBasketItemQueryRepositoryInterface;
 use Domain\Wishlist\Request\Query\WishlistBasketItem\GetWishlistBasketItemRequest;
 use Domain\Wishlist\Response\WishlistBasketItemResponse;
@@ -29,25 +30,26 @@ final class WishlistBasketItemQueryRepository extends AbstractRepository impleme
         $wishlistItemBaskets = [];
         foreach ($items as $item) {
             $wishlistGroupMember = null;
-            if($request->getWishlistGroupId()) {
+
+            if($item->getWishlistGroup()) {
                 $wishlistGroupMember = $this->entityManager->getRepository(WishlistGroupMemberEntity::class)
                     ->findOneBy([
-                        'wishlist' => $item->getWishlistItem()->getWishlist(),
-                        'wishlistMember' => $item->getWishlistMember()
+                        'wishlistMember' => $item->getWishlistMember(),
+                        'wishlistGroup' => $item->getWishlistGroup()
                     ]);
-            }
+                if($wishlistGroupMember === null) {
+                    throw new NotFoundException();
+                }
 
-            if($wishlistGroupMember) {
-                $memberName = $wishlistGroupMember->getPseudonym();
-            } else {
-                $memberName = $item->getWishlistMember()->getEmail() ?? $item->getWishlistMember()->getStringUuid();
+                $pseudonym = $wishlistGroupMember->getPseudonym();
             }
 
             $wishlistItemBaskets[] = new WishlistBasketItemResponse(
                 $item->getStringUuid(),
                 $item->getWishlistItem()->getStringUuid(),
                 $item->getWishlistMember()->getStringUuid(),
-                $memberName,
+                $item->getWishlistGroup()?->getStringUuid(),
+                $pseudonym ?? $item->getWishlistMember()->getStringUuid(),
                 $item->isVisibleName(),
                 $item->isCanBeShared()
             );

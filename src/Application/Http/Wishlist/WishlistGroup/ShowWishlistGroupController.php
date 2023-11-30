@@ -20,7 +20,6 @@ final class ShowWishlistGroupController extends CustomAbstractController
     #[Route('/{id}', name: 'wishlist_group_show', methods: ['GET'])]
     public function __invoke(Request $request, string $id): Response
     {
-
         $getWishlistGroupQuery = new GetWishlistGroupQuery();
         $getWishlistGroupQuery->setRequest(new GetWishlistGroupRequest($id));
 

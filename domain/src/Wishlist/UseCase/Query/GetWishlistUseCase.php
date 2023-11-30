@@ -34,12 +34,17 @@ final readonly class GetWishlistUseCase implements GetWishlistInterface
 
     private function loadBasketItems(WishlistResponse $wishlistResponse, GetWishlistRequest $request): void
     {
+
         if(
             $request->hasOption(GetWishlistRequest::OPT_ITEMS_LOAD_BASKET_ITEMS)
             && $request->getOptionValue(GetWishlistRequest::OPT_ITEMS_LOAD_BASKET_ITEMS)
         ) {
             foreach ($wishlistResponse->getItems() as $item) {
-                $basketItems = $this->wishlistItemBasketQueryRepository->get(new GetWishlistBasketItemRequest($item->getId()));
+                $basketItems = $this->wishlistItemBasketQueryRepository->get(
+                    new GetWishlistBasketItemRequest(
+                        $item->getId(),
+                    )
+                );
                 $item->attachBasketItems($basketItems);
             }
         }

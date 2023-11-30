@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Domain\Model;
 
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
 use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
 
 final class BasketItem
@@ -11,6 +12,7 @@ final class BasketItem
     public function __construct(
         private string           $wishlistItemId,
         private WishlistMemberId $wishlistMemberId,
+        private ?WishlistGroupId $wishlistGroupId,
         private bool             $memberVisible,
         private bool $canBeShared
     ) {
@@ -25,6 +27,11 @@ final class BasketItem
     public function getWishlistMemberId(): WishlistMemberId
     {
         return $this->wishlistMemberId;
+    }
+
+    public function getWishlistGroupId(): ?WishlistGroupId
+    {
+        return $this->wishlistGroupId;
     }
 
     public function isMemberVisible(): bool

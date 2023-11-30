@@ -16,12 +16,12 @@ final readonly class WishlistPresenter
 
     }
 
-    public function present(WishlistResponse $response): WishlistView
+    public function present(WishlistResponse $response, ?string $wishlistGroupId = null): WishlistView
     {
         return new WishlistView(
             $response->getName(),
             $response->isOwner(),
-            array_map(fn (WishlistItemResponse $item) => $this->wishlistItemPresenter->present($item, $response), $response->getItems()),
+            array_map(fn (WishlistItemResponse $item) => $this->wishlistItemPresenter->present($item, $response, $wishlistGroupId), $response->getItems()),
         );
     }
 }
