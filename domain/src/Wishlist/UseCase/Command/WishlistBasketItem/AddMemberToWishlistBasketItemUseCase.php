@@ -7,6 +7,7 @@ namespace Domain\Wishlist\UseCase\Command\WishlistBasketItem;
 use Domain\Common\Domain\Exception\DomainException;
 use Domain\Wishlist\Domain\Model\BasketItem;
 use Domain\Wishlist\Domain\Model\WishlistBasketItem;
+use Domain\Wishlist\Domain\ValueObject\WishlistGroupId;
 use Domain\Wishlist\Domain\ValueObject\WishlistMemberId;
 use Domain\Wishlist\Port\Command\WishlistBasketItem\AddMemberToWishlistBasketItemInterface;
 use Domain\Wishlist\Repository\Command\WishlistBasketItemCommandRepositoryInterface;
@@ -30,10 +31,12 @@ final readonly class AddMemberToWishlistBasketItemUseCase implements AddMemberTo
     {
         $wishlistItemId = $request->getWishlistItemId();
         $wishlistMemberId = new WishlistMemberId($request->getWishlistMemberId());
+        $wishlistGroupId = $request->getWishlistGroupId() ? new WishlistGroupId($request->getWishlistGroupId()) : null;
 
         $basketItem = new BasketItem(
             $wishlistItemId,
             $wishlistMemberId,
+            $wishlistGroupId,
             $request->isVisibleName(),
             $request->isCanBeShared()
         );
@@ -44,6 +47,7 @@ final readonly class AddMemberToWishlistBasketItemUseCase implements AddMemberTo
             $basketItems[] = new BasketItem(
                 $item->getWishlistItemId(),
                 new WishlistMemberId($item->getWishlistMemberId()),
+                $item->getWishlistGroupId() ? new WishlistGroupId($item->getWishlistGroupId()) : null,
                 $item->isVisibleName(),
                 $item->isCanBeShared()
             );

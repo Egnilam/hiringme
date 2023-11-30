@@ -23,6 +23,10 @@ class BasketEntity implements EntityInterface
     #[ORM\JoinColumn(name: 'wishlist_item_id', nullable: false)]
     private WishlistItemEntity $wishlistItem;
 
+    #[ORM\ManyToOne(targetEntity: WishlistGroupEntity::class)]
+    #[ORM\JoinColumn(name: 'wishlist_group_id', nullable: true)]
+    private ?WishlistGroupEntity $wishlistGroup;
+
     #[ORM\Column(type: 'boolean')]
     private bool $visibleName;
 
@@ -48,6 +52,17 @@ class BasketEntity implements EntityInterface
     public function setWishlistItem(WishlistItemEntity $wishlistItem): self
     {
         $this->wishlistItem = $wishlistItem;
+        return $this;
+    }
+
+    public function getWishlistGroup(): ?WishlistGroupEntity
+    {
+        return $this->wishlistGroup;
+    }
+
+    public function setWishlistGroup(?WishlistGroupEntity $wishlistGroup): self
+    {
+        $this->wishlistGroup = $wishlistGroup;
         return $this;
     }
 

@@ -17,10 +17,10 @@ final readonly class AddMemberToWishlistBasketItemHandler implements CommandHand
     public function __invoke(AddMemberToWishlistBasketItemCommand $command): void
     {
         $this->addWishlistItemToWishlistMemberBasket->execute(new AddMemberToWishlistBasketItemRequest(
-            $command->getUserId(),
             $command->getWishlistMemberId(),
             $command->getWishlistId(),
             $command->getWishlistItemId(),
+            $command->getWishlistGroupId(),
             $command->isVisible(),
             $command->isLock()
         ));

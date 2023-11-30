@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Presenter\Wishlist;
 
+use App\Application\Http\Wishlist\WishlistBasketItem\AddMemberToWishlistBasketItemController;
 use App\Application\Http\Wishlist\WishlistItem\RemoveItemToWishlistController;
 use App\Application\Http\Wishlist\WishlistItem\UpdateItemOfWishlistController;
 use App\Application\Presenter\DeleteFormPresenter;
@@ -23,7 +24,7 @@ final readonly class WishlistItemPresenter
 
     }
 
-    public function present(WishlistItemResponse $response, WishlistResponse $wishlistResponse): WishlistItemView
+    public function present(WishlistItemResponse $response, WishlistResponse $wishlistResponse, ?string $wishlistGroupId): WishlistItemView
     {
         return new WishlistItemView(
             $response->getLabel(),
@@ -42,9 +43,9 @@ final readonly class WishlistItemPresenter
                 UpdateItemOfWishlistController::getRequestParams($wishlistResponse->getId(), $response->getId())
             ),
             $this->linkPresenter->present(
-                'test',
-                'public_wishlist_item_basket_add',
-                ['wishlist' => $wishlistResponse->getId(), 'item' => $response->getId()]
+                'Add item',
+                AddMemberToWishlistBasketItemController::NAME,
+                AddMemberToWishlistBasketItemController::getRequestParams($wishlistResponse->getId(), $response->getId(), $wishlistGroupId)
             ),
             'remove',
             $wishlistResponse->isOwner()

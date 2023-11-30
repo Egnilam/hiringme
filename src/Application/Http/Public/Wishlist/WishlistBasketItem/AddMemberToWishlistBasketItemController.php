@@ -25,12 +25,8 @@ final class AddMemberToWishlistBasketItemController extends CustomAbstractContro
             throw new \Exception('Not access');
         }
 
-        /** @var UserEntity $userEntity */
-        $userEntity = $this->getUser();
-
         $command = new AddMemberToWishlistBasketItemCommand();
         $command
-            ->setUserId($userEntity->getStringUuid())
             ->setWishlistMemberId('18ee0c7a-824f-415c-a5dd-bce13c4091de')
             ->setWishlistId((string)$request->query->get('wishlist'))
             ->setWishlistItemId((string)$request->query->get('item'));

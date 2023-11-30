@@ -26,7 +26,7 @@ final class RemoveItemToWishlistController extends CustomAbstractController
         ];
     }
 
-    #[Route('/{id}', name: 'wishlist_item_remove', methods: ['DELETE'])]
+    #[Route('/{id}', name: self::NAME, methods: ['DELETE'])]
     public function __invoke(Request $request, string $wishlistId, string $id): Response
     {
         if($this->isCsrfTokenValid(sprintf('delete.%s', $id), (string)$request->request->get('_token'))) {
