@@ -15,10 +15,12 @@ use Domain\Wishlist\Repository\Command\WishlistCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Command\AssociateGroupMemberToWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class AssociateGroupMemberMemberToWishlistUseCase implements AssociateGroupMemberToWishlistInterface
 {
     public function __construct(
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
         private WishlistCommandRepositoryInterface $wishlistCommandRepository,
     ) {
@@ -33,8 +35,12 @@ final readonly class AssociateGroupMemberMemberToWishlistUseCase implements Asso
         $wishlistId = new WishlistId($request->getWishlistId());
 
         $wishlistGroupId = new WishlistGroupId($request->getWishlistGroupId());
+        $wishlistMemberClaimantId = $this->getClaimantWishlistMemberId->get();
 
-        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($request->getWishlistId()));
+        $wishlistResponse = $this->wishlistQueryRepository->get(
+            new GetWishlistRequest($request->getWishlistId()),
+            $wishlistMemberClaimantId
+        );
 
         $groups[] = $wishlistGroupId;
         foreach ($wishlistResponse->getGroups() as $group) {
@@ -43,7 +49,7 @@ final readonly class AssociateGroupMemberMemberToWishlistUseCase implements Asso
 
         new Wishlist(
             $wishlistId,
-            new WishlistMemberId($wishlistResponse->getOwner()),
+            new WishlistMemberId($wishlistResponse->getWishlistMemberId()),
             $wishlistResponse->getName(),
             $groups,
             [],

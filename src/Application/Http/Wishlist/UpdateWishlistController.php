@@ -28,7 +28,7 @@ final class UpdateWishlistController extends CustomAbstractController
         $command = new UpdateWishlistCommand();
         $command
             ->setId($wishlist->getId())
-            ->setWishlistMemberId($wishlist->getOwner())
+            ->setWishlistMemberId($wishlist->getWishlistMemberId())
             ->setName($wishlist->getName())
             ->setVisibility(VisibilityEnum::from($wishlist->getVisibility()));
 

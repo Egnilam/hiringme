@@ -18,11 +18,13 @@ use Domain\Wishlist\Repository\Command\WishlistCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Command\AddItemToWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class AddItemToWishlistUseCase implements AddItemToWishlistInterface
 {
     public function __construct(
         private IdServiceInterface $idService,
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
         private WishlistCommandRepositoryInterface $wishlistCommandRepository,
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
     ) {
@@ -35,7 +37,12 @@ final readonly class AddItemToWishlistUseCase implements AddItemToWishlistInterf
     {
         $wishlistId = new WishlistId($request->getWishlistId());
 
-        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($request->getWishlistId()));
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+
+        $wishlistResponse = $this->wishlistQueryRepository->get(
+            new GetWishlistRequest($request->getWishlistId()),
+            $claimantWishlistMemberId
+        );
 
         $wishlistItem = new WishlistItem(
             $this->idService->next(),
@@ -54,7 +61,7 @@ final readonly class AddItemToWishlistUseCase implements AddItemToWishlistInterf
 
         new Wishlist(
             $wishlistId,
-            new WishlistMemberId($wishlistResponse->getOwner()),
+            new WishlistMemberId($wishlistResponse->getWishlistMemberId()),
             $wishlistResponse->getName(),
             [],
             $wishlistItems,

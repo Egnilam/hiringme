@@ -10,10 +10,10 @@ use Domain\Wishlist\Response\WishlistResponse;
 
 interface WishlistQueryRepositoryInterface
 {
-    public function get(GetWishlistRequest $request): WishlistResponse;
+    public function get(GetWishlistRequest $request, string $claimantWishlistMemberId): WishlistResponse;
 
     /**
      * @return array<WishlistResponse>
      */
-    public function getList(GetListWishlistRequest $request): array;
+    public function getList(GetListWishlistRequest $request, string $claimantWishlistMemberId): array;
 }

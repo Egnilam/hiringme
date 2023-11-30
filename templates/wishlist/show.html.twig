@@ -5,13 +5,15 @@
 {% block content %}
     {% block body %}
         <h1 class="main__title">{{ wishlist.name }}</h1>
-        <div class="main__actions">
-            <a class="button button--accent" href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
-            <a class="button" href="{{ path('wishlist_update', { id: wishlist.id}) }}">Edit</a>
-            {% include 'wishlist/_delete.html.twig' %}
-        </div>
+        {% if wishlist_view.owner %}
+            <div class="main__actions">
+                <a class="button button--accent" href="{{ path('wishlist_item_add', { wishlistId: wishlist.id }) }}">Add item</a>
+                <a class="button" href="{{ path('wishlist_update', { id: wishlist.id}) }}">Edit</a>
+                {% include 'wishlist/_delete.html.twig' %}
+            </div>
+        {% endif %}
         <div class="card-container">
-            {% for item in wishlist.items %}
+            {% for item_view in wishlist_view.wishlistItemViews %}
                 {% include 'wishlist/wishlist_item/_show.html.twig' %}
             {% endfor %}
         </div>

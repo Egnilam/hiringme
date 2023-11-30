@@ -120,7 +120,7 @@ final class WishlistCommandRepository extends AbstractRepository implements Wish
     private function buildWishlistEntity(Wishlist $wishlist, WishlistEntity $wishlistEntity = null): WishlistEntity
     {
         $wishlistMemberEntity = $this->entityManager->getRepository(WishlistMemberEntity::class)
-            ->findOneBy(['uuid' => IdService::fromString($wishlist->getOwner()->getId())]);
+            ->findOneBy(['uuid' => IdService::fromString($wishlist->getMemberId()->getId())]);
 
         if(!$wishlistMemberEntity) {
             throw new NotFoundException();

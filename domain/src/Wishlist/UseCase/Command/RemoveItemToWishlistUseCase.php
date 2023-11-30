@@ -18,10 +18,12 @@ use Domain\Wishlist\Repository\Command\WishlistCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Command\RemoveItemToWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlistInterface
 {
     public function __construct(
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
         private WishlistCommandRepositoryInterface $wishlistCommandRepository,
     ) {
@@ -34,7 +36,13 @@ final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlist
     public function execute(RemoveItemToWishlistRequest $request): void
     {
         $wishlistId = new WishlistId($request->getWishlistId());
-        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($wishlistId->getId()));
+
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+
+        $wishlistResponse = $this->wishlistQueryRepository->get(
+            new GetWishlistRequest($wishlistId->getId()),
+            $claimantWishlistMemberId
+        );
 
         $wishlistItems = [];
         foreach ($wishlistResponse->getItems() as $item) {
@@ -45,7 +53,7 @@ final readonly class RemoveItemToWishlistUseCase implements RemoveItemToWishlist
 
         new Wishlist(
             $wishlistId,
-            new WishlistMemberId($wishlistResponse->getOwner()),
+            new WishlistMemberId($wishlistResponse->getWishlistMemberId()),
             $wishlistResponse->getName(),
             [],
             $wishlistItems,

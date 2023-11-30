@@ -8,11 +8,14 @@ use Domain\Wishlist\Port\Query\GetListWishlistInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Query\GetListWishlistRequest;
 use Domain\Wishlist\Response\WishlistResponse;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class GetListWishlistUseCase implements GetListWishlistInterface
 {
-    public function __construct(private WishlistQueryRepositoryInterface $wishlistQueryRepository)
-    {
+    public function __construct(
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
+        private WishlistQueryRepositoryInterface $wishlistQueryRepository,
+    ) {
     }
 
     /**
@@ -20,6 +23,8 @@ final readonly class GetListWishlistUseCase implements GetListWishlistInterface
      */
     public function execute(GetListWishlistRequest $request): array
     {
-        return $this->wishlistQueryRepository->getList($request);
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+
+        return $this->wishlistQueryRepository->getList($request, $claimantWishlistMemberId);
     }
 }

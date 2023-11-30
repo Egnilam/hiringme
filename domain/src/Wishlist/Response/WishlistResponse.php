@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace Domain\Wishlist\Response;
 
-final readonly class WishlistResponse
+final class WishlistResponse
 {
+    private bool $owner;
     /**
      * @param array<string> $groups
      * @param array<WishlistItemResponse> $items
      */
     public function __construct(
-        private string $id,
-        private string $owner,
-        private string $name,
-        private array $groups,
-        private array $items,
-        private string $visibility
+        private readonly string $id,
+        private readonly string $wishlistMemberId,
+        private readonly string $name,
+        private readonly array  $groups,
+        private readonly array  $items,
+        private readonly string $visibility,
+        string $claimantWishlistMemberId
     ) {
-
+        $this->owner = $claimantWishlistMemberId === $this->wishlistMemberId;
     }
 
     public function getId(): string
@@ -26,9 +28,9 @@ final readonly class WishlistResponse
         return $this->id;
     }
 
-    public function getOwner(): string
+    public function getWishlistMemberId(): string
     {
-        return $this->owner;
+        return $this->wishlistMemberId;
     }
 
     public function getName(): string
@@ -55,5 +57,10 @@ final readonly class WishlistResponse
     public function getVisibility(): string
     {
         return $this->visibility;
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->owner;
     }
 }

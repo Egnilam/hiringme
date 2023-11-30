@@ -14,10 +14,12 @@ use Domain\Wishlist\Repository\Command\WishlistCommandRepositoryInterface;
 use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Command\UpdateWishlistRequest;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class UpdateWishlistUseCase implements UpdateWishlistInterface
 {
     public function __construct(
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
         private WishlistCommandRepositoryInterface $wishlistCommandRepository,
     ) {
@@ -29,9 +31,14 @@ final readonly class UpdateWishlistUseCase implements UpdateWishlistInterface
     public function execute(UpdateWishlistRequest $request): void
     {
         $wishlistId = new WishlistId($request->getId());
-        $owner = new WishlistMemberId($request->getOwner());
+        $owner = new WishlistMemberId($request->getWishlistMemberId());
 
-        $wishlistResponse = $this->wishlistQueryRepository->get(new GetWishlistRequest($wishlistId->getId()));
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+
+        $wishlistResponse = $this->wishlistQueryRepository->get(
+            new GetWishlistRequest($wishlistId->getId()),
+            $claimantWishlistMemberId
+        );
 
         $wishlistItems = [];
         foreach ($wishlistResponse->getItems() as $item) {

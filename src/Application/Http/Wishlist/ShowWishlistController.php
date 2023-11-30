@@ -6,7 +6,9 @@ namespace App\Application\Http\Wishlist;
 
 use App\Action\Query\Wishlist\GetWishlistQuery;
 use App\Application\Http\CustomAbstractController;
+use App\Application\Presenter\Wishlist\WishlistPresenter;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
+use Domain\Wishlist\Response\WishlistResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlists')]
 final class ShowWishlistController extends CustomAbstractController
 {
-    #[Route('/{id}', name: 'wishlist_show', methods: ['GET'])]
-    public function __invoke(Request $request, string $id): Response
+    public const NAME = 'wishlist_show';
+
+    #[Route('/{id}', name: self::NAME, methods: ['GET'])]
+    public function __invoke(Request $request, string $id, WishlistPresenter $presenter): Response
     {
         $query = new GetWishlistQuery();
         $query->setRequest(
@@ -27,10 +31,13 @@ final class ShowWishlistController extends CustomAbstractController
                 ]
             )
         );
+
+        /** @var WishlistResponse $wishlist */
         $wishlist = $this->queryBus->ask($query);
 
         return $this->render('wishlist/show.html.twig', [
-            'wishlist' => $wishlist
+            'wishlist' => $wishlist,
+            'wishlist_view' => $presenter->present($wishlist)
         ]);
     }
 }

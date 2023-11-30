@@ -19,7 +19,7 @@ use Domain\Wishlist\Response\WishlistResponse;
 
 final class WishlistQueryRepository extends AbstractRepository implements WishlistQueryRepositoryInterface
 {
-    public function get(GetWishlistRequest $request): WishlistResponse
+    public function get(GetWishlistRequest $request, string $claimantWishlistMemberId): WishlistResponse
     {
         if($this->storePersistEntityService->has($request->getId())) {
             /** @var WishlistEntity $wishlistEntity */
@@ -47,14 +47,15 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
             $wishlistEntity->getName(),
             $this->getWishlistGroups($wishlistEntity),
             $items ?? [],
-            $wishlistEntity->getVisibility()
+            $wishlistEntity->getVisibility(),
+            $claimantWishlistMemberId
         );
     }
 
     /**
      * @return array<WishlistResponse>
      */
-    public function getList(GetListWishlistRequest $request): array
+    public function getList(GetListWishlistRequest $request, string $claimantWishlistMemberId): array
     {
         $wishlistRequest = $this->entityManager->getRepository(WishlistEntity::class)
             ->createQueryBuilder('wishlist');
@@ -77,7 +78,8 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
                 $wishlistEntity->getName(),
                 [],
                 $this->getWishlistItems($wishlistEntity->getStringUuid()),
-                $wishlistEntity->getVisibility()
+                $wishlistEntity->getVisibility(),
+                $claimantWishlistMemberId
             );
         }
 

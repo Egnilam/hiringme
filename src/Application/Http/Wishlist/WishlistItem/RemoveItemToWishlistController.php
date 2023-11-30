@@ -13,10 +13,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/wishlists/{wishlistId}/items')]
 final class RemoveItemToWishlistController extends CustomAbstractController
 {
+    public const NAME = 'wishlist_item_remove';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $wishlistId, string $id): array
+    {
+        return [
+            'wishlistId' => $wishlistId,
+            'id' => $id
+        ];
+    }
+
     #[Route('/{id}', name: 'wishlist_item_remove', methods: ['DELETE'])]
     public function __invoke(Request $request, string $wishlistId, string $id): Response
     {
-        if($this->isCsrfTokenValid(sprintf('remove.%s', $id), (string)$request->request->get('_token'))) {
+        if($this->isCsrfTokenValid(sprintf('delete.%s', $id), (string)$request->request->get('_token'))) {
             try {
                 $command = new RemoveItemToWishlistCommand();
                 $command

@@ -6,6 +6,7 @@ namespace App\Application\Form\Wishlist\WishlistItem;
 
 use Domain\Wishlist\Domain\Model\PriorityEnum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -45,6 +46,16 @@ abstract class AbstractWishlistItemForm extends AbstractType
             ->add('price', NumberType::class, [
                 'required' => false,
                 'label' => $this->translator->trans('wishlist.item.price.label')
+            ])
+            ->add('test', ChoiceType::class, [
+                'mapped' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => [
+                    'Fiat' => 0,
+                    'Ferrari' => 1,
+                    'Renault' => 2
+                ]
             ])
         ;
     }

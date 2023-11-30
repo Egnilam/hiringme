@@ -27,7 +27,7 @@ final readonly class CreateWishlistUseCase implements CreateWishlistInterface
     public function execute(CreateWishlistRequest $request): WishlistId
     {
         $wishlistId = new WishlistId($this->idService->next());
-        $owner = new WishlistMemberId($request->getOwner());
+        $owner = new WishlistMemberId($request->getWishlistMemberId());
 
         $wishlist = new Wishlist(
             $wishlistId,

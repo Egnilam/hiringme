@@ -9,16 +9,16 @@ use Domain\Wishlist\Domain\Model\VisibilityEnum;
 abstract readonly class AbstractWishlistRequest
 {
     public function __construct(
-        private string $owner,
-        private string $name,
+        private string         $wishlistMemberId,
+        private string         $name,
         private VisibilityEnum $visibility,
     ) {
 
     }
 
-    public function getOwner(): string
+    public function getWishlistMemberId(): string
     {
-        return $this->owner;
+        return $this->wishlistMemberId;
     }
 
     public function getName(): string

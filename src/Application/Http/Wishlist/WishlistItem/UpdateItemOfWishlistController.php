@@ -8,12 +8,9 @@ use App\Action\Command\Wishlist\UpdateItemOfWishlistCommand;
 use App\Action\Query\Wishlist\WishlistItem\GetWishlistItemQuery;
 use App\Application\Form\Wishlist\WishlistItem\UpdateItemOfWishlistForm;
 use App\Application\Http\CustomAbstractController;
-use App\Infrastructure\Framework\Messenger\Command\CommandBusInterface;
-use App\Infrastructure\Framework\Messenger\Query\QueryBusInterface;
 use Domain\Wishlist\Domain\Model\PriorityEnum;
 use Domain\Wishlist\Request\Query\WishlistItem\GetWishlistItemRequest;
 use Domain\Wishlist\Response\WishlistItemResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +18,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/wishlists/{wishlistId}/items')]
 final class UpdateItemOfWishlistController extends CustomAbstractController
 {
-    #[Route('/{id}/update', name: 'wishlist_item_update', methods: ['GET', 'PUT'])]
+    public const NAME = 'wishlist_item_update';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $wishlistId, string $id): array
+    {
+        return [
+          'wishlistId' => $wishlistId,
+          'id' => $id
+        ];
+    }
+
+    #[Route('/{id}/update', name: self::NAME, methods: ['GET', 'PUT'])]
     public function __invoke(Request $request, string $wishlistId, string $id): Response
     {
 

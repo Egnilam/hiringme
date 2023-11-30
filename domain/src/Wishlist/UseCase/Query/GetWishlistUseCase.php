@@ -10,10 +10,12 @@ use Domain\Wishlist\Repository\Query\WishlistQueryRepositoryInterface;
 use Domain\Wishlist\Request\Query\GetWishlistRequest;
 use Domain\Wishlist\Request\Query\WishlistBasketItem\GetWishlistBasketItemRequest;
 use Domain\Wishlist\Response\WishlistResponse;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 
 final readonly class GetWishlistUseCase implements GetWishlistInterface
 {
     public function __construct(
+        private GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId,
         private WishlistQueryRepositoryInterface $wishlistQueryRepository,
         private WishlistBasketItemQueryRepositoryInterface $wishlistItemBasketQueryRepository
     ) {
@@ -21,7 +23,9 @@ final readonly class GetWishlistUseCase implements GetWishlistInterface
 
     public function execute(GetWishlistRequest $request): WishlistResponse
     {
-        $wishlistResponse = $this->wishlistQueryRepository->get($request);
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+
+        $wishlistResponse = $this->wishlistQueryRepository->get($request, $claimantWishlistMemberId);
 
         $this->loadBasketItems($wishlistResponse, $request);
 

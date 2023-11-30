@@ -13,7 +13,7 @@ final class Wishlist
 {
     private WishlistId $id;
 
-    private WishlistMemberId $owner;
+    private WishlistMemberId $memberId;
 
     private string $name;
 
@@ -35,15 +35,15 @@ final class Wishlist
      * @throws DomainException
      */
     public function __construct(
-        WishlistId $id,
-        WishlistMemberId $owner,
-        string $name,
-        array $groups,
-        array $items,
-        VisibilityEnum $visibility
+        WishlistId       $id,
+        WishlistMemberId $wishlistMemberId,
+        string           $name,
+        array            $groups,
+        array            $items,
+        VisibilityEnum   $visibility
     ) {
         $this->id = $id;
-        $this->owner = $owner;
+        $this->memberId = $wishlistMemberId;
         $this->name = $name;
         $this->assignGroups($groups);
         $this->items = $items;
@@ -55,9 +55,9 @@ final class Wishlist
         return $this->id;
     }
 
-    public function getOwner(): WishlistMemberId
+    public function getMemberId(): WishlistMemberId
     {
-        return $this->owner;
+        return $this->memberId;
     }
 
     public function getName(): string
