@@ -18,7 +18,6 @@ final readonly class RemoveMemberToWishlistGroupHandler implements CommandHandle
     {
         $this->removeWishlistGroupMember->execute(
             new RemoveMemberToWishlistGroupRequest(
-                $command->getClaimantId(),
                 $command->getWishlistGroupId(),
                 $command->getWishlistGroupMemberId(),
             )

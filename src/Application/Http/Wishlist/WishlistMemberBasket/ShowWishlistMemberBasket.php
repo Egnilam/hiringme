@@ -8,6 +8,7 @@ use App\Action\Query\Wishlist\WishlistMemberBasket\GetWishlistMemberBasketQuery;
 use App\Application\Http\CustomAbstractController;
 use App\Application\View\NavbarView;
 use Domain\Wishlist\Request\Query\WishlistMemberBasket\GetWishlistMemberBasketRequest;
+use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,10 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 final class ShowWishlistMemberBasket extends CustomAbstractController
 {
     #[Route(name: 'wishlist_member_basket_show', methods: ['GET'])]
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response
     {
         $query = new GetWishlistMemberBasketQuery();
-        $query->setRequest(new GetWishlistMemberBasketRequest('18ee0c7a-824f-415c-a5dd-bce13c4091de'));
+        $query->setRequest(new GetWishlistMemberBasketRequest($getClaimantWishlistMemberId->get()));
 
         $wishlistMemberBasket = $this->queryBus->ask($query);
 

@@ -20,7 +20,6 @@ final class RemoveMemberToWishlistGroupController extends CustomAbstractControll
             try {
                 $command = new RemoveMemberToWishlistGroupCommand();
                 $command
-                    ->setClaimantId('claimant id')
                     ->setWishlistGroupId($groupId)
                     ->setWishlistGroupMemberId($id);
 

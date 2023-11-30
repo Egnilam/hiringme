@@ -8,22 +8,9 @@ use App\Infrastructure\Framework\Messenger\Command\CommandInterface;
 
 final class RemoveMemberToWishlistGroupCommand implements CommandInterface
 {
-    private string $claimantId;
-
     private string $wishlistGroupId;
 
     private string $wishlistGroupMemberId;
-
-    public function getClaimantId(): string
-    {
-        return $this->claimantId;
-    }
-
-    public function setClaimantId(string $claimantId): self
-    {
-        $this->claimantId = $claimantId;
-        return $this;
-    }
 
     public function getWishlistGroupId(): string
     {
