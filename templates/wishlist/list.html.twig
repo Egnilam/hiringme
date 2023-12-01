@@ -20,8 +20,8 @@
                         <span class="card__label">Groups : {{ wishlist.groups|length }}</span>
                     </div>
                     <div class="card__actions">
-                        <a class="button button--accent button--round" href="{{ path('wishlist_show', { id: wishlist.id}) }}">
-                            <i class="gg-eye"></i>
+                        <a class="button button--round button--accent" href="{{ path('wishlist_show', { id: wishlist.id}) }}">
+                            {% include 'svg/eye.html.twig' with { 'class_extend' : 'icon--accent'} %}
                         </a>
                     </div>
                 </div>
