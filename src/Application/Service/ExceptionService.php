@@ -17,7 +17,10 @@ final readonly class ExceptionService
     {
         if($exception instanceof HandlerFailedException) {
             foreach ($exception->getNestedExceptions() as $nestedException) {
-                if(is_subclass_of($nestedException, DomainException::class)) {
+                if(
+                    is_subclass_of($nestedException, DomainException::class)
+                    || DomainException::class === $nestedException::class
+                ) {
                     $this->fromDomainException($nestedException);
                 }
             }

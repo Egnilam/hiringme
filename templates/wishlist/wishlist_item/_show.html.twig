@@ -24,28 +24,27 @@
                     <p>{{ participant.visibleName ? participant.memberName : 'Anonymous' }}</p>
                 {% endfor %}
         {% endif %}
-
     </div>
     {% if item_view.description %}
         <span>{{ item_view.description }}</span>
     {% endif %}
     <div class="card__actions">
         {% if item_view.owner %}
-            <a class="button button--round" href="{{ item_view.actionUpdate.link }}">
-                <i class="gg-pen"></i>
+            <a class="button button--round" href="{{ item_view.actionUpdate.link }}" aria-labelledby="btn-update-wishlist-item-{{ loop.index }}">
+                <span id="btn-update-wishlist-item-{{ loop.index }}" hidden>{{ item_view.actionUpdate.text }}</span>
+                {% include 'svg/pen.html.twig' %}
             </a>
             {% include '_components/_form_delete.html.twig' with {
                 'action' : item_view.actionRemove.action,
                 'token_id' : item_view.actionRemove.tokenId,
-                'btn_txt' : 'delete',
-                'extend_class' : '' } %}
+                'text' : 'delete' } %}
             {% else %}
                 {% if item_view.canAddToMyBasket() %}
-                    <a class="button button--accent" href="{{  item_view.actionAddItemToBasket.link }}">
+                    <a class="button button--accent" href="{{  item_view.actionAddItemToBasket.link }}" aria-labelledby="btn-add-to-basket-{{ loop.index }}">
+                        <span id="btn-add-to-basket-{{ loop.index }}" hidden>{{  item_view.actionAddItemToBasket.text }}</span>
                         {{  item_view.actionAddItemToBasket.text }}
                     </a>
                 {% endif %}
-
         {% endif %}
     </div>
 </div>

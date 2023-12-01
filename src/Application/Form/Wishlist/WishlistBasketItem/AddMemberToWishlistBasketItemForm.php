@@ -22,10 +22,12 @@ final class AddMemberToWishlistBasketItemForm extends AbstractType
         $builder
             ->add('visible', CheckboxType::class, [
                 'required' => false,
+                'data' => true,
                 'label' => $this->translator->trans('form.name_visible')
             ])
             ->add('lock', CheckboxType::class, [
                 'required' => false,
+                'data' => true,
                 'label' => $this->translator->trans('form.lock'),
             ])
         ;

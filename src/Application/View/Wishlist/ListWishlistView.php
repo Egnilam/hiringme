@@ -6,42 +6,40 @@ namespace App\Application\View\Wishlist;
 
 use App\Application\View\LinkView;
 use App\Application\View\ViewInterface;
-use Domain\Wishlist\Response\WishlistResponse;
-use Symfony\Component\Translation\TranslatableMessage;
 
-class ListWishlistView implements ViewInterface
+final readonly class ListWishlistView implements ViewInterface
 {
-    private TranslatableMessage $title;
-
-    private LinkView $createWishlist;
-
     /**
-     * @param array<WishlistResponse>  $wishlists
-     * @param LinkView $createWishlist
+     * @param array<WishlistView>  $wishlists
      */
     public function __construct(
-        private readonly array $wishlists,
-        LinkView $createWishlist
+        private string $pageTitle,
+        private string $title,
+        private array $wishlists,
+        private LinkView $actionCreate
     ) {
-        $this->title = new TranslatableMessage('ui.wishlist.list.title');
-        $this->createWishlist = $createWishlist;
     }
 
-    /**
-     * @return array<WishlistResponse>
-     */
-    public function getWishlists(): array
+    public function getPageTitle(): string
     {
-        return $this->wishlists;
+        return $this->pageTitle;
     }
 
-    public function getTitle(): TranslatableMessage
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getCreateWishlist(): LinkView
+    public function getActionCreate(): LinkView
     {
-        return $this->createWishlist;
+        return $this->actionCreate;
+    }
+
+    /**
+     * @return array<WishlistView>
+     */
+    public function getWishlists(): array
+    {
+        return $this->wishlists;
     }
 }

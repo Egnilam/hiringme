@@ -17,8 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlist_groups/{groupId}/members')]
 final class AssociateWishlistToGroupMemberController extends CustomAbstractController
 {
-    #[Route('/{id}/wishlist', name: 'wishlist_group_member_associate_wishlist', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, string $groupId, string $id): Response
+    public const NAME = 'wishlist_group_member_associate_wishlist';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $groupId, string $memberId): array
+    {
+        return [
+            'groupId' => $groupId,
+            'memberId' => $memberId
+        ];
+    }
+
+    #[Route('/{memberId}/wishlist', name: self::NAME, methods: ['GET', 'POST'])]
+    public function __invoke(Request $request, string $groupId, string $memberId): Response
     {
         $command = new AssociateGroupMemberToWishlistCommand();
         $command->setWishlistGroupId($groupId);
@@ -26,7 +39,7 @@ final class AssociateWishlistToGroupMemberController extends CustomAbstractContr
         $query = new GetListWishlistQuery();
 
         /** @var array<WishlistResponse> $wishlists */
-        $wishlists = $this->queryBus->ask($query->setRequest(new GetListWishlistRequest($id)));
+        $wishlists = $this->queryBus->ask($query->setRequest(new GetListWishlistRequest($memberId)));
         if(count($wishlists) === 0) {
             return $this->redirectToRoute('wishlist_create', ['group' => $groupId]);
         }

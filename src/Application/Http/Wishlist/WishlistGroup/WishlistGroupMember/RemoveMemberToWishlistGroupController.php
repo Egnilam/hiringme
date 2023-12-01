@@ -13,7 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlist_groups/{groupId}/members')]
 final class RemoveMemberToWishlistGroupController extends CustomAbstractController
 {
-    #[Route('/{id}', name: 'wishlist_group_member_remove', methods: ['DELETE'])]
+    public const NAME = 'wishlist_group_member_remove';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $groupId, string $id): array
+    {
+        return [
+            'groupId' => $groupId,
+            'id' => $id
+        ];
+    }
+
+    #[Route('/{id}', name: self::NAME, methods: ['DELETE'])]
     public function __invoke(Request $request, string $groupId, string $id): Response
     {
         if($this->isCsrfTokenValid(sprintf('remove.%s', $id), (string)$request->request->get('_token'))) {

@@ -14,7 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/wishlists/{wishlistId}/items')]
 final class AddItemToWishlistController extends CustomAbstractController
 {
-    #[Route('/add', name: 'wishlist_item_add', methods: ['GET', 'POST'])]
+    public const NAME = 'wishlist_item_add';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $wishlistId): array
+    {
+        return [
+          'wishlistId' => $wishlistId
+        ];
+    }
+
+    #[Route('/add', name: self::NAME, methods: ['GET', 'POST'])]
     public function __invoke(Request $request, string $wishlistId): Response
     {
         $command = new AddItemToWishlistCommand();

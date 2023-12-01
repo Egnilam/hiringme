@@ -6,6 +6,7 @@ namespace App\Application\Http\Wishlist;
 
 use App\Action\Query\Wishlist\GetListWishlistQuery;
 use App\Application\Http\CustomAbstractController;
+use App\Application\Presenter\Wishlist\ListWishlistPresenter;
 use App\Application\Presenter\Wishlist\WishlistPresenter;
 use App\Application\View\LinkView;
 use App\Application\View\Wishlist\ListWishlistView;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class ListWishlistController extends CustomAbstractController
 {
     #[Route(name: 'wishlist_list', methods: ['GET'])]
-    public function __invoke(Request $request, WishlistPresenter $wishlistPresenter, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response
+    public function __invoke(Request $request, ListWishlistPresenter $presenter, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response
     {
         $query = new GetListWishlistQuery();
         $query->setRequest(new GetListWishlistRequest($getClaimantWishlistMemberId->get()));
@@ -28,10 +29,7 @@ final class ListWishlistController extends CustomAbstractController
         /** @var array<WishlistResponse> $wishlists */
         $wishlists = $this->queryBus->ask($query);
 
-        $view = new ListWishlistView(
-            $wishlists,
-            new LinkView('ui.wishlist.create', $this->generateUrl('wishlist_create'))
-        );
+        $view = $presenter->present($wishlists);
 
         return $this->render('wishlist/list.html.twig', [
             'view' => $view

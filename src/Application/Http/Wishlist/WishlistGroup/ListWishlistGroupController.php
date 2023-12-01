@@ -19,7 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlist_groups')]
 final class ListWishlistGroupController extends CustomAbstractController
 {
-    #[Route(name: 'wishlist_group_list', methods: ['GET'])]
+    public const NAME = 'wishlist_group_list';
+
+    #[Route(name: self::NAME, methods: ['GET'])]
     public function __invoke(Request $request): Response
     {
         /** @var UserEntity $user */
@@ -34,7 +36,7 @@ final class ListWishlistGroupController extends CustomAbstractController
         $getListWishlistGroupQuery->setRequest(new GetListWishlistGroupRequest($wishlistMemberResponse->getId()));
 
         $wishlistGroups = $this->queryBus->ask($getListWishlistGroupQuery);
-        dump($wishlistGroups);
+
         return $this->render('wishlist/wishlist_group/list.html.twig', [
             'wishlist_groups' => $wishlistGroups,
             'navbar' => new NavbarView('groups')

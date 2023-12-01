@@ -7,6 +7,7 @@ namespace App\Application\Http\Wishlist\WishlistBasketItem;
 use App\Action\Command\Wishlist\WishlistBasketItem\AddMemberToWishlistBasketItemCommand;
 use App\Application\Form\Wishlist\WishlistBasketItem\AddMemberToWishlistBasketItemForm;
 use App\Application\Http\CustomAbstractController;
+use App\Application\Http\Wishlist\ShowWishlistController;
 use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,19 +43,24 @@ final class AddMemberToWishlistBasketItemController extends CustomAbstractContro
     {
         $claimantWishlistMemberId = $getClaimantWishlistMemberId->get();
 
+        $wishlistGroupId = $request->query->has('group') ? (string)$request->query->get('group') : null;
+
         $command = new AddMemberToWishlistBasketItemCommand();
         $command
             ->setWishlistMemberId($claimantWishlistMemberId)
             ->setWishlistId($wishlistId)
             ->setWishlistItemId($id)
-            ->setWishlistGroupId($request->query->has('group') ? (string)$request->query->get('group') : null);
+            ->setWishlistGroupId($wishlistGroupId);
 
         $form = $this->createForm(AddMemberToWishlistBasketItemForm::class, $command);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->commandBus->dispatch($command);
+
+                return $this->redirectToRoute(ShowWishlistController::NAME, ShowWishlistController::getRequestParams($wishlistId, $wishlistGroupId));
             } catch (\Exception $exception) {
+                $this->exceptionService->execute($exception);
             }
         }
 
