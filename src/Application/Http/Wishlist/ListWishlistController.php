@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Http\Wishlist;
 
 use App\Action\Query\Wishlist\GetListWishlistQuery;
-use App\Action\Query\Wishlist\WishlistMember\GetWishlistMemberQuery;
 use App\Application\Http\CustomAbstractController;
 use App\Application\Presenter\Wishlist\WishlistPresenter;
 use App\Application\View\LinkView;
 use App\Application\View\Wishlist\ListWishlistView;
-use App\Application\View\Wishlist\WishlistView;
-use App\Infrastructure\Framework\Doctrine\Entity\UserEntity;
 use Domain\Wishlist\Request\Query\GetListWishlistRequest;
-use Domain\Wishlist\Request\Query\WishlistMember\GetWishlistMemberRequest;
-use Domain\Wishlist\Response\WishlistMemberResponse;
 use Domain\Wishlist\Response\WishlistResponse;
 use Domain\Wishlist\Service\GetClaimantWishlistMemberIdInterface;
 use Symfony\Component\HttpFoundation\Request;

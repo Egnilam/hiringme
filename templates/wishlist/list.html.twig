@@ -16,6 +16,8 @@
                     <h2 class="card__title">{{ wishlist.name }}</h2>
                     <div>
                         <span class="card__label">{{ wishlist.visibility }}</span>
+                        <span class="card__label">Items : {{ wishlist.items|length }}</span>
+                        <span class="card__label">Groups : {{ wishlist.groups|length }}</span>
                     </div>
                     <div class="card__actions">
                         <a class="button button--accent button--round" href="{{ path('wishlist_show', { id: wishlist.id}) }}">

@@ -14,6 +14,17 @@
         {% if item_view.priority %}
             <span class="card__label">{{ item_view.priority }}</span>
         {% endif %}
+        <span class="card__label">{{ item_view.isLocked ? 'Is locked' : 'is opened'}}</span>
+    </div>
+    <div>
+        {% if item_view.isOwner %}
+            <span class="card__label">{{ item_view.isSelected }}</span>
+            {% else %}
+                {% for participant in item_view.participants %}
+                    <p>{{ participant.visibleName ? participant.memberName : 'Anonymous' }}</p>
+                {% endfor %}
+        {% endif %}
+
     </div>
     {% if item_view.description %}
         <span>{{ item_view.description }}</span>
@@ -29,9 +40,12 @@
                 'btn_txt' : 'delete',
                 'extend_class' : '' } %}
             {% else %}
-                <a class="button button--accent" href="{{  item_view.actionAddItemToBasket.link }}">
-                    {{  item_view.actionAddItemToBasket.text }}
-                </a>
+                {% if item_view.canAddToMyBasket() %}
+                    <a class="button button--accent" href="{{  item_view.actionAddItemToBasket.link }}">
+                        {{  item_view.actionAddItemToBasket.text }}
+                    </a>
+                {% endif %}
+
         {% endif %}
     </div>
 </div>

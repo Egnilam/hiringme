@@ -42,6 +42,7 @@ final class ShowWishlistController extends CustomAbstractController
 
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
+            'wishlist_group_id' => $wishlistGroupId,
             'wishlist_view' => $presenter->present(
                 $wishlist,
                 $wishlistGroupId

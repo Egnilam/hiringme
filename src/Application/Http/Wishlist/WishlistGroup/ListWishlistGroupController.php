@@ -34,7 +34,7 @@ final class ListWishlistGroupController extends CustomAbstractController
         $getListWishlistGroupQuery->setRequest(new GetListWishlistGroupRequest($wishlistMemberResponse->getId()));
 
         $wishlistGroups = $this->queryBus->ask($getListWishlistGroupQuery);
-
+        dump($wishlistGroups);
         return $this->render('wishlist/wishlist_group/list.html.twig', [
             'wishlist_groups' => $wishlistGroups,
             'navbar' => new NavbarView('groups')

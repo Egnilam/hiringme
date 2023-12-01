@@ -24,31 +24,32 @@ final readonly class WishlistItemPresenter
 
     }
 
-    public function present(WishlistItemResponse $response, WishlistResponse $wishlistResponse, ?string $wishlistGroupId): WishlistItemView
+    public function present(WishlistItemResponse $wishlistItem, WishlistResponse $wishlistResponse, ?string $wishlistGroupId): WishlistItemView
     {
         return new WishlistItemView(
-            $response->getLabel(),
-            $response->getPrice(),
-            $response->getPriority(),
-            $response->getDescription(),
-            $response->getLink() ? $this->externalLinkPresenter->present($response->getLabel(), $response->getLink()) : null,
+            $wishlistItem->getLabel(),
+            $wishlistItem->getPrice(),
+            $wishlistItem->getPriority(),
+            $wishlistItem->getDescription(),
+            $wishlistItem->getLink() ? $this->externalLinkPresenter->present($wishlistItem->getLabel(), $wishlistItem->getLink()) : null,
             $this->deleteFormPresenter->present(
-                $response->getId(),
+                $wishlistItem->getId(),
                 RemoveItemToWishlistController::NAME,
-                RemoveItemToWishlistController::getRequestParams($wishlistResponse->getId(), $response->getId())
+                RemoveItemToWishlistController::getRequestParams($wishlistResponse->getId(), $wishlistItem->getId())
             ),
             $this->linkPresenter->present(
                 'Update item',
                 UpdateItemOfWishlistController::NAME,
-                UpdateItemOfWishlistController::getRequestParams($wishlistResponse->getId(), $response->getId())
+                UpdateItemOfWishlistController::getRequestParams($wishlistResponse->getId(), $wishlistItem->getId())
             ),
             $this->linkPresenter->present(
                 'Add item',
                 AddMemberToWishlistBasketItemController::NAME,
-                AddMemberToWishlistBasketItemController::getRequestParams($wishlistResponse->getId(), $response->getId(), $wishlistGroupId)
+                AddMemberToWishlistBasketItemController::getRequestParams($wishlistResponse->getId(), $wishlistItem->getId(), $wishlistGroupId)
             ),
             'remove',
-            $wishlistResponse->isOwner()
+            $wishlistResponse->isOwner(),
+            $wishlistItem->getBasketItems()
         );
     }
 }

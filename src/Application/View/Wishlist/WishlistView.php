@@ -30,10 +30,15 @@ class WishlistView implements ViewInterface
     }
 
     /**
-     * @return WishlistItemView[]
+     * @return array<WishlistItemView>
      */
     public function getWishlistItemViews(): array
     {
         return $this->wishlistItemViews;
+    }
+
+    public function countWishlistItem(): int
+    {
+        return count($this->wishlistItemViews);
     }
 }
