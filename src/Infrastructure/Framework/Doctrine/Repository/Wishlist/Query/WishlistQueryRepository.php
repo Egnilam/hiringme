@@ -76,7 +76,7 @@ final class WishlistQueryRepository extends AbstractRepository implements Wishli
                 $wishlistEntity->getStringUuid(),
                 $wishlistEntity->getWishlistMember()->getStringUuid(),
                 $wishlistEntity->getName(),
-                [],
+                $this->getWishlistGroups($wishlistEntity),
                 $this->getWishlistItems($wishlistEntity->getStringUuid()),
                 $wishlistEntity->getVisibility(),
                 $claimantWishlistMemberId

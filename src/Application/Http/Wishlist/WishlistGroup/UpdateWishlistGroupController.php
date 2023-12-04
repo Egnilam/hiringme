@@ -18,6 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlist_groups')]
 final class UpdateWishlistGroupController extends CustomAbstractController
 {
+    public const NAME = 'wishlist_group_update';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $id): array
+    {
+        return ['id' => $id];
+    }
+
     #[Route('/{id}/update', name: 'wishlist_group_update', methods: ['GET', 'PUT'])]
     public function __invoke(Request $request, string $id): Response
     {

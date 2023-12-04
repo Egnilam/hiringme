@@ -7,8 +7,14 @@ ui:
 
   wishlist:
     create: 'Créer une nouvelle liste'
+    update: 'Modifier la liste'
+    delete: 'Supprimer la liste'
     list:
       title: 'Mes listes'
+    item:
+      add: 'Ajouter un nouvel item'
+    group:
+      show_list: 'Retourner aux groupes'
 
 
 wishlist:
@@ -39,3 +45,5 @@ form:
   owner_pseudonym: 'Pseudonyme du créateur'
   name_visible: 'Afficher mon nom'
   lock: 'Accepter le partage'
+  select:
+    placeholder: 'Choisir une option'

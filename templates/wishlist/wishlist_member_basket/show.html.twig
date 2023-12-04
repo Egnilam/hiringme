@@ -9,7 +9,7 @@
             {% for basket_item in wishlist_member_basket.items %}
                 <div class="card">
                     <p class="card__title">{{ basket_item.itemName }}</p>
-                    <p>{{ basket_item.wishlistName }}</p>
+                    <p>{{ basket_item.wishlistName }} {% if basket_item.wishlistGroupName %} | {{ basket_item.wishlistGroupName}} {% endif %}</p>
                     <p>{{ basket_item.memberName }}</p>
                 </div>
             {% endfor %}

@@ -25,17 +25,26 @@ final class WishlistBasketItem
     {
         $itemCanBeShared = true;
         $memberAttachedToItems = [];
+        $wishlistGroupId = null;
         foreach ($items as $item) {
+            if($item->getWishlistGroupId()) {
+                if($wishlistGroupId && $item->getWishlistGroupId()->getId() !== $wishlistGroupId) {
+                    throw new DomainException('Cannot add from 2 different groups');
+                }
+                $wishlistGroupId = $item->getWishlistGroupId()->getId();
+            }
+
             if(!$item->isCanBeShared()) {
                 if(!$itemCanBeShared) {
-                    throw new DomainException('Two peoples cannot take an locked item');
+                    throw new DomainException('Two peoples cannot take a locked item');
                 }
                 $itemCanBeShared = false;
             }
 
             if(isset($memberAttachedToItems[$item->getWishlistMemberId()->getId()])) {
-                throw new DomainException('Cannot add this item two times at the same at the same member');
+                throw new DomainException('Cannot add this item two times at the same member');
             }
+
             $memberAttachedToItems[$item->getWishlistMemberId()->getId()] = $item->getWishlistItemId();
         }
 

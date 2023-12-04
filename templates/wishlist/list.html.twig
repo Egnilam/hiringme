@@ -1,25 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Wishlists{% endblock %}
+{% block title %}{{ view.pageTitle }}{% endblock %}
 
 {% block content %}
     {% block body %}
-        <h1 class="main__title">{{ view.title|trans }}</h1>
+        <h1 class="main__title">{{ view.title }}</h1>
         <div class="main__actions">
-            <a class="button button--accent" href="{{ view.createWishlist.link }}">
-                {{ view.createWishlist.text|trans }}
+            <a class="button button--accent" href="{{ view.actionCreate.link }}">
+                {{ view.actionCreate.text }}
             </a>
         </div>
         <div class="card-container">
-            {% for wishlist in view.wishlists %}
+            {% for wishlist_view in view.wishlists %}
                 <div class="card">
-                    <h2 class="card__title">{{ wishlist.name }}</h2>
+                    <h2 class="card__title">{{ wishlist_view.name }}</h2>
                     <div>
-                        <span class="card__label">{{ wishlist.visibility }}</span>
+                        <span class="card__label">{{ wishlist_view.visibility }}</span>
+                        <span class="card__label">Items : {{ wishlist_view.countWishlistItems }}</span>
+                        <span class="card__label">Groups : {{ wishlist_view.countWishlistGroups }}</span>
                     </div>
                     <div class="card__actions">
-                        <a class="button button--accent button--round" href="{{ path('wishlist_show', { id: wishlist.id}) }}">
-                            <i class="gg-eye"></i>
+                        <a class="button button--round button--accent" href="{{ wishlist_view.actionShowWishlist.link }}" aria-labelledby="btn-show-wishlist-{{ loop.index}}">
+                            <span id="btn-show-wishlist-{{ loop.index }}" hidden>{{ wishlist_view.actionShowWishlist.text }}</span>
+                            {% include 'svg/eye.html.twig' with { 'class_extend' : 'icon--accent'} %}
                         </a>
                     </div>
                 </div>

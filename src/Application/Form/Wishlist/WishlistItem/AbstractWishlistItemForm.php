@@ -36,7 +36,7 @@ abstract class AbstractWishlistItemForm extends AbstractType
             ->add('priority', EnumType::class, [
                 'class' => PriorityEnum::class,
                 'label' => $this->translator->trans('wishlist.item.priority.label'),
-                'placeholder' => 'Choose an option',
+                'placeholder' => $this->translator->trans('form.select.placeholder'),
                 'required' => false,
                 'choice_label' => function (PriorityEnum $enum): string {
                     return $this->translator->trans(sprintf('wishlist.item.priority.ENUM.%s', $enum->value));

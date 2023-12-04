@@ -18,6 +18,22 @@ final class ShowWishlistController extends CustomAbstractController
 {
     public const NAME = 'wishlist_show';
 
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $id, ?string $group = null): array
+    {
+        $params = [
+            'id' => $id,
+        ];
+
+        if($group) {
+            $params['group'] = $group;
+        }
+
+        return $params;
+    }
+
     #[Route('/{id}', name: self::NAME, methods: ['GET'])]
     public function __invoke(Request $request, string $id, WishlistPresenter $presenter): Response
     {
@@ -42,6 +58,7 @@ final class ShowWishlistController extends CustomAbstractController
 
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
+            'wishlist_group_id' => $wishlistGroupId,
             'wishlist_view' => $presenter->present(
                 $wishlist,
                 $wishlistGroupId

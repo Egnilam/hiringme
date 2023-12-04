@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlists')]
 final class CreateWishlistController extends CustomAbstractController
 {
+    public const NAME = 'wishlist_create';
+
     public const QUERY_PARAM_GROUP = 'group';
 
     #[Route('/create', name: 'wishlist_create', methods: ['GET', 'POST'])]

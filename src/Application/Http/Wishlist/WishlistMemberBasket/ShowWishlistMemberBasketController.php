@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('basket')]
-final class ShowWishlistMemberBasket extends CustomAbstractController
+final class ShowWishlistMemberBasketController extends CustomAbstractController
 {
     #[Route(name: 'wishlist_member_basket_show', methods: ['GET'])]
     public function __invoke(Request $request, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response

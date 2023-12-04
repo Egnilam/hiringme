@@ -14,7 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('wishlist_groups/{groupId}/members')]
 final class AddMemberToWishlistGroupController extends CustomAbstractController
 {
-    #[Route('/add', name: 'wishlist_group_member_add', methods: ['GET', 'POST'])]
+    public const NAME = 'wishlist_group_member_add';
+
+    /**
+     * @return array<string>
+     */
+    public static function getRequestParams(string $groupId): array
+    {
+        return ['groupId' => $groupId];
+    }
+
+    #[Route('/add', name: self::NAME, methods: ['GET', 'POST'])]
     public function __invoke(Request $request, string $groupId): Response
     {
         $addWishlistGroupMemberCommand =  new AddMemberToWishlistGroupCommand();
