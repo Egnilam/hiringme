@@ -37,7 +37,7 @@ final readonly class UpdateItemOfWishlistUseCase implements UpdateItemOfWishlist
     {
         $wishlistId = new WishlistId($request->getWishlistId());
 
-        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->getWishlistMemberId();
 
         $wishlistResponse = $this->wishlistQueryRepository->get(
             new GetWishlistRequest($request->getWishlistId(), [GetWishlistRequest::OPT_LOAD_ITEMS => true]),

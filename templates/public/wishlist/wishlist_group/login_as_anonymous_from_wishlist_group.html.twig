@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choose your name{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <h1 class="main__title">Choose your name</h1>
+        <div class="card-container">
+            {{ form_start(form, {'attr' : {'class' : 'form'}}) }}
+            <div class="form-control">
+                {{ form_errors(form.wishlistMemberId) }}
+                {{ form_label(form.wishlistMemberId) }}
+                <div class="wishlist-form__card-container">
+                    {% for wishlistMemberId in form.wishlistMemberId %}
+                        <div class="wishlist-form__radio-card">
+                            {{ form_widget(wishlistMemberId) }}
+                            {{ form_label(wishlistMemberId) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="button button--accent" type="submit">{{ 'form.save'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+    {% endblock %}
+{% endblock %}

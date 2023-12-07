@@ -35,7 +35,7 @@ final readonly class AssociateGroupMemberMemberToWishlistUseCase implements Asso
         $wishlistId = new WishlistId($request->getWishlistId());
 
         $wishlistGroupId = new WishlistGroupId($request->getWishlistGroupId());
-        $wishlistMemberClaimantId = $this->getClaimantWishlistMemberId->get();
+        $wishlistMemberClaimantId = $this->getClaimantWishlistMemberId->getWishlistMemberId();
 
         $wishlistResponse = $this->wishlistQueryRepository->get(
             new GetWishlistRequest($request->getWishlistId()),

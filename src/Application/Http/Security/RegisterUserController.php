@@ -8,12 +8,9 @@ use App\Action\Command\User\RegisterUserCommand;
 use App\Action\Command\Wishlist\WishlistMember\RegisterWishlistMemberCommand;
 use App\Application\Form\User\RegisterUserForm;
 use App\Application\Http\CustomAbstractController;
-use App\Application\Presenter\DomainErrorPresenter;
 use Doctrine\ORM\EntityManagerInterface;
-use Domain\Common\Domain\Exception\DomainException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/register')]

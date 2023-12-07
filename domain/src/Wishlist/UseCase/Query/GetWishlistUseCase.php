@@ -23,7 +23,7 @@ final readonly class GetWishlistUseCase implements GetWishlistInterface
 
     public function execute(GetWishlistRequest $request): WishlistResponse
     {
-        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->getWishlistMemberId();
 
         $wishlistResponse = $this->wishlistQueryRepository->get($request, $claimantWishlistMemberId);
 

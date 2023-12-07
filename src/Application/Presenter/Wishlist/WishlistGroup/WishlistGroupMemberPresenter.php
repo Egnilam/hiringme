@@ -34,7 +34,7 @@ readonly class WishlistGroupMemberPresenter
             $wishlistGroupMemberResponse->getEmail(),
             $wishlistGroupMemberResponse->isOwner(),
             (bool)$wishlistGroupMemberResponse->getWishlistId(),
-            $this->getClaimantWishlistMemberId->get() === $wishlistGroupMemberResponse->getWishlistMemberId(),
+            $this->getClaimantWishlistMemberId->getWishlistMemberId() === $wishlistGroupMemberResponse->getWishlistMemberId(),
             $wishlistGroupMemberResponse->getWishlistId() ? $this->linkPresenter->present(
                 'ui.wishlist.group.member.show_wishlist',
                 ShowWishlistController::NAME,

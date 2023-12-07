@@ -27,6 +27,10 @@ services:
             - '../src/Infrastructure/Framework/Doctrine/Entity/'
             - '../src/Kernel.php'
 
+    App\Infrastructure\Framework\Session\Decorator\SessionFactoryWishlistMemberBag:
+        decorates: session.factory
+        arguments: ['@.inner']
+
     Domain\:
         resource: '../domain/src/'
     # add more service definitions when explicit configuration is needed

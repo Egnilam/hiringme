@@ -6,5 +6,5 @@ namespace Domain\Wishlist\Service;
 
 interface GetClaimantWishlistMemberIdInterface
 {
-    public function get(): string;
+    public function getWishlistMemberId(): string;
 }

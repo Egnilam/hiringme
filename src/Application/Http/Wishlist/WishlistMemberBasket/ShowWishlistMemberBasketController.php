@@ -20,7 +20,7 @@ final class ShowWishlistMemberBasketController extends CustomAbstractController
     public function __invoke(Request $request, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response
     {
         $query = new GetWishlistMemberBasketQuery();
-        $query->setRequest(new GetWishlistMemberBasketRequest($getClaimantWishlistMemberId->get()));
+        $query->setRequest(new GetWishlistMemberBasketRequest($getClaimantWishlistMemberId->getWishlistMemberId()));
 
         $wishlistMemberBasket = $this->queryBus->ask($query);
 
