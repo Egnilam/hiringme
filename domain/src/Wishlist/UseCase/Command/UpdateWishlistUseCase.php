@@ -33,7 +33,7 @@ final readonly class UpdateWishlistUseCase implements UpdateWishlistInterface
         $wishlistId = new WishlistId($request->getId());
         $owner = new WishlistMemberId($request->getWishlistMemberId());
 
-        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->get();
+        $claimantWishlistMemberId = $this->getClaimantWishlistMemberId->getWishlistMemberId();
 
         $wishlistResponse = $this->wishlistQueryRepository->get(
             new GetWishlistRequest($wishlistId->getId()),

@@ -36,6 +36,7 @@ final class WishlistGroupQueryRepository extends AbstractRepository implements W
                 $wishlistGroupMemberEntity->getPseudonym(),
                 $wishlistGroupMemberEntity->getWishlistMember()->getEmail(),
                 $wishlistGroupMemberEntity->getWishlistMember()->getStringUuid(),
+                $wishlistGroupMemberEntity->getWishlistMember()->isRegistered(),
                 $wishlistGroupMemberEntity->getWishlist()?->getStringUuid(),
                 $wishlistGroupMemberEntity->isOwner()
             );

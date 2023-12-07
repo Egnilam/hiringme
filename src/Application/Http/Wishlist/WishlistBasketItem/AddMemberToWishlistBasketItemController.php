@@ -41,7 +41,7 @@ final class AddMemberToWishlistBasketItemController extends CustomAbstractContro
     #[Route('/{id}/basket', name: self::NAME, methods: ['GET', 'POST'])]
     public function __invoke(Request $request, string $wishlistId, string $id, GetClaimantWishlistMemberIdInterface $getClaimantWishlistMemberId): Response
     {
-        $claimantWishlistMemberId = $getClaimantWishlistMemberId->get();
+        $claimantWishlistMemberId = $getClaimantWishlistMemberId->getWishlistMemberId();
 
         $wishlistGroupId = $request->query->has('group') ? (string)$request->query->get('group') : null;
 

@@ -11,6 +11,7 @@ final readonly class WishlistGroupMemberResponse
         private string $pseudonym,
         private ?string $email,
         private string $wishlistMemberId,
+        private bool $wishlistMemberRegistered,
         private ?string $wishlistId,
         private bool $owner,
     ) {
@@ -34,6 +35,11 @@ final readonly class WishlistGroupMemberResponse
     public function getWishlistMemberId(): string
     {
         return $this->wishlistMemberId;
+    }
+
+    public function isWishlistMemberRegistered(): bool
+    {
+        return $this->wishlistMemberRegistered;
     }
 
     public function getWishlistId(): ?string
